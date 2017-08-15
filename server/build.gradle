@@ -1,0 +1,47 @@
+buildscript {
+  ext {
+    springBootVersion = '1.5.6.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    classpath("cz.habarta.typescript-generator:typescript-generator-gradle-plugin:1.27.339")
+  }
+}
+
+apply plugin: 'cz.habarta.typescript-generator'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile('org.springframework.boot:spring-boot-starter-aop')
+  compile('org.springframework.boot:spring-boot-starter-data-jpa')
+  compile('org.springframework.boot:spring-boot-starter-security')
+  compile('org.springframework.boot:spring-boot-starter-web')
+  runtime('org.postgresql:postgresql')
+  compileOnly('org.projectlombok:lombok')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+  testCompile('org.springframework.security:spring-security-test')
+  testRuntime('org.hsqldb:hsqldb')
+}
+
+generateTypeScript {
+  jsonLibrary = 'jackson2'
+  classes = [
+    
+  ]
+  //outputFileType = 'implementationFile'
+  outputFile = '../common/src/model.d.ts'
+  outputKind = 'module'
+  removeTypeNameSuffix = 'Dto'
+}
