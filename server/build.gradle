@@ -11,6 +11,10 @@ buildscript {
   }
 }
 
+plugins {
+  id "net.ltgt.apt-eclipse" version "0.11" //annotation processing
+}
+
 apply plugin: 'cz.habarta.typescript-generator'
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -21,6 +25,7 @@ sourceCompatibility = 1.8
 
 repositories {
   mavenCentral()
+  maven { url "http://dl.bintray.com/xinra/nucleus" }
 }
 
 dependencies {
@@ -30,6 +35,11 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-web')
   runtime('org.postgresql:postgresql')
   compileOnly('org.projectlombok:lombok')
+  
+  compile('com.xinra.nucleus:nucleus-common:0.1.1')
+  compile('com.xinra.nucleus:nucleus-entity:0.1.0')
+  compile('com.xinra.nucleus:nucleus-service:0.1.1')
+  
   testCompile('org.springframework.boot:spring-boot-starter-test')
   testCompile('org.springframework.security:spring-security-test')
   testRuntime('org.hsqldb:hsqldb')
