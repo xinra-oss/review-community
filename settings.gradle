@@ -1,3 +1,3 @@
-include 'server', 'common', 'web'
+include 'server', 'shared', 'web'
 
 rootProject.name = 'review-community'
