@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Profile("test")
 @RequestMapping("/test")
-public class TestController {
+public class SampleController {
   
   private @Autowired ContextHolder<Context> contextHolder;
   private @Autowired MultiMarketMode multiMarketMode;
