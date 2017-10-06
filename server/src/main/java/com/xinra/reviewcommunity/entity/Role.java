@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Role {
   
-  // New roles can be added here. Make sure to not create circular inheritance!
+  // New roles can be added here.
   
   /**
    * Default role of newly registered users.
@@ -67,7 +67,7 @@ public enum Role {
     if (transitiveRoles == null) {
       Set<Role> roles = new HashSet<>();
       roles.add(this);
-      // this is infinite recursion if there is a circular inheritance!
+      // it is not possible to declare circular inheritance
       parents.forEach(p -> roles.addAll(p.getTransitiveRoles()));
       transitiveRoles = Sets.immutableEnumSet(roles);
     }
