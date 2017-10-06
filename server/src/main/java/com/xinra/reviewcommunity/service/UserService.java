@@ -1,7 +1,9 @@
 package com.xinra.reviewcommunity.service;
 
+import com.google.common.collect.ImmutableSet;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.PasswordLoginRepository;
+import com.xinra.reviewcommunity.entity.Role;
 import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.entity.UserRepository;
 import lombok.NonNull;
@@ -32,6 +34,7 @@ public class UserService extends AbstractService {
     User user = entityFactory.createEntity(User.class);
     user.setName(name);
     user.setEmail(email);
+    user.setRoles(ImmutableSet.of(Role.USER));
     
     user = userRepo.save(user);
     
