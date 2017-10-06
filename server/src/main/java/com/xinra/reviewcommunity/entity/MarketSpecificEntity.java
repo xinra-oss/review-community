@@ -1,6 +1,5 @@
 package com.xinra.reviewcommunity.entity;
 
-import com.xinra.nucleus.entity.BaseEntity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -16,7 +15,7 @@ import org.hibernate.annotations.ParamDef;
 @FilterDef(name = "market", parameters = @ParamDef(name = "marketId", type = "string"), 
     defaultCondition = "market_id = :marketId")
 @Filter(name = "market")
-public abstract class MarketSpecificEntity extends BaseEntity {
+public abstract class MarketSpecificEntity extends NamedEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   protected Market market;

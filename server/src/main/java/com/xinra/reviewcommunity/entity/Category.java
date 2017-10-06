@@ -1,15 +1,16 @@
 package com.xinra.reviewcommunity.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Market extends NamedEntity {
+public class Category extends NamedEntity {
   
-  private @NonNull String slug;
-  
+  @ManyToOne
+  private Category parent;
+
 }
