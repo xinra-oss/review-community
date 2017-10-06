@@ -8,8 +8,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Market extends NamedEntity {
-  
-  private @NonNull String slug;
+public class PasswordLogin extends Login {
+
+  private @NonNull String passwordHash;
   
 }
