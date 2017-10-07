@@ -1,6 +1,9 @@
 package com.xinra.reviewcommunity.rest.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xinra.nucleus.service.DtoFactory;
+import com.xinra.reviewcommunity.service.AuthenticatedUserDto;
+import com.xinra.reviewcommunity.service.UserDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Component;
 public class RestAuthenticationSuccessHandler 
     extends SavedRequestAwareAuthenticationSuccessHandler {
 
+  private @Autowired DtoFactory dtoFactory;
   private final ObjectMapper mapper;
   
   @Autowired
@@ -35,13 +40,24 @@ public class RestAuthenticationSuccessHandler
       Authentication authentication) throws ServletException, IOException {
     
     response.setStatus(HttpServletResponse.SC_OK);
+    response.setContentType("application/json");
     
-    // TODO return user data
+    AuthenticatedUserDto user = (AuthenticatedUserDto) authentication.getPrincipal();
     
-    log.info("User with name {} authenticated", "erik");
+    // we have to create a new object so that not all properties are marshaled
+    UserDto userDto = dtoFactory.createDto(UserDto.class);
+    userDto.setLevel(user.getLevel());
+    userDto.setName(user.getName());
+    
+    SuccessfulAuthenticationDto authDto = dtoFactory.createDto(SuccessfulAuthenticationDto.class);
+    authDto.setUser(userDto);
+    authDto.setPermissions(user.getPermissions());
+    authDto.setCsrfToken((CsrfToken) request.getAttribute(CsrfToken.class.getName()));
+    
+    log.info("User with name '{}' authenticated", user.getName());
     
     PrintWriter writer = response.getWriter();
-    writer.println("{\"foo\": 5}");
+    mapper.writeValue(writer, authDto);
     writer.flush();
   }
   

@@ -1,5 +1,9 @@
 package com.xinra.reviewcommunity.rest.conf;
 
+import com.xinra.nucleus.service.DtoFactory;
+import com.xinra.reviewcommunity.entity.PasswordLogin;
+import com.xinra.reviewcommunity.entity.PasswordLoginRepository;
+import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +21,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private @Autowired RestAuthenticationSuccessHandler authenticationSuccessHandler;
   private @Autowired RestAuthenticationFailureHandler authenticationFailureHandler;
   private @Autowired RestLogoutSuccessHandler logoutSuccessHandler;
+  private @Autowired DtoFactory dtoFactory;
+  private @Autowired PasswordLoginRepository<PasswordLogin> passwordLoginRepo;
+  
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(new AuthenticationProviderImpl(dtoFactory, passwordLoginRepo));
+  }
   
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -36,11 +47,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
         .authenticationEntryPoint(authenticationEntryPoint);
     
-  }
-  
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
   }
   
 }
