@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   /**
-   * Get a CSRF token for POST requests.
+   * Get a CSRF token.
    */
   @RequestMapping(path = "/csrf-token", method = RequestMethod.GET)
-  public String getCsrfToken(HttpServletRequest request) {
-    return ((CsrfToken) request.getAttribute(CsrfToken.class.getName())).getToken();
+  public CsrfToken getCsrfToken(HttpServletRequest request) {
+    return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
   }
   
 }
