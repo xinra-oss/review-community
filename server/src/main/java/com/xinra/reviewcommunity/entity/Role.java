@@ -1,6 +1,5 @@
 package com.xinra.reviewcommunity.entity;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.HashSet;
@@ -11,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 /**
  * A role is a set of {@link Permission}s. Permissions can be inherited from one or more roles.
  * Each user can have multiple roles.
+ * 
+ * @see UserLevel
  */
 @Getter
 @RequiredArgsConstructor
@@ -40,12 +41,6 @@ public enum Role {
       
     )
   );
-  
-  /**
-   * The first role of this list that a user has determines his/her "level".
-   * It is displayed in the client.
-   */
-  public static final ImmutableList<Role> LEVELS = ImmutableList.of(ADMIN, MODERATOR, USER);
 
   private static ImmutableSet<Role> inheritsFrom(Role... parents) {
     return ImmutableSet.copyOf(parents);

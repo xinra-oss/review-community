@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -21,9 +22,14 @@ public class User extends NamedEntity {
   
   @Enumerated(EnumType.STRING)
   @ElementCollection(targetClass = Role.class)
-  private Set<Role> roles;
+  private @NonNull Set<Role> roles;
   
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-  private Set<Login> logins;
+  private @NonNull Set<Login> logins;
+  
+  // cache
+  
+  @Enumerated(EnumType.STRING)
+  private @NonNull UserLevel level;
   
 }

@@ -5,6 +5,7 @@ import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.PasswordLoginRepository;
 import com.xinra.reviewcommunity.entity.Role;
 import com.xinra.reviewcommunity.entity.User;
+import com.xinra.reviewcommunity.entity.UserLevel;
 import com.xinra.reviewcommunity.entity.UserRepository;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ public class UserService extends AbstractService {
     user.setName(name);
     user.setEmail(email);
     user.setRoles(ImmutableSet.of(Role.USER));
+    user.setLevel(UserLevel.USER);
     
     user = userRepo.save(user);
     
