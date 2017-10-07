@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest;
 
 import org.springframework.web.context.request.RequestContextHolder;
 

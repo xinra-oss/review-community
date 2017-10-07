@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.Context;
 import java.lang.annotation.Documented;

@@ -2,7 +2,7 @@ package com.xinra.reviewcommunity;
 
 import com.xinra.nucleus.common.ContextHolder;
 import com.xinra.nucleus.common.GenericContextHolder;
-import com.xinra.reviewcommunity.frontend.FrontendUtil;
+import com.xinra.reviewcommunity.rest.FrontendUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

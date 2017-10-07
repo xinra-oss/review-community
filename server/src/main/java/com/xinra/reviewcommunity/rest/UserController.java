@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.service.UserService;
 import com.xinra.reviewcommunity.service.UserService.UsernameAlreadyExistsException;

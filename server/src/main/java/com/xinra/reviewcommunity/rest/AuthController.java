@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;

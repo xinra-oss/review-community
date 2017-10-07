@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest;
 
 import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.nucleus.service.ServiceProvider;

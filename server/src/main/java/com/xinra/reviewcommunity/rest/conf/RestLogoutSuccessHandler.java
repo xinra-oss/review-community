@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest.conf;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

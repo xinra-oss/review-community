@@ -1,6 +1,7 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest.conf;
 
 import com.xinra.reviewcommunity.MultiMarketMode;
+import com.xinra.reviewcommunity.rest.MarketAgnostic;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Set;

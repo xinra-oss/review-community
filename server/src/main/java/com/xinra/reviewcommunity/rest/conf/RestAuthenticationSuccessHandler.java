@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
