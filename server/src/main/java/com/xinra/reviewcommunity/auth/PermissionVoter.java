@@ -50,6 +50,7 @@ public class PermissionVoter implements AccessDecisionVoter<Object> {
   }
 
   /**
+   * {@inheritDoc}
    * @implSpec adapted from {@link RoleVoter}.
    */
   @Override
