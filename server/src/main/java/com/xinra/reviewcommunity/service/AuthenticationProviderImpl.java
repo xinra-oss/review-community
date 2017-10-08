@@ -2,9 +2,9 @@ package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.Streams;
 import com.xinra.nucleus.service.DtoFactory;
+import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.PasswordLoginRepository;
-import com.xinra.reviewcommunity.entity.Role;
 import com.xinra.reviewcommunity.entity.UserLevel;
 import java.util.Set;
 import java.util.stream.Collectors;

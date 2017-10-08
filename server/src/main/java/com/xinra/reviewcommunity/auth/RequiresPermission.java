@@ -1,6 +1,5 @@
-package com.xinra.reviewcommunity.rest.conf;
+package com.xinra.reviewcommunity.auth;
 
-import com.xinra.reviewcommunity.entity.Permission;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

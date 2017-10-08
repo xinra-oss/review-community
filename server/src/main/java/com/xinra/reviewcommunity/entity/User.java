@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.entity;
 
+import com.xinra.reviewcommunity.auth.Role;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;

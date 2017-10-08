@@ -1,6 +1,5 @@
-package com.xinra.reviewcommunity.rest.conf;
+package com.xinra.reviewcommunity.auth;
 
-import com.xinra.reviewcommunity.entity.Permission;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

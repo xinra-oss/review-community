@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.entity;
+package com.xinra.reviewcommunity.auth;
 
 public enum Permission {
 

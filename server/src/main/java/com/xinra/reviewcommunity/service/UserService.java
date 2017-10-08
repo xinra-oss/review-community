@@ -1,9 +1,9 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.ImmutableSet;
+import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.PasswordLoginRepository;
-import com.xinra.reviewcommunity.entity.Role;
 import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.entity.UserLevel;
 import com.xinra.reviewcommunity.entity.UserRepository;

@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.rest.conf;
+package com.xinra.reviewcommunity.auth;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.annotation.SecuredAnnotationSecurityMetadataSource;
