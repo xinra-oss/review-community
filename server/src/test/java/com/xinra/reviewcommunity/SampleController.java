@@ -1,7 +1,7 @@
 package com.xinra.reviewcommunity;
 
 import com.xinra.nucleus.common.ContextHolder;
-import com.xinra.reviewcommunity.rest.MarketAgnostic;
+import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
