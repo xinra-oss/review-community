@@ -30,7 +30,7 @@ public class MarketService extends AbstractService {
    * Loads market information from database into cache. 
    */
   public void buildCache() {
-    log.info("Building market cache.");
+    log.info("Building market cache");
     dtoCache = new HashMap<>();
     entityCache = new HashMap<>();
     
