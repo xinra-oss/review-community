@@ -12,7 +12,7 @@ public class MethodSecurityConfiguration extends GlobalMethodSecurityConfigurati
   
   @Override
   public MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
-    return new SecuredAnnotationSecurityMetadataSource(new RequiresPermission.MetadataExtractor());
+    return new SecuredAnnotationSecurityMetadataSource(new AccessRequires.MetadataExtractor());
   }
   
   @Override

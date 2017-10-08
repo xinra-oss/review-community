@@ -17,7 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
  * the authority is contained in the {@link Permission} enum.
  * 
  * <p>Voters are not used everywhere to check authorities. They are, however, used for method
- * security. This class is required for {@link RequiresPermission} to work in place of
+ * security. This class is required for {@link AccessRequires} to work in place of
  * {@link Secured}.
  */
 public class PermissionVoter implements AccessDecisionVoter<Object> {
