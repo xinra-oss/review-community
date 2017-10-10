@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest.conf;
 
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;

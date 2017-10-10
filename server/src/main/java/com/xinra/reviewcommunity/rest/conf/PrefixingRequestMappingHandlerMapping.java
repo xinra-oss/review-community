@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.frontend;
+package com.xinra.reviewcommunity.rest.conf;
 
 import com.xinra.reviewcommunity.MultiMarketMode;
 import java.lang.reflect.Field;

@@ -16,7 +16,7 @@ public class CacheBuilder implements ApplicationListener<ContextRefreshedEvent> 
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
-    log.info("Starting initial cache buildiung.");
+    log.info("Starting initial cache buildiung");
     serviceProvider.getService(MarketService.class).buildCache();
   }
 
