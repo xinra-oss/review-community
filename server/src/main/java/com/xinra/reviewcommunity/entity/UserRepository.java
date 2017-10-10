@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository<T extends User> extends AbstractEntityRepository<T> {
 
-  T getByName(String name);
+  T findByName(String name);
   
 }

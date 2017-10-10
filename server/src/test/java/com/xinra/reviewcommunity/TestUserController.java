@@ -37,7 +37,7 @@ public class TestUserController {
     mvc.perform(post("/de/api/user").params(params).with(csrf()))
         .andExpect(status().isOk());
     
-    assertThat(userRepo.getByName("peter"))
+    assertThat(userRepo.findByName("peter"))
         .as("create user entity")
         .isNotNull();
     
