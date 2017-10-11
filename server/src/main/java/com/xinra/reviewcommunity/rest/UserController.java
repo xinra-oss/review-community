@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.xinra.reviewcommunity.dto.RegisterDto;
 import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.UserService;
 import com.xinra.reviewcommunity.service.UserService.UsernameAlreadyExistsException;

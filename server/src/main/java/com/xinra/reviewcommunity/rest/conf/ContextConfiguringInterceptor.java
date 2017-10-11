@@ -3,7 +3,7 @@ package com.xinra.reviewcommunity.rest.conf;
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
 import com.xinra.reviewcommunity.MultiMarketMode;
-import com.xinra.reviewcommunity.service.MarketDto;
+import com.xinra.reviewcommunity.dto.MarketDto;
 import com.xinra.reviewcommunity.service.MarketService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;

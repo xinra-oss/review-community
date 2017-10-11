@@ -1,6 +1,7 @@
-package com.xinra.reviewcommunity.entity;
+package com.xinra.reviewcommunity.repo;
 
 import com.xinra.nucleus.entity.AbstractEntityRepository;
+import com.xinra.reviewcommunity.entity.Login;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;

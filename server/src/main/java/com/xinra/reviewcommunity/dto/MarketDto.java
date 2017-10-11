@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.service;
+package com.xinra.reviewcommunity.dto;
 
 import com.xinra.nucleus.entity.EntityPk;
 import com.xinra.nucleus.service.Dto;
