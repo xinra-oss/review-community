@@ -1,6 +1,6 @@
 package com.xinra.reviewcommunity;
 
-import com.xinra.reviewcommunity.service.MarketDto;
+import com.xinra.reviewcommunity.dto.MarketDto;
 import java.util.Optional;
 import lombok.Getter;
 import org.springframework.stereotype.Component;

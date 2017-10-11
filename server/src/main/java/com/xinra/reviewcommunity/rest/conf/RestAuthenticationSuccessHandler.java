@@ -2,8 +2,8 @@ package com.xinra.reviewcommunity.rest.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xinra.nucleus.service.DtoFactory;
-import com.xinra.reviewcommunity.service.AuthenticatedUserDto;
-import com.xinra.reviewcommunity.service.UserDto;
+import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
+import com.xinra.reviewcommunity.dto.UserDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

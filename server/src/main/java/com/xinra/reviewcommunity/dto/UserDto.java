@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.service;
+package com.xinra.reviewcommunity.dto;
 
 import com.xinra.nucleus.service.Dto;
 import com.xinra.reviewcommunity.entity.UserLevel;

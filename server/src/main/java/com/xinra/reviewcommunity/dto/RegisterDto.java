@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity.rest;
+package com.xinra.reviewcommunity.dto;
 
 import javax.validation.constraints.Pattern;
 import lombok.Data;

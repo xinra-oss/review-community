@@ -1,8 +1,9 @@
 package com.xinra.reviewcommunity.service;
 
 import com.xinra.nucleus.entity.EntityPk;
+import com.xinra.reviewcommunity.dto.MarketDto;
 import com.xinra.reviewcommunity.entity.Market;
-import com.xinra.reviewcommunity.entity.MarketRepository;
+import com.xinra.reviewcommunity.repo.MarketRepository;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;
