@@ -1,0 +1,22 @@
+plugins {
+  id "com.moowork.node" version "1.2.0"
+}
+
+apply plugin: 'base'
+
+check.dependsOn 'npm_test'
+
+task generate(dependsOn: ':server:generateTypeScript')
+
+assemble {
+  dependsOn 'npm_install'
+  dependsOn 'generate'
+}
+
+// currently fails, see https://github.com/NathanWalker/angular-seed-advanced/issues/470
+// will be added back when fixed
+// clean.dependsOn 'npm_run_clean'
+clean.doLast {
+  logger.warn("WARNING: Deleting generated sources. Running the client with npm will not work until you run the gradle task ':client:generate' again!")
+  delete 'src/client/app/modules/shared/generated'
+}

@@ -63,6 +63,8 @@ desktop
 gulpfile.js
 gulpfile.js.map
 
+src/client/app/modules/shared/generated
+
 #VSCode Chrome Debugger Extension (launch.json configuration)
 ChromeDebugger-UserData
 
