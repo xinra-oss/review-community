@@ -1,10 +1,11 @@
 {
-  "name": "angular-seed-advanced",
+  "name": "review-community-client",
   "version": "0.0.0",
-  "description": "High-quality, modular starter (advanced seed) project for Angular 2 apps with statically typed build and AoT + NativeScript + Electron",
+  "description": "Client for Review Community. Web and mobile.",
   "repository": {
-    "url": "https://github.com/NathanWalker/angular-seed-advanced"
+    "url": "https://github.com/xinra-it/review-community"
   },
+  "private": true,
   "scripts": {
     "build.desktop.mac": "rimraf desktop/mac/* && gulp desktop.mac --desktop --desktopBuild",
     "build.desktop.windows": "rimraf desktop/windows/* && gulp desktop.windows --desktop --desktopBuild",
@@ -60,13 +61,13 @@
     "compodoc": "./node_modules/.bin/compodoc -p src/client/tsconfig.json",
     "serve.compodoc": "./node_modules/.bin/compodoc -s"
   },
-  "author": "Minko Gechev <mgechev>",
+  "author": "xinra IT Solutions <xinra-it>",
   "contributors": [
     {
-      "name": "Nathan Walker <NathanWalker>"
+      "name": "Erik Hofer <erikhofer>"
     }
   ],
-  "license": "MIT",
+  "license": "SEE LICENSE IN ../LICENSE",
   "devDependencies": {
     "@angular/compiler-cli": "~4.1.0",
     "@angular/platform-server": "~4.1.0",

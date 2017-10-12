@@ -1,8 +1,9 @@
 {
-  "name": "angular-seed-advanced",
+  "name": "review-community-client",
   "version": "0.0.0",
+  "private": true,
   "nativescript": {
-    "id": "com.yourdomain.nativescript",
+    "id": "com.xinra.reviewcommunity",
     "tns-ios": {
       "version": "3.1.0"
     },
