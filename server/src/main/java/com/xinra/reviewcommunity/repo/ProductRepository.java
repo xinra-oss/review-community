@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository<T extends Product> extends AbstractEntityRepository<T> {
 
+  T findbyName(String name);
+
 }
