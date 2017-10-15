@@ -34,7 +34,7 @@ public class TestUserController {
     params.add("password", "secret");
     
     // creating a user should work
-    mvc.perform(post("/de/api/user").params(params).with(csrf()))
+    mvc.perform(post("/api/user").params(params).with(csrf()))
         .andExpect(status().isOk());
     
     assertThat(userRepo.findByName("peter"))
@@ -42,7 +42,7 @@ public class TestUserController {
         .isNotNull();
     
     // creating a user with the same name again should fail
-    mvc.perform(post("/de/api/user").params(params).with(csrf()))
+    mvc.perform(post("/api/user").params(params).with(csrf()))
         .andExpect(status().isBadRequest());
     
     userRepo.deleteAll();
