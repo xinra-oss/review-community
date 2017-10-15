@@ -33,9 +33,9 @@ public class PrefixingRequestMappingHandlerMapping extends RequestMappingHandler
     }
     
     String marketPrefix = multiMarketMode == MultiMarketMode.PATH
-        && (AnnotatedElementUtils.hasAnnotation(method, MarketAgnostic.class)
-        || AnnotatedElementUtils.hasAnnotation(handlerType, MarketAgnostic.class))
-        ? "" : "/{market}";
+        && !AnnotatedElementUtils.hasAnnotation(method, MarketAgnostic.class)
+        && !AnnotatedElementUtils.hasAnnotation(handlerType, MarketAgnostic.class)
+        ? "/{market}" : "";
     
     // TODO make api prefix configurable
     String apiPrefix = AnnotatedElementUtils.hasAnnotation(method, ResponseBody.class)
