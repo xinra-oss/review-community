@@ -10,4 +10,5 @@ public class CreateProductDto implements Dto {
   private String description;
   private String categoryId;
   private String brandId;
+  
 }

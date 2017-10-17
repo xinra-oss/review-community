@@ -2,10 +2,7 @@ package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
-import com.xinra.reviewcommunity.entity.Product;
-import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.ProductService;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,20 +14,18 @@ public class ProductController extends AbstractController {
 
 
   /**
-  * Creates a new product.
-  *
-  * @param createProductDto {@link com.xinra.reviewcommunity.dto.CreateProductDto}
-  */
+   * Create a new product.
+   */
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void createProduct(CreateProductDto createProductDto) {
-
-    serviceProvider.getService(ProductService.class)
-            .createProduct(createProductDto);
+  public void create(CreateProductDto createProductDto) {
+    serviceProvider.getService(ProductService.class).createProduct(createProductDto);
   }
 
+  /**
+   * GET a product by ID.
+   */
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public ProductDto findProductDtoById(@PathVariable String id) {
-    return serviceProvider.getService(ProductService.class)
-        .findProductById(id);
+  public ProductDto get(@PathVariable String id) {
+    return serviceProvider.getService(ProductService.class).getById(id);
   }
 }

@@ -8,4 +8,5 @@ public class CategoryDto implements Dto {
 
   private String categoryId;
   private String name;
+  
 }

@@ -21,17 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductService extends AbstractService {
 
-  @Autowired
-  private ProductRepository<Product> productRepo;
-  @Autowired
-  private CategoryRepository<Category> categoryRepo;
-  @Autowired
-  private BrandRepository<Brand> brandRepo;
+  private @Autowired ProductRepository<Product> productRepo;
+  private @Autowired CategoryRepository<Category> categoryRepo;
+  private @Autowired BrandRepository<Brand> brandRepo;
 
   /**
    * Creates a new product.
-   *
-   * @param createProductDto {@link com.xinra.reviewcommunity.dto.CreateProductDto}
    */
   public void createProduct(@NonNull CreateProductDto createProductDto) {
 
@@ -50,16 +45,10 @@ public class ProductService extends AbstractService {
   }
 
   /**
-   * Finds product with given id from database.
-   *
-   * @param id The name of the product.
-   * @return {@link com.xinra.reviewcommunity.entity.Product}
-   *
+   * Returns the product with the given ID.
    */
-  public ProductDto findProductById(String id) throws IllegalArgumentException {
+  public ProductDto getById(String id) throws IllegalArgumentException {
 
-    ProductDto productDto = new ProductDto();
-    log.info("Fetching product with id: '{}'", id);
     Product product = productRepo.findOne(id);
 
     if (product == null) {
@@ -67,28 +56,28 @@ public class ProductService extends AbstractService {
       throw new IllegalArgumentException(id);
       //TODO exceptionHandler
     }
-    return fillProductDtoWithProduct(product);
+    return toDto(product);
   }
 
 
-  private ProductDto fillProductDtoWithProduct(Product product) {
+  private ProductDto toDto(Product product) {
 
-    ProductDto productDto = new ProductDto();
+    ProductDto productDto = dtoFactory.createDto(ProductDto.class);
 
     productDto.setName(product.getName());
     productDto.setDescription(product.getDescription());
 
-    BrandDto brandDto = new BrandDto();
+    BrandDto brandDto = dtoFactory.createDto(BrandDto.class);
     brandDto.setName(product.getBrand().getName());
     brandDto.setBrandId(product.getBrand().getPk().getId());
 
-    productDto.setBrandDto(brandDto);
+    productDto.setBrand(brandDto);
 
-    CategoryDto categoryDto = new CategoryDto();
+    CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
     categoryDto.setName(product.getCategory().getName());
     categoryDto.setCategoryId(product.getCategory().getPk().getId());
 
-    productDto.setCategoryDto(categoryDto);
+    productDto.setCategory(categoryDto);
 
     return productDto;
   }

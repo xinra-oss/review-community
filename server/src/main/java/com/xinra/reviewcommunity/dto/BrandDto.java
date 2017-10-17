@@ -8,4 +8,5 @@ public class BrandDto implements Dto {
 
   private String brandId;
   private String name;
+  
 }
