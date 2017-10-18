@@ -1,17 +1,14 @@
 package com.xinra.reviewcommunity.entity;
 
+import com.xinra.nucleus.entity.BaseEntity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
-
-import com.xinra.nucleus.entity.BaseEntity;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter
