@@ -11,10 +11,6 @@ buildscript {
   }
 }
 
-plugins {
-  id "net.ltgt.apt-eclipse" version "0.11" //annotation processing
-}
-
 apply plugin: 'cz.habarta.typescript-generator'
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -60,11 +56,19 @@ dependencies {
 
 generateTypeScript {
   jsonLibrary = 'jackson2'
-  classes = [
-    
+  //classes = [
+  //  ''
+  //]
+  classPatterns = [
+    'com.xinra.reviewcommunity.dto.*'
+  ]
+  excludeClasses = [
+    'com.xinra.nucleus.service.Dto',
+    'com.xinra.reviewcommunity.dto.AuthenticatedUserDto',
+    'com.xinra.reviewcommunity.dto.RegisterDto'
   ]
   //outputFileType = 'implementationFile'
-  outputFile = '../shared/src/model.d.ts'
+  outputFile = '../client/src/client/app/modules/shared/generated/model.d.ts'
   outputKind = 'module'
   removeTypeNameSuffix = 'Dto'
 }
