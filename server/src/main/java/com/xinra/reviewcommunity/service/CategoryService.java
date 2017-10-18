@@ -1,8 +1,11 @@
 package com.xinra.reviewcommunity.service;
 
+import com.xinra.reviewcommunity.dto.CategoryDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class CategoryService extends AbstractService {
     Category category = entityFactory.createEntity(Category.class);
     category.setName(createCategoryDto.getName());
 
-    if(createCategoryDto.getParentSerial() != 0) {
+    if (createCategoryDto.getParentSerial() != 0) {
       Category parentCategory = categoryRepo.findBySerial(createCategoryDto.getParentSerial());
       category.setParent(parentCategory);
     }
@@ -35,5 +38,40 @@ public class CategoryService extends AbstractService {
 
     log.info("Created category with name '{}'", createCategoryDto.getName());
   }
+
+  /**
+   * Returns a list of all categories.
+   *
+   */
+  public List<CategoryDto> getAllCategories() {
+    return categoryRepo.findByParentIsNull().stream()
+      .map(this::toDto)
+      .collect(Collectors.toList());
+
+//    List<CategoryDto> list = new ArrayList<>();
+//
+//    for(Category cat : categoryRepo.findByParentIsNull()) {
+//      list.add(toDto(cat));
+//    }
+//
+//    return list;
+  }
+
+  private CategoryDto toDto(Category category) {
+
+    CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
+
+    categoryDto.setName(category.getName());
+    categoryDto.setSerial(category.getSerial());
+
+    categoryDto.setChildren(category.getChildren().stream()
+            .map(this::toDto)
+            .collect(Collectors.toList()));
+
+    return categoryDto;
+  }
+
+
+
 
 }
