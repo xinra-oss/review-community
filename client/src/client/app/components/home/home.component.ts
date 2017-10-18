@@ -21,6 +21,10 @@ export class HomeComponent implements OnInit {
   }
 
   viewCategories() {
+    this.routerext.navigate(['/categories']);
+  }
+
+  viewHistory() {
     // Try this in the {N} app
     // {N} can use these animation options
     this.routerext.navigate(['/categories'], {
@@ -29,10 +33,6 @@ export class HomeComponent implements OnInit {
         name: 'slideTop',
       }
     });
-  }
-
-  viewHistory() {
-
   }
 
   scan() {

@@ -1,3 +1,4 @@
+import { CategoryListComponent } from './app/modules/category';
 // nativescript
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -46,7 +47,8 @@ import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/inde
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    CategoryListComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA,
