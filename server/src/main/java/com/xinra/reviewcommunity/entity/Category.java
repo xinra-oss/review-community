@@ -11,7 +11,6 @@ import lombok.Setter;
 public class Category extends SerialEntity {
 
   private String name;
-  private int serial;
 
   @ManyToOne
   private Category parent;

@@ -39,13 +39,15 @@ public class ProductService extends AbstractService {
     product.setCategory(category);
     product.setBrand(brand);
 
+    int serial = serviceProvider.getService(SerialService.class).getNextSerial(Product.class);
+    product.setSerial(serial);
     productRepo.save(product);
 
     log.info("Created Product with name '{}'", createProductDto.getName());
   }
 
   /**
-   * Returns the product with the given ID.
+   * Returns the product with the given Serial.
    */
   public ProductDto getProductBySerial(int serial) {
 
@@ -71,6 +73,7 @@ public class ProductService extends AbstractService {
 
     productDto.setBrand(brandDto);
 
+    //TODO remove category
     CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
     categoryDto.setName(product.getCategory().getName());
     categoryDto.setSerial(product.getCategory().getSerial());

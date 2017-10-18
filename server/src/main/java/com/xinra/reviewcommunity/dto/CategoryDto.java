@@ -1,12 +1,13 @@
 package com.xinra.reviewcommunity.dto;
 
-import com.xinra.nucleus.service.Dto;
+import com.xinra.reviewcommunity.entity.Category;
+import java.util.List;
 import lombok.Data;
 
 @Data
 public class CategoryDto extends SerialDto {
 
-  private int serial;
   private String name;
+  private List<Category> children;
   
 }

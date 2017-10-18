@@ -7,9 +7,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Brand extends SerialEntity {
+public class Brand extends MarketSpecificEntity {
 
   private String name;
-  private int serial;
-
 }
