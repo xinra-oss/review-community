@@ -25,7 +25,7 @@ public class ProductController extends AbstractController {
    * GET a product by ID.
    */
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public ProductDto get(@PathVariable String id) {
-    return serviceProvider.getService(ProductService.class).getById(id);
+  public ProductDto get(@PathVariable int serial) {
+    return serviceProvider.getService(ProductService.class).getProductBySerial(serial);
   }
 }

@@ -4,9 +4,9 @@ import com.xinra.nucleus.service.Dto;
 import lombok.Data;
 
 @Data
-public class CategoryDto implements Dto {
+public class CategoryDto extends SerialDto {
 
-  private String categoryId;
+  private int serial;
   private String name;
   
 }

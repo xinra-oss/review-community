@@ -30,8 +30,8 @@ public class ProductService extends AbstractService {
    */
   public void createProduct(@NonNull CreateProductDto createProductDto) {
 
-    Category category = categoryRepo.findOne(createProductDto.getCategoryId());
-    Brand brand = brandRepo.findOne(createProductDto.getBrandId());
+    Category category = categoryRepo.findBySerial(createProductDto.getCategorySerial());
+    Brand brand = brandRepo.findBySerial(createProductDto.getBrandSerial());
 
     Product product = entityFactory.createEntity(Product.class);
     product.setName(createProductDto.getName());
@@ -47,14 +47,12 @@ public class ProductService extends AbstractService {
   /**
    * Returns the product with the given ID.
    */
-  public ProductDto getById(String id) throws IllegalArgumentException {
+  public ProductDto getProductBySerial(int serial) {
 
-    Product product = productRepo.findOne(id);
+    Product product = productRepo.findBySerial(serial);
 
     if (product == null) {
-      log.error("Product with id: '{}' not found.", id);
-      throw new IllegalArgumentException(id);
-      //TODO exceptionHandler
+      throw new SerialNotFoundException(Product.class, serial);
     }
     return toDto(product);
   }
@@ -69,13 +67,13 @@ public class ProductService extends AbstractService {
 
     BrandDto brandDto = dtoFactory.createDto(BrandDto.class);
     brandDto.setName(product.getBrand().getName());
-    brandDto.setBrandId(product.getBrand().getPk().getId());
+    brandDto.setSerial(product.getBrand().getSerial());
 
     productDto.setBrand(brandDto);
 
     CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
     categoryDto.setName(product.getCategory().getName());
-    categoryDto.setCategoryId(product.getCategory().getPk().getId());
+    categoryDto.setSerial(product.getCategory().getSerial());
 
     productDto.setCategory(categoryDto);
 

@@ -1,11 +1,10 @@
 package com.xinra.reviewcommunity.dto;
 
+import com.xinra.nucleus.service.Dto;
 import lombok.Data;
 
 @Data
-public class BrandDto extends SerialDto {
+public class SerialDto implements Dto {
 
   private int serial;
-  private String name;
-  
 }
