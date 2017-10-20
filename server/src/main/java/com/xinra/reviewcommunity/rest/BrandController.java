@@ -1,7 +1,9 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.xinra.reviewcommunity.dto.BrandDto;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.service.BrandService;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,5 +20,13 @@ public class BrandController extends AbstractController {
   @RequestMapping(path = "", method = RequestMethod.POST)
   public void create(@RequestBody @Valid CreateBrandDto createBrandDto) {
     serviceProvider.getService(BrandService.class).createBrand(createBrandDto);
+  }
+
+  /**
+   * GET a list of all Brands.
+   */
+  @RequestMapping(path = "", method = RequestMethod.GET)
+  public List<BrandDto> get() {
+    return serviceProvider.getService(BrandService.class).getAllBrands();
   }
 }

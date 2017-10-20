@@ -1,8 +1,13 @@
 package com.xinra.reviewcommunity.service;
 
+import com.google.common.collect.Streams;
+import com.xinra.reviewcommunity.dto.BrandDto;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.repo.BrandRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +34,23 @@ public class BrandService extends AbstractService {
     brandRepo.save(brand);
 
     log.info("Created brand with name '{}'", createBrandDto.getName());
+  }
+
+  /**
+   * Returns a list of all brands.
+   */
+  public List<BrandDto> getAllBrands() {
+    return Streams.stream(brandRepo.findAll())
+      .map(this::toDto)
+      .collect(Collectors.toList());
+  }
+
+  private BrandDto toDto(Brand brand) {
+    BrandDto brandDto = dtoFactory.createDto(BrandDto.class);
+
+    brandDto.setName(brand.getName());
+    brandDto.setSerial(brand.getSerial());
+
+    return brandDto;
   }
 }

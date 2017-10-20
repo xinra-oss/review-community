@@ -107,7 +107,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     categoryService.createCategory(createCategoryDto4);
 
     CreateCategoryDto createCategoryDto5 = dtoFactory.createDto(CreateCategoryDto.class);
-    createCategoryDto5.setName("Alkoholhaltig");
+    createCategoryDto5.setName("Softdrinks");
     createCategoryDto5.setParentSerial(4);
     categoryService.createCategory(createCategoryDto5);
 
@@ -124,7 +124,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     brandService.createBrand(createBrandDto1);
 
     CreateBrandDto createBrandDto2 = dtoFactory.createDto(CreateBrandDto.class);
-    createBrandDto2.setName("Mast-Jägermeister SE");
+    createBrandDto2.setName("Coca Cola");
     brandService.createBrand(createBrandDto2);
 
     contextHolder.clearMock();
@@ -146,15 +146,22 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createProductDto2.setCategorySerial(3);
 
     CreateProductDto createProductDto3 = dtoFactory.createDto(CreateProductDto.class);
-    createProductDto3.setName("Jägermeister");
-    createProductDto3.setDescription("Kräuterlikör");
+    createProductDto3.setName("Coca Cola Light");
+    createProductDto3.setDescription("Share a Coke with Olofmeister");
     createProductDto3.setBrandSerial(2);
     createProductDto3.setCategorySerial(5);
+
+    CreateProductDto createProductDto4 = dtoFactory.createDto(CreateProductDto.class);
+    createProductDto4.setName("Coca Cola Zero");
+    createProductDto4.setDescription("Echter Geschmack - Zero Zucker");
+    createProductDto4.setBrandSerial(2);
+    createProductDto4.setCategorySerial(5);
 
     ProductService productService = serviceProvider.getService(ProductService.class);
     productService.createProduct(createProductDto1);
     productService.createProduct(createProductDto2);
     productService.createProduct(createProductDto3);
+    productService.createProduct(createProductDto4);
 
     contextHolder.clearMock();
   }
