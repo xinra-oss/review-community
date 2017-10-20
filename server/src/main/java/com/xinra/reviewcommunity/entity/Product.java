@@ -13,7 +13,6 @@ public class Product extends SerialEntity {
 
   private String name;
   private String description;
-  private int serial;
 
   @ManyToOne(optional = false)
   private @NonNull Category category;

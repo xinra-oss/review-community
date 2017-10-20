@@ -64,6 +64,7 @@ public class ProductService extends AbstractService {
 
     ProductDto productDto = dtoFactory.createDto(ProductDto.class);
 
+    productDto.setSerial(product.getSerial());
     productDto.setName(product.getName());
     productDto.setDescription(product.getDescription());
 
@@ -73,9 +74,7 @@ public class ProductService extends AbstractService {
 
     productDto.setBrand(brandDto);
 
-    //TODO remove category
     CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
-    categoryDto.setName(product.getCategory().getName());
     categoryDto.setSerial(product.getCategory().getSerial());
 
     productDto.setCategory(categoryDto);

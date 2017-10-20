@@ -5,6 +5,7 @@ import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.service.CategoryService;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,8 @@ public class CategoryController extends AbstractController {
   /**
    * Create a new category.
    */
-  @RequestMapping(path = "", method = RequestMethod.POST, consumes = "application/json")
-  public void create(@Valid CreateCategoryDto createCategoryDto) {
+  @RequestMapping(path = "", method = RequestMethod.POST)
+  public void create(@RequestBody @Valid CreateCategoryDto createCategoryDto) {
     serviceProvider.getService(CategoryService.class).createCategory(createCategoryDto);
 
   }

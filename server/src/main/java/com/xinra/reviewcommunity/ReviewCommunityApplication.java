@@ -29,11 +29,12 @@ public class ReviewCommunityApplication {
   @Bean
   public MultiMarketMode multiMarketMode() {
     MultiMarketMode mmm;
-    try {
-      mmm = MultiMarketMode.valueOf(multiMarketMode.trim().toUpperCase());
-    } catch (IllegalArgumentException | NullPointerException ex) {
-      mmm = MultiMarketMode.DISABLED;
-    }
+//    try {
+//      mmm = MultiMarketMode.valueOf(multiMarketMode.trim().toUpperCase());
+//    } catch (IllegalArgumentException | NullPointerException ex) {
+//      mmm = MultiMarketMode.DISABLED;
+//    }
+    mmm = MultiMarketMode.PATH;
     log.info("Multi market mode is {}.", mmm);
     return mmm;
   }
