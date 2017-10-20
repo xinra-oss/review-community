@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     // {N} can use these animation options
     this.routerext.navigate(['/categories'], {
       transition: {
-        duration: 1000,
+        duration: 400,
         name: 'slideTop',
       }
     });

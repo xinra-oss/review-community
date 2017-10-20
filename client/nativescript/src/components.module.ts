@@ -1,4 +1,3 @@
-import { CategoryListComponent } from './app/modules/category';
 // nativescript
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -24,6 +23,7 @@ import { CoreModule } from './app/modules/core/core.module';
 import { AnalyticsModule } from './app/modules/analytics/analytics.module';
 import { MultilingualModule, translateLoaderFactory } from './app/modules/i18n/multilingual.module';
 import { SampleModule } from './app/modules/sample/sample.module';
+import { CategoryModule } from './app/modules/category';
 import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/index';
 
 // intermediate component module
@@ -39,16 +39,16 @@ import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/inde
       useFactory: (translateLoaderFactory)
     }]),
     SampleModule,
+    CategoryModule,
     NativeScriptModule,
     NativeScriptFormsModule,
     NativeScriptHttpModule,
-    NativeScriptRouterModule,
+    NativeScriptRouterModule
   ],
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent,
-    CategoryListComponent
+    AboutComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA,
@@ -60,6 +60,7 @@ import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/inde
     AnalyticsModule,
     CoreModule,
     SampleModule,
+    CategoryModule,
     NativeScriptModule,
     NativeScriptFormsModule,
     NativeScriptHttpModule,
