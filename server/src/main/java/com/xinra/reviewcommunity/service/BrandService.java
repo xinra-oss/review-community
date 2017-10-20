@@ -7,7 +7,6 @@ import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.repo.BrandRepository;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

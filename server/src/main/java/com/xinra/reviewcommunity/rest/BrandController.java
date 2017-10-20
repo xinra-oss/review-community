@@ -2,9 +2,12 @@ package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.dto.BrandDto;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
+import com.xinra.reviewcommunity.dto.ProductDto;
 import com.xinra.reviewcommunity.service.BrandService;
+import com.xinra.reviewcommunity.service.ProductService;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,4 +32,13 @@ public class BrandController extends AbstractController {
   public List<BrandDto> get() {
     return serviceProvider.getService(BrandService.class).getAllBrands();
   }
+
+  /**
+   * GET a list of all products of a brand.
+   */
+  @RequestMapping(path = "/{serial}", method = RequestMethod.GET)
+  public List<ProductDto> getByBrand(@PathVariable int serial) {
+    return serviceProvider.getService(ProductService.class).getProductsByBrand(serial);
+  }
+
 }

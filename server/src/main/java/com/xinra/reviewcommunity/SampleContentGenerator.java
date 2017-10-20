@@ -157,11 +157,18 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createProductDto4.setBrandSerial(2);
     createProductDto4.setCategorySerial(5);
 
+    CreateProductDto createProductDto5 = dtoFactory.createDto(CreateProductDto.class);
+    createProductDto5.setName("Coca Cola ");
+    createProductDto5.setDescription("Timeless taste");
+    createProductDto5.setBrandSerial(2);
+    createProductDto5.setCategorySerial(5);
+
     ProductService productService = serviceProvider.getService(ProductService.class);
     productService.createProduct(createProductDto1);
     productService.createProduct(createProductDto2);
     productService.createProduct(createProductDto3);
     productService.createProduct(createProductDto4);
+    productService.createProduct(createProductDto5);
 
     contextHolder.clearMock();
   }

@@ -24,10 +24,12 @@ public class ProductController extends AbstractController {
   }
 
   /**
-   * GET a product by Serial.
+   * GET a product by it's Serial.
    */
   @RequestMapping(path = "/{serial}", method = RequestMethod.GET)
   public ProductDto get(@PathVariable int serial) {
     return serviceProvider.getService(ProductService.class).getProductBySerial(serial);
   }
+
+
 }

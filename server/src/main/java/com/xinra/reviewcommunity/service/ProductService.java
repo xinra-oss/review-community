@@ -10,6 +10,8 @@ import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.repo.BrandRepository;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
 import com.xinra.reviewcommunity.repo.ProductRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,23 @@ public class ProductService extends AbstractService {
     return toDto(product);
   }
 
+  /**
+   * Returns a list of all products of a brand.
+   **/
+  public List<ProductDto> getProductsByBrand(int serial) {
+    return productRepo.findProductsByBrandSerial(serial).stream()
+      .map(this::toDto)
+      .collect(Collectors.toList());
+  }
+
+  /**
+   * Returns a list of all products of a category.
+   */
+  public List<ProductDto> getProductsByCategory(int serial) {
+    return productRepo.findProductsByCategorySerial(serial).stream()
+      .map(this::toDto)
+      .collect(Collectors.toList());
+  }
 
   private ProductDto toDto(Product product) {
 
