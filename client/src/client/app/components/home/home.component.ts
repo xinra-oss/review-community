@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   viewHistory() {
     // Try this in the {N} app
     // {N} can use these animation options
-    this.routerext.navigate(['/categories'], {
+    this.routerext.navigate(['/product'], {
       transition: {
         duration: 400,
         name: 'slideTop',
