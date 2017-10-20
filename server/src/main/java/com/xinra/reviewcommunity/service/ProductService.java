@@ -4,6 +4,7 @@ import com.xinra.reviewcommunity.dto.BrandDto;
 import com.xinra.reviewcommunity.dto.CategoryDto;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
+import com.xinra.reviewcommunity.dto.SerialDto;
 import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.entity.Product;
@@ -30,7 +31,7 @@ public class ProductService extends AbstractService {
   /**
    * Creates a new product.
    */
-  public void createProduct(@NonNull CreateProductDto createProductDto) {
+  public SerialDto createProduct(@NonNull CreateProductDto createProductDto) {
 
     Category category = categoryRepo.findBySerial(createProductDto.getCategorySerial());
     Brand brand = brandRepo.findBySerial(createProductDto.getBrandSerial());
@@ -46,6 +47,11 @@ public class ProductService extends AbstractService {
     productRepo.save(product);
 
     log.info("Created Product with name '{}'", createProductDto.getName());
+
+    SerialDto serialDto = dtoFactory.createDto(SerialDto.class);
+    serialDto.setSerial(serial);
+
+    return serialDto;
   }
 
   /**

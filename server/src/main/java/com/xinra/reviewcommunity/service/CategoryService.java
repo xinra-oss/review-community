@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.service;
 
 import com.xinra.reviewcommunity.dto.CategoryDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
+import com.xinra.reviewcommunity.dto.SerialDto;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
 import java.util.List;
@@ -22,7 +23,7 @@ public class CategoryService extends AbstractService {
   /**
    * Creates a new Category.
    */
-  public void createCategory(@NonNull CreateCategoryDto createCategoryDto) {
+  public SerialDto createCategory(@NonNull CreateCategoryDto createCategoryDto) {
 
     Category category = entityFactory.createEntity(Category.class);
     category.setName(createCategoryDto.getName());
@@ -37,6 +38,10 @@ public class CategoryService extends AbstractService {
     categoryRepo.save(category);
 
     log.info("Created category with name '{}'", createCategoryDto.getName());
+
+    SerialDto serialDto = dtoFactory.createDto(SerialDto.class);
+    serialDto.setSerial(serial);
+    return serialDto;
   }
 
   /**

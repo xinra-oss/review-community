@@ -3,6 +3,7 @@ package com.xinra.reviewcommunity.rest;
 import com.xinra.reviewcommunity.dto.CategoryDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
+import com.xinra.reviewcommunity.dto.SerialDto;
 import com.xinra.reviewcommunity.service.CategoryService;
 import com.xinra.reviewcommunity.service.ProductService;
 import java.util.List;
@@ -21,9 +22,8 @@ public class CategoryController extends AbstractController {
    * Create a new category.
    */
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void create(@RequestBody @Valid CreateCategoryDto createCategoryDto) {
-    serviceProvider.getService(CategoryService.class).createCategory(createCategoryDto);
-
+  public SerialDto create(@RequestBody @Valid CreateCategoryDto createCategoryDto) {
+    return serviceProvider.getService(CategoryService.class).createCategory(createCategoryDto);
   }
 
   /**

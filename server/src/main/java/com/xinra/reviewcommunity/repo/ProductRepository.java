@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository<T extends Product> extends SerialEntityRepository<T> {
 
   Set<T> findProductsByBrandSerial(int serial);
+
   Set<T> findProductsByCategorySerial(int serial);
 }

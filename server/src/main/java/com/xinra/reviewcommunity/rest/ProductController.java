@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
+import com.xinra.reviewcommunity.dto.SerialDto;
 import com.xinra.reviewcommunity.service.ProductService;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,8 @@ public class ProductController extends AbstractController {
    * Create a new product.
    */
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void create(@RequestBody @Valid CreateProductDto createProductDto) {
-    serviceProvider.getService(ProductService.class).createProduct(createProductDto);
+  public SerialDto create(@RequestBody @Valid CreateProductDto createProductDto) {
+    return serviceProvider.getService(ProductService.class).createProduct(createProductDto);
   }
 
   /**
