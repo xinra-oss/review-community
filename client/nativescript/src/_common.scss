@@ -1,5 +1,9 @@
 @import '~nativescript-theme-core/scss/light';
 
+.fa {
+  font-family: FontAwesome, fontawesome-webfont;
+}
+
 $accent: #106CC8;
 
 // ActionBar

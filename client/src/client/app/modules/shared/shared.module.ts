@@ -4,6 +4,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { TNSFontIconModule } from 'nativescript-ngx-fonticon';
+
 // modules
 import { MultilingualModule } from '../i18n/index';
 import { SHARED_COMPONENTS } from './components/index';
@@ -25,7 +27,12 @@ const SHARED_MODULES: any[] = [
 
 @NgModule({
   imports: [
-    ...SHARED_MODULES
+    ...SHARED_MODULES,
+    // This should not really be here. It is {N} specific but inlcuding it in the ComponentModule
+    // doesn't work because it has to be on top of the hierarchy in order for the pipe to work.
+    TNSFontIconModule.forRoot({
+      'fa': 'font-awesome.css'
+    })
   ],
   declarations: [
     ...SHARED_COMPONENTS
@@ -37,6 +44,7 @@ const SHARED_MODULES: any[] = [
   exports: [
     ...SHARED_MODULES,
     ...SHARED_COMPONENTS,
+    TNSFontIconModule
   ]
 })
 export class SharedModule {}
