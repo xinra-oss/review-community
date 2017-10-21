@@ -1,6 +1,5 @@
 package com.xinra.reviewcommunity.rest.conf;
 
-import com.xinra.reviewcommunity.MultiMarketMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,9 +11,6 @@ public class FrontendConfiguration extends WebMvcConfigurationSupport {
   
   @Autowired
   private ContextConfiguringInterceptor requestContextInterceptor;
-  
-  @Autowired
-  private MultiMarketMode multiMarketMode;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
@@ -23,7 +19,7 @@ public class FrontendConfiguration extends WebMvcConfigurationSupport {
   
   @Override
   protected RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
-    return new PrefixingRequestMappingHandlerMapping(multiMarketMode);
+    return new PrefixingRequestMappingHandlerMapping();
   }
   
 }

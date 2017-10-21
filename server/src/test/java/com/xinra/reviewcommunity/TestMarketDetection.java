@@ -13,11 +13,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+@SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-@SpringBootTest("reviewcommunity.multi-market-mode=path")
-public class TestMultiMarketModePath {
+public class TestMarketDetection {
 
   private @Autowired MockMvc mvc;
   

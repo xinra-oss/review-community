@@ -16,14 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SampleController {
   
   private @Autowired ContextHolder<Context> contextHolder;
-  private @Autowired MultiMarketMode multiMarketMode;
   
   /** Market-aware regular controller. Returns current market slug. */
   @RequestMapping("/marketAware")
   public ResponseEntity<String> marketAware() {
-    return new ResponseEntity<>(
-        multiMarketMode.isEnabled() ? contextHolder.get().getMarket().get().getSlug() : "none",
-        HttpStatus.OK);
+    return new ResponseEntity<>(contextHolder.get().getMarket().get().getSlug(), HttpStatus.OK);
   }
   
   /** Market-agnostic regular controller. */
@@ -37,6 +34,6 @@ public class SampleController {
   @ResponseBody
   @RequestMapping("/marketAwareRest")
   public String marketAwareRest() {
-    return multiMarketMode.isEnabled() ? contextHolder.get().getMarket().get().getSlug() : "none";
+    return contextHolder.get().getMarket().get().getSlug();
   }
 }
