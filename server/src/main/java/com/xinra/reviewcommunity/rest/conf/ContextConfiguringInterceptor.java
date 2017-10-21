@@ -2,7 +2,6 @@ package com.xinra.reviewcommunity.rest.conf;
 
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
-import com.xinra.reviewcommunity.MultiMarketMode;
 import com.xinra.reviewcommunity.dto.MarketDto;
 import com.xinra.reviewcommunity.service.MarketService;
 import java.util.Map;
@@ -20,41 +19,37 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @Component
 public class ContextConfiguringInterceptor extends HandlerInterceptorAdapter {
   
+  @SuppressWarnings("unused")
+  private static class MarketNotFoundException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+    
+    public MarketNotFoundException(String slug) {
+      super("Market with slug '" + slug + "' does not exist");
+    }
+  }
+  
   @Autowired
   private Context context;
   
   @Autowired
   private ServiceProvider serviceProvider;
-  
-  @Autowired
-  private MultiMarketMode multiMarketMode;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
 
-    switch (multiMarketMode) {
-      case PATH:
-        String slug = getPathParameters(request).get("market");
-        if (slug == null) {
-          break; // handler is @MarketAgnostic
-        }
-        MarketDto market = serviceProvider.getService(MarketService.class).getBySlug(slug);
-        if (market == null) {
-          // TODO throw exception
-          response.sendError(404);
-          return false;
-        }
-        context.setMarket(market);
-        break;
-      case SUBDOMAIN:
-        // TODO implement market distinction by subdomain
-        break;
-      default: // DISABLED
-    }
-    
+    String slug = getPathParameters(request).get("market");
+    if (slug != null) {
+      MarketDto market = serviceProvider.getService(MarketService.class).getBySlug(slug);
+      if (market == null) {
+        response.sendError(404);
+        return false;
+        // TODO throw new MarketNotFoundException(slug);
+      }
+      context.setMarket(market);
+    } // else handler is @MarketAgnostic
+  
     return true;
-    
   }
   
   @SuppressWarnings("unchecked")

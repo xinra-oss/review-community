@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
 public class SampleContentGenerator implements ApplicationListener<ContextRefreshedEvent> {
   
   private @Autowired ContextHolder<Context> contextHolder;
-  private @Autowired MultiMarketMode multiMarketMode;
   private @Autowired Environment environment;
   private @Autowired ServiceProvider serviceProvider;
   private @Autowired EntityFactory entityFactory;
@@ -38,9 +37,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   public void onApplicationEvent(ContextRefreshedEvent event) {
     if (environment.acceptsProfiles("test") || schemaExport.startsWith("create")) {
       log.info("Start generating sample data");
-      if (multiMarketMode.isEnabled()) {
-        createMarkets();
-      }
+      createMarkets();
       if (environment.acceptsProfiles("dev")) {
         createProducts();
         createUsers();
