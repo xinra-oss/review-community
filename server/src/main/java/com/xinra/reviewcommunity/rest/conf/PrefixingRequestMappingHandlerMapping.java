@@ -10,9 +10,9 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
- * Modifies controller request mappings. If multi market mode is enabled and market should be
- * resolved by path, this adds the path variable {market} to all handlers that are not marked
- * as {@link MarketAgnostic}. If enabled, a constant prefix is added to all REST mappings.
+ * Modifies controller request mappings. Adds the path variable {market} to all handlers that are
+ * not marked as {@link MarketAgnostic}. If enabled, a constant prefix is added to all REST
+ * mappings.
  */
 public class PrefixingRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
