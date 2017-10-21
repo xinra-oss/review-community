@@ -1,6 +1,5 @@
 package com.xinra.reviewcommunity.rest.conf;
 
-import com.xinra.reviewcommunity.MultiMarketMode;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -16,12 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * as {@link MarketAgnostic}. If enabled, a constant prefix is added to all REST mappings.
  */
 public class PrefixingRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
-  
-  private final MultiMarketMode multiMarketMode;
-
-  public PrefixingRequestMappingHandlerMapping(MultiMarketMode multiMarketMode) {
-    this.multiMarketMode = multiMarketMode;
-  }
 
   @Override
   protected RequestMappingInfo getMappingForMethod(Method method, Class<?> handlerType) {
@@ -32,10 +25,9 @@ public class PrefixingRequestMappingHandlerMapping extends RequestMappingHandler
       return info;
     }
     
-    String marketPrefix = multiMarketMode == MultiMarketMode.PATH
-        && !AnnotatedElementUtils.hasAnnotation(method, MarketAgnostic.class)
-        && !AnnotatedElementUtils.hasAnnotation(handlerType, MarketAgnostic.class)
-        ? "/{market}" : "";
+    String marketPrefix = AnnotatedElementUtils.hasAnnotation(method, MarketAgnostic.class)
+        || AnnotatedElementUtils.hasAnnotation(handlerType, MarketAgnostic.class)
+        ? "" : "/{market}";
     
     // TODO make api prefix configurable
     String apiPrefix = AnnotatedElementUtils.hasAnnotation(method, ResponseBody.class)
