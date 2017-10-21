@@ -25,6 +25,7 @@ import { MultilingualModule, translateLoaderFactory } from './app/modules/i18n/m
 import { SampleModule } from './app/modules/sample/sample.module';
 import { CategoryModule } from './app/modules/category';
 import { ProductModule } from './app/modules/product';
+import { AuthModule } from './app/modules/auth';
 import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/index';
 
 // intermediate component module
@@ -42,6 +43,7 @@ import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/inde
     SampleModule,
     CategoryModule,
     ProductModule,
+    AuthModule,
     NativeScriptModule,
     NativeScriptFormsModule,
     NativeScriptHttpModule,
@@ -64,6 +66,7 @@ import { ConsoleService, ConsoleTarget, LogLevel } from './app/modules/core/inde
     SampleModule,
     CategoryModule,
     ProductModule,
+    AuthModule,
     NativeScriptModule,
     NativeScriptFormsModule,
     NativeScriptHttpModule,
