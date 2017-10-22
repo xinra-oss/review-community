@@ -67,7 +67,7 @@ generateTypeScript {
     'java.io.Serializable'
   ]
   //outputFileType = 'implementationFile'
-  outputFile = '../client/src/client/app/modules/shared/generated/model.d.ts'
+  outputFile = '../client/src/client/app/modules/shared/models/generated.model.d.ts'
   outputKind = 'module'
   removeTypeNameSuffix = 'Dto'
 }
