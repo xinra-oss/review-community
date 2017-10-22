@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { TNSFontIconModule } from 'nativescript-ngx-fonticon';
+import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 
 // modules
 import { MultilingualModule } from '../i18n/index';
@@ -15,7 +16,11 @@ const SHARED_MODULES: any[] = [
   HttpModule,
   FormsModule,
   RouterModule,
-  MultilingualModule
+  MultilingualModule,
+  // It's probably bad to do this here. See
+  // https://github.com/NathanWalker/angular-seed-advanced/issues/366 for details on the
+  // workaround. We may need to fix this properly for the web client to work.
+  NativeScriptFormsModule
 ];
 
 /**

@@ -3,7 +3,6 @@ import { NgModule, Optional, SkipSelf, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA 
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 
 // app
 import { SharedModule } from '../shared';
@@ -19,11 +18,7 @@ import { LoginComponent } from './components';
 @NgModule({
   imports: [
     SharedModule,
-    MultilingualModule,
-    // It's probably bad to do this here. See
-    // https://github.com/NathanWalker/angular-seed-advanced/issues/366 for details on the
-    // workaround. We may need to fix this properly for the web client to work.
-    NativeScriptFormsModule
+    MultilingualModule
   ],
   providers: [
     ...AUTH_PROVIDERS
