@@ -10,7 +10,7 @@ import { Config } from '../../core/index';
 import { Analytics, AnalyticsService } from '../../analytics/index';
 
 // module
-//import { NameList } from '../actions/index';
+import { Auth } from '../store';
 
 @Injectable()
 export class AuthService extends Analytics {
@@ -20,7 +20,7 @@ export class AuthService extends Analytics {
     private http: Http
   ) {
     super(analytics);
-    //this.category = NameList.CATEGORY;
+    this.category = Auth.CATEGORY;
   }
 
 }

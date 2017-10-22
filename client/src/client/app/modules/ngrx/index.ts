@@ -37,8 +37,8 @@ import { combineReducers } from '@ngrx/store';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
-import * as fromMultilingual from '../i18n/index';
-import * as fromSample from '../sample/index';
+import * as fromMultilingual from '../i18n';
+import * as fromAuth from '../auth';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -46,7 +46,7 @@ import * as fromSample from '../sample/index';
  */
 export interface AppState {
   i18n: fromMultilingual.IMultilingualState;
-  sample: fromSample.ISampleState;
+  auth: fromAuth.AuthState;
 }
 
 /**
@@ -58,7 +58,7 @@ export interface AppState {
  */
 const reducers = {
   i18n: fromMultilingual.reducer,
-  sample: fromSample.reducer
+  auth: fromAuth.reducer
 };
 
 // ensure state is frozen as extra level of security when developing
@@ -78,9 +78,8 @@ export function AppReducer(state: any, action: any) {
 export function getMultilingualState(state$: Observable<AppState>): Observable<fromMultilingual.IMultilingualState> {
   return state$.select(s => s.i18n);
 }
-export function getNameListState(state$: Observable<IAppState>): Observable<fromSample.ISampleState> {
-  return state$.select(s => s.sample);
+export function getAuthState(state$: Observable<AppState>): Observable<fromAuth.AuthState> {
+  return state$.select(s => s.auth);
 }
 
 export const getLang: any = compose(fromMultilingual.getLang, getMultilingualState);
-export const getNames: any = compose(fromSample.getNames, getNameListState);
