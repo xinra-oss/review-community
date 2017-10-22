@@ -1,13 +1,11 @@
 {
-  "HOME": "Home",
-  "ABOUT": "About",
-  "HELLO": "Hello",
-  "ABOUT_ADD": "You want more? Add them yourself!",
-  "INPUT_HINT": "Enter a new computer scientist...",
-  "ADD_BTN_TEXT": "Add",
 
   "HOME_SEARCH_PRODUCT": "Search product...",
   "HOME_SCAN": "Scan",
   "HOME_CATEGORIES": "Categories",
-  "HOME_HISTORY": "History"
+  "HOME_HISTORY": "History",
+
+  "LOGIN_USERNAME": "Username",
+  "LOGIN_PASSWORD": "Password",
+  "LOGIN_LOG_IN": "Log in"
 }
