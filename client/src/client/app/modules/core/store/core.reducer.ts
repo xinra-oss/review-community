@@ -12,11 +12,17 @@ export function reducer(
         ...state,
         initialized: true
       }
-    
-    case Core.ActionTypes.CLEAR_API_ERROR:
+
+    case Core.ActionTypes.HANDLE_ERROR:
       return {
         ...state,
-        apiError: undefined
+        error: action.payload
+      }
+    
+    case Core.ActionTypes.CLEAR_ERROR:
+      return {
+        ...state,
+        error: undefined
       }
 
     default:

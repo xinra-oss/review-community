@@ -4,19 +4,19 @@ import * as _ from 'lodash';
 import { ApiError } from '../../shared/models';
 
 export interface CoreState {
-  apiError: ApiError;
+  error: any;
   initialized: boolean;
 }
 
 export const coreInitialState: CoreState = {
-  apiError: undefined,
+  error: undefined,
   initialized: false
 };
 
 // selectors
 
-export function getApiError(state$: Observable<CoreState>) {
-  return state$.select(state => state.apiError);
+export function getError(state$: Observable<CoreState>) {
+  return state$.select(state => state.error);
 }
 
 export function isInitialized(state$: Observable<CoreState>) {

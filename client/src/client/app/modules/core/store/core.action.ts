@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { type } from '../../core/utils/index';
-import { ApiError } from '../../shared/models';
 
 export namespace Core {
   // Category to uniquely identify the actions
@@ -9,15 +8,15 @@ export namespace Core {
   export interface CoreActions {
     INIT: string,
     INITIALIZED: string,
-    HANDLE_API_ERROR: string,
-    CLEAR_API_ERROR: string
+    HANDLE_ERROR: string,
+    CLEAR_ERROR: string
   }
 
   export const ActionTypes: CoreActions = {
     INIT: type(`[${CATEGORY}] Init`),
     INITIALIZED: type(`[${CATEGORY}] Initialized`),
-    HANDLE_API_ERROR: type(`[${CATEGORY}] Handle API error`),
-    CLEAR_API_ERROR: type(`[${CATEGORY}] Clear API error`),
+    HANDLE_ERROR: type(`[${CATEGORY}] Handle error`),
+    CLEAR_ERROR: type(`[${CATEGORY}] Clear error`),
   };
 
   export class InitAction implements Action {
@@ -30,19 +29,19 @@ export namespace Core {
     payload = null;
   }
 
-  export class HandleApiErrorAction implements Action {
-    type = ActionTypes.HANDLE_API_ERROR;
-    constructor(public payload: ApiError) {}
+  export class HandleErrorAction implements Action {
+    type = ActionTypes.HANDLE_ERROR;
+    constructor(public payload: any) {}
   }
 
-  export class ClearApiErrorAction implements Action {
-    type = ActionTypes.CLEAR_API_ERROR;
+  export class ClearErrorAction implements Action {
+    type = ActionTypes.CLEAR_ERROR;
     payload = null;
   }
 
   export type Actions
     = InitAction
     | InitializedAction
-    | HandleApiErrorAction
-    | ClearApiErrorAction;
+    | HandleErrorAction
+    | ClearErrorAction;
 }
