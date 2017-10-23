@@ -39,6 +39,7 @@ import { combineReducers } from '@ngrx/store';
  */
 import * as fromMultilingual from '../i18n';
 import * as fromAuth from '../auth';
+import * as fromCore from '../core';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -47,6 +48,7 @@ import * as fromAuth from '../auth';
 export interface AppState {
   i18n: fromMultilingual.IMultilingualState;
   auth: fromAuth.AuthState;
+  core: fromCore.CoreState;
 }
 
 /**
@@ -58,7 +60,8 @@ export interface AppState {
  */
 const reducers = {
   i18n: fromMultilingual.reducer,
-  auth: fromAuth.reducer
+  auth: fromAuth.reducer,
+  core: fromCore.reducer
 };
 
 // ensure state is frozen as extra level of security when developing
@@ -80,6 +83,9 @@ export function getMultilingualState(state$: Observable<AppState>): Observable<f
 }
 export function getAuthState(state$: Observable<AppState>): Observable<fromAuth.AuthState> {
   return state$.select(s => s.auth);
+}
+export function getCoreState(state$: Observable<AppState>): Observable<fromCore.CoreState> {
+  return state$.select(s => s.core);
 }
 
 export const getLang: any = compose(fromMultilingual.getLang, getMultilingualState);
