@@ -8,32 +8,29 @@ export function reducer(
 ): AuthState {
   switch (action.type) {
     case Auth.ActionTypes.SET_CSRF_TOKEN:
-      return {
-        ...state,
+      return (<any>Object).assign({}, state, {
         csrfToken: action.payload
-      }
+      });
     
     case Auth.ActionTypes.SET_SESSION_ID:
-      return {
-        ...state,
+      return (<any>Object).assign({}, state, {
         sessionId: action.payload
-      }
+      });
 
     case Auth.ActionTypes.LOGGED_IN:
       const auth = <SuccessfulAuthentication>action.payload;
-      return {
-        ...state,
+      return (<any>Object).assign({}, state, {
+        initialized: action.payload,
         csrfToken: auth.csrfToken,
         authenticatedUser: auth.user,
         permissions: auth.permissions
-      }
+      });
 
     case Auth.ActionTypes.LOGGED_OUT:
-      return {
-        ...state,
+      return (<any>Object).assign({}, state, {
         authenticatedUser: undefined,
         permissions: []
-      }
+      });
 
     default:
       return state;

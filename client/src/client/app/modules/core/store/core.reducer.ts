@@ -8,22 +8,19 @@ export function reducer(
 ): CoreState {
   switch (action.type) {
     case Core.ActionTypes.INITIALIZED:
-      return {
-        ...state,
-        initialized: true
-      }
+      return (<any>Object).assign({}, state, {
+        initialized: action.payload
+      });
 
     case Core.ActionTypes.HANDLE_ERROR:
-      return {
-        ...state,
+      return (<any>Object).assign({}, state, {
         error: action.payload
-      }
+      });
     
     case Core.ActionTypes.CLEAR_ERROR:
-      return {
-        ...state,
+      return (<any>Object).assign({}, state, {
         error: undefined
-      }
+      });
 
     default:
       return state;
