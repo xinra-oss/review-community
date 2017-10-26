@@ -24,7 +24,7 @@ export class CoreEffects {
     .ofType(Core.ActionTypes.INIT)
     .startWith(new Core.InitAction())
     .switchMap(() => {
-      return this.http.get('http://192.168.42.101:8080/api/csrf-token')
+      return this.http.get('http://192.168.42.215:8080/api/csrf-token')
         .map(res => res.json());
     })
     .map(csrfToken => {
@@ -34,9 +34,8 @@ export class CoreEffects {
     // .merge(csrfToken => {
     //   return [new Auth.SetCsrfTokenAction(csrfToken)];
     // })
-    .concat(() => new Core.InitializedAction());
-    // nothing reacting to failure at moment but you could if you want (here for example)
-    //.catch(() => Observable.of(new NameList.InitFailedAction()));
+    .concat(() => new Core.InitializedAction())
+    .catch((error) => Observable.of(new Core.HandleErrorAction(error)));
 
   constructor(
     private store: Store<any>,
