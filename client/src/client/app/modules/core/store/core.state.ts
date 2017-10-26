@@ -1,16 +1,18 @@
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
 
-import { ApiError } from '../../shared/models';
+import { ApiError, Market } from '../../shared/models';
 
 export interface CoreState {
   error: any;
   initialized: boolean;
+  market: Market;
 }
 
 export const coreInitialState: CoreState = {
   error: undefined,
-  initialized: false
+  initialized: false,
+  market: undefined
 };
 
 // selectors

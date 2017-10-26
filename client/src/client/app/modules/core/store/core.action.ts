@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../../core/utils/index';
+import { Market } from '../../shared/models';
 
 export namespace Core {
   // Category to uniquely identify the actions
@@ -9,7 +10,8 @@ export namespace Core {
     INIT: string,
     INITIALIZED: string,
     HANDLE_ERROR: string,
-    CLEAR_ERROR: string
+    CLEAR_ERROR: string,
+    SET_MARKET: string
   }
 
   export const ActionTypes: CoreActions = {
@@ -17,6 +19,7 @@ export namespace Core {
     INITIALIZED: type(`[${CATEGORY}] Initialized`),
     HANDLE_ERROR: type(`[${CATEGORY}] Handle error`),
     CLEAR_ERROR: type(`[${CATEGORY}] Clear error`),
+    SET_MARKET: type(`[${CATEGORY}] Set market`),
   };
 
   export class InitAction implements Action {
@@ -39,9 +42,15 @@ export namespace Core {
     payload = null;
   }
 
+  export class SetMarketAction implements Action {
+    type = ActionTypes.SET_MARKET;
+    constructor(public payload: Market) {}
+  }
+
   export type Actions
     = InitAction
     | InitializedAction
     | HandleErrorAction
-    | ClearErrorAction;
+    | ClearErrorAction
+    | SetMarketAction;
 }

@@ -22,6 +22,11 @@ export function reducer(
         error: undefined
       });
 
+    case Core.ActionTypes.SET_MARKET:
+      return (<any>Object).assign({}, state, {
+        market: action.payload
+      });
+
     default:
       return state;
   }
