@@ -2,12 +2,14 @@ package com.xinra.reviewcommunity.rest.conf;
 
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
+import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.dto.MarketDto;
 import com.xinra.reviewcommunity.service.MarketService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -48,6 +50,11 @@ public class ContextConfiguringInterceptor extends HandlerInterceptorAdapter {
       }
       context.setMarket(market);
     } // else handler is @MarketAgnostic
+    
+    if (request.getUserPrincipal() != null) {
+      context.setAuthenticatedUser((AuthenticatedUserDto) 
+          ((Authentication) request.getUserPrincipal()).getPrincipal());
+    }
   
     return true;
   }
