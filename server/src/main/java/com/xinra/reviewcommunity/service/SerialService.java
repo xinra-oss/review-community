@@ -1,8 +1,8 @@
 package com.xinra.reviewcommunity.service;
 
-import com.xinra.nucleus.entity.BaseEntity;
 import com.xinra.reviewcommunity.entity.ChildSerial;
 import com.xinra.reviewcommunity.entity.Serial;
+import com.xinra.reviewcommunity.entity.SerialEntity;
 import com.xinra.reviewcommunity.repo.ChildSerialRepository;
 import com.xinra.reviewcommunity.repo.SerialRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class SerialService extends AbstractService {
   /**
    * Gets the next top-level serial of an entity class.
    */
-  public int getNextSerial(Class<? extends BaseEntity> entityType) {
+  public int getNextSerial(Class<? extends SerialEntity> entityType) {
     Serial serial = serialRepo.findByName(entityType.getName());
     if (serial == null) {
       serial = entityFactory.createEntity(Serial.class);

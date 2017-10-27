@@ -39,6 +39,7 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-security')
   compile('org.springframework.boot:spring-boot-starter-web')
   runtime('org.postgresql:postgresql')
+  runtime('mysql:mysql-connector-java')
   compileOnly('org.projectlombok:lombok')
   
   compile('com.xinra.nucleus:nucleus-common:0.1.1')
