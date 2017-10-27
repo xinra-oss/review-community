@@ -32,5 +32,4 @@ public class ProductController extends AbstractController {
     return serviceProvider.getService(ProductService.class).getProductBySerial(serial);
   }
 
-
 }

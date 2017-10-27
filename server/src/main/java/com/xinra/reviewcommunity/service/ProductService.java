@@ -71,18 +71,28 @@ public class ProductService extends AbstractService {
    * Returns a list of all products of a brand.
    **/
   public List<ProductDto> getProductsByBrand(int serial) {
-    return productRepo.findProductsByBrandSerial(serial).stream()
-      .map(this::toDto)
-      .collect(Collectors.toList());
+    List<ProductDto> list = productRepo.findProductsByBrandSerial(serial).stream()
+        .map(this::toDto)
+        .collect(Collectors.toList());
+
+    if (list.isEmpty()) {
+      throw new SerialNotFoundException(Brand.class, serial);
+    }
+    return list;
   }
 
   /**
    * Returns a list of all products of a category.
    */
   public List<ProductDto> getProductsByCategory(int serial) {
-    return productRepo.findProductsByCategorySerial(serial).stream()
-      .map(this::toDto)
-      .collect(Collectors.toList());
+    List<ProductDto> list = productRepo.findProductsByCategorySerial(serial).stream()
+        .map(this::toDto)
+        .collect(Collectors.toList());
+
+    if (list.isEmpty()) {
+      throw new SerialNotFoundException(Category.class, serial);
+    }
+    return list;
   }
 
   private ProductDto toDto(Product product) {
