@@ -30,7 +30,7 @@ const MARKET_AGNOSTIC_ENDPOINTS = [
 @Injectable()
 export class ApiService {
 
-  private market: Market;
+  private market: Market = {pk: undefined, slug: "de"};
   private csrfToken: CsrfToken;
   private sessionCookie: string;
 

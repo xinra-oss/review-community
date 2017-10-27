@@ -6,13 +6,14 @@ import { Http } from '@angular/http';
 import { Store, Action } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
+import * as _ from 'lodash';
 
 // module
 import { AppService } from '../services';
 import { Core } from './';
 import { Auth } from '../../auth';
 import { LogService, ApiService } from '../';
-import { CsrfToken } from '../../shared/models';
+import { Init } from '../../shared/models';
 
 @Injectable()
 export class CoreEffects {
@@ -24,16 +25,18 @@ export class CoreEffects {
   @Effect() init$: Observable<Action> = this.actions$
     .ofType(Core.ActionTypes.INIT)
     .startWith(new Core.InitAction())
-    .switchMap(() => {
-      return this.api.get<CsrfToken>('/csrf-token');
+    .switchMap(() => this.api.get<Init>('/init'))
+    .mergeMap(init => {
+      const actions : Action[] = [
+        new Auth.SetCsrfTokenAction(init.csrfToken),
+        new Core.SetAvailableMarketsAction(init.markets)
+      ]
+      if (!_.isNil(init.authenticatedUser)) {
+        actions.push(new Auth.SetAuthenticatedUserAction(init.authenticatedUser));
+        actions.push(new Auth.SetPermissionsAction(init.permissions));
+      }
+      return actions;
     })
-    .map(csrfToken => {
-      this.log.info(JSON.stringify(csrfToken));
-      return new Auth.SetCsrfTokenAction(csrfToken);
-    })
-    // .merge(csrfToken => {
-    //   return [new Auth.SetCsrfTokenAction(csrfToken)];
-    // })
     .concat(() => new Core.InitializedAction())
     .catch((error) => Observable.of(new Core.HandleErrorAction(error)));
 
