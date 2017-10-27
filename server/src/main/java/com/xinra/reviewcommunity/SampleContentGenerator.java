@@ -50,7 +50,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
       if (multiMarketMode.isEnabled()) {
         createMarkets();
       }
-      if (environment.acceptsProfiles("dev")) {
+      if (environment.acceptsProfiles("dev", "test")) {
         createBrands();
         createCategories();
         createProducts();
