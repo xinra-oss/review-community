@@ -8,8 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Used on a controller class or method to indicate that it is scoped to the whole application in
- * multi market mode. Market will not be available in {@link Context}.
+ * Used on a controller class or method to indicate that it is scoped to the whole application.
+ * Market will not be available in {@link Context}.
  */
 @Documented
 @Target({ElementType.TYPE, ElementType.METHOD})
