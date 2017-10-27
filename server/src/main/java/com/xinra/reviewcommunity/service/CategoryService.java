@@ -30,6 +30,10 @@ public class CategoryService extends AbstractService {
 
     if (createCategoryDto.getParentSerial() != 0) {
       Category parentCategory = categoryRepo.findBySerial(createCategoryDto.getParentSerial());
+
+      if (parentCategory == null) {
+        throw new SerialNotFoundException(Category.class, createCategoryDto.getParentSerial());
+      }
       category.setParent(parentCategory);
     }
 

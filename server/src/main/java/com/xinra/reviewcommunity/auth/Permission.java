@@ -2,10 +2,12 @@ package com.xinra.reviewcommunity.auth;
 
 public enum Permission {
 
-  ADD_PRODUCT,
+  CREATE_PRODUCT,
   EDIT_PRODUCT,
   DELETE_PRODUCT,
-  
-  ADD_REVIEW
-  
+
+  CREATE_REVIEW,
+
+  CREATE_BRAND,
+  CREATE_CATEGORY
 }

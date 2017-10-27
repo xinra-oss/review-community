@@ -1,5 +1,7 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.xinra.reviewcommunity.auth.AccessRequires;
+import com.xinra.reviewcommunity.auth.Permission;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
 import com.xinra.reviewcommunity.dto.SerialDto;
@@ -19,6 +21,7 @@ public class ProductController extends AbstractController {
   /**
    * Create a new product.
    */
+  @AccessRequires(Permission.CREATE_PRODUCT)
   @RequestMapping(path = "", method = RequestMethod.POST)
   public SerialDto create(@RequestBody @Valid CreateProductDto createProductDto) {
     return serviceProvider.getService(ProductService.class).createProduct(createProductDto);

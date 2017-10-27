@@ -34,7 +34,15 @@ public class ProductService extends AbstractService {
   public SerialDto createProduct(@NonNull CreateProductDto createProductDto) {
 
     Category category = categoryRepo.findBySerial(createProductDto.getCategorySerial());
+
+    if (category == null) {
+      throw new SerialNotFoundException(Category.class, createProductDto.getCategorySerial());
+    }
+
     Brand brand = brandRepo.findBySerial(createProductDto.getBrandSerial());
+    if (brand == null) {
+      throw new SerialNotFoundException(Brand.class, createProductDto.getBrandSerial());
+    }
 
     Product product = entityFactory.createEntity(Product.class);
     product.setName(createProductDto.getName());

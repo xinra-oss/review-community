@@ -1,5 +1,7 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.xinra.reviewcommunity.auth.AccessRequires;
+import com.xinra.reviewcommunity.auth.Permission;
 import com.xinra.reviewcommunity.dto.BrandDto;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
@@ -20,6 +22,7 @@ public class BrandController extends AbstractController {
   /**
    * Creates a new Brand.
    */
+  @AccessRequires(Permission.CREATE_BRAND)
   @RequestMapping(path = "", method = RequestMethod.POST)
   public void create(@RequestBody @Valid CreateBrandDto createBrandDto) {
     serviceProvider.getService(BrandService.class).createBrand(createBrandDto);

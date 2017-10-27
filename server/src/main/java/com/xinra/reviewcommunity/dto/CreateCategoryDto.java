@@ -12,6 +12,5 @@ public class CreateCategoryDto implements Dto {
   @Length(max = 30)
   private String name;
 
-  @NotBlank
   private int parentSerial;
 }

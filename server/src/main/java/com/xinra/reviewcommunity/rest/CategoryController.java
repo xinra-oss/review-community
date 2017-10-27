@@ -1,5 +1,7 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.xinra.reviewcommunity.auth.AccessRequires;
+import com.xinra.reviewcommunity.auth.Permission;
 import com.xinra.reviewcommunity.dto.CategoryDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.ProductDto;
@@ -21,6 +23,7 @@ public class CategoryController extends AbstractController {
   /**
    * Create a new category.
    */
+  @AccessRequires(Permission.CREATE_CATEGORY)
   @RequestMapping(path = "", method = RequestMethod.POST)
   public SerialDto create(@RequestBody @Valid CreateCategoryDto createCategoryDto) {
     return serviceProvider.getService(CategoryService.class).createCategory(createCategoryDto);

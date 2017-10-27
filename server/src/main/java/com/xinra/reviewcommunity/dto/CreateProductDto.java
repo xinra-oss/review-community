@@ -4,6 +4,7 @@ import com.xinra.nucleus.service.Dto;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 @Data
 public class CreateProductDto implements Dto {
@@ -14,10 +15,9 @@ public class CreateProductDto implements Dto {
 
   private String description;
 
-  @NotBlank
+  @Range(min = 1)
   private int categorySerial;
 
-  @NotBlank
   private int brandSerial;
   
 }
