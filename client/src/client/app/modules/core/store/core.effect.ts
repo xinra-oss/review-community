@@ -11,7 +11,8 @@ import { Observable } from 'rxjs/Observable';
 import { AppService } from '../services';
 import { Core } from './';
 import { Auth } from '../../auth';
-import { LogService } from '../';
+import { LogService, ApiService } from '../';
+import { CsrfToken } from '../../shared/models';
 
 @Injectable()
 export class CoreEffects {
@@ -24,8 +25,7 @@ export class CoreEffects {
     .ofType(Core.ActionTypes.INIT)
     .startWith(new Core.InitAction())
     .switchMap(() => {
-      return this.http.get('http://192.168.42.215:8080/api/csrf-token')
-        .map(res => res.json());
+      return this.api.get<CsrfToken>('/csrf-token');
     })
     .map(csrfToken => {
       this.log.info(JSON.stringify(csrfToken));
@@ -41,6 +41,7 @@ export class CoreEffects {
     private store: Store<any>,
     private actions$: Actions,
     private http: Http,
-    private log: LogService
+    private log: LogService,
+    private api: ApiService
   ) { }
 }

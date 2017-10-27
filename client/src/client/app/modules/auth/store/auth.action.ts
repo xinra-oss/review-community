@@ -26,7 +26,7 @@ export namespace Auth {
 
   export class SetCsrfTokenAction implements Action {
     type = ActionTypes.SET_CSRF_TOKEN;
-    constructor(public payload: string) {}
+    constructor(public payload: CsrfToken) {}
   }
 
   export class SetSessionIdAction implements Action {
