@@ -4,11 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.xinra.reviewcommunity.entity.Product;
-import com.xinra.reviewcommunity.repo.ProductRepository;
+import com.xinra.reviewcommunity.entity.Category;
+import com.xinra.reviewcommunity.repo.CategoryRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +17,40 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-public class TestProductController {
+public class TestCategoryController {
+
 
   private @Autowired MockMvc mvc;
-  private @Autowired ProductRepository<Product> productRepo;
+  private @Autowired CategoryRepository<Category> categoryRepo;
 
   @Test
-  public void createProduct() throws Exception {
+  public void createCategory() throws Exception {
 
-    String content = "{ " +
-            "    \"name\": \"Oreo\", " +
-            "    \"description\": \"they're cookies\"," +
-            "    \"categorySerial\": 1," +
-            "    \"brandSerial\": 1" +
-            "}";
+    String content = "{ \"name\": \"sweets\", \"parentSerial\": 3 } ";
 
-    // creating a product should work
-    mvc.perform(post("/de/api/product").contentType("application/json").content(content).with(authentication(
-            new TestingAuthenticationToken("jon", "snow", "CREATE_PRODUCT")))
+    mvc.perform(MockMvcRequestBuilders.post("/de/api/category").contentType("application/json").content(content).with(authentication(
+            new TestingAuthenticationToken("jon", "snow", "CREATE_CATEGORY")))
             .with(csrf()))
             .andExpect(status().isOk());
 
-    assertThat(productRepo.findBySerial(1))
+    assertThat(categoryRepo.findBySerial(6))
             .as("create product entity")
             .isNotNull();
   }
 
   @Test
-  public void getProduct() throws Exception {
-    mvc.perform(get("/de/api/product/1")).andExpect(status().isOk());
+  public void getAllCategories() throws Exception {
+    mvc.perform(get("/de/api/category")).andExpect(status().isOk());
   }
 
+  @Test
+  public void getProductsByCategory() throws Exception {
+    mvc.perform(get("/de/api/category/3")).andExpect(status().isOk());
+  }
 }

@@ -7,8 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.xinra.reviewcommunity.entity.Product;
-import com.xinra.reviewcommunity.repo.ProductRepository;
+import com.xinra.reviewcommunity.entity.Brand;
+import com.xinra.reviewcommunity.repo.BrandRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +18,38 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-public class TestProductController {
+public class TestBrandController {
 
   private @Autowired MockMvc mvc;
-  private @Autowired ProductRepository<Product> productRepo;
+  private @Autowired BrandRepository<Brand> brandRepo;
 
   @Test
-  public void createProduct() throws Exception {
+  public void createBrand() throws Exception {
 
-    String content = "{ " +
-            "    \"name\": \"Oreo\", " +
-            "    \"description\": \"they're cookies\"," +
-            "    \"categorySerial\": 1," +
-            "    \"brandSerial\": 1" +
-            "}";
+    String content = "{ \"name\": \"Bosch\" } ";
 
-    // creating a product should work
-    mvc.perform(post("/de/api/product").contentType("application/json").content(content).with(authentication(
-            new TestingAuthenticationToken("jon", "snow", "CREATE_PRODUCT")))
+    mvc.perform(post("/de/api/brand").contentType("application/json").content(content).with(authentication(
+            new TestingAuthenticationToken("jon", "snow", "CREATE_BRAND")))
             .with(csrf()))
             .andExpect(status().isOk());
 
-    assertThat(productRepo.findBySerial(1))
+    assertThat(brandRepo.findBySerial(3))
             .as("create product entity")
             .isNotNull();
   }
 
   @Test
-  public void getProduct() throws Exception {
-    mvc.perform(get("/de/api/product/1")).andExpect(status().isOk());
+  public void getBrands() throws Exception {
+    mvc.perform(get("/de/api/brand")).andExpect(status().isOk());
   }
 
+  @Test
+  public void getProductsByBrand() throws Exception {
+    mvc.perform(get("/de/api/brand/1")).andExpect(status().isOk());
+  }
 }
