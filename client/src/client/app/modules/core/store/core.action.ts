@@ -11,7 +11,8 @@ export namespace Core {
     INITIALIZED: string,
     HANDLE_ERROR: string,
     CLEAR_ERROR: string,
-    SET_MARKET: string
+    SET_MARKET: string,
+    SET_AVAILAVLE_MARKETS: string
   }
 
   export const ActionTypes: CoreActions = {
@@ -20,6 +21,7 @@ export namespace Core {
     HANDLE_ERROR: type(`[${CATEGORY}] Handle error`),
     CLEAR_ERROR: type(`[${CATEGORY}] Clear error`),
     SET_MARKET: type(`[${CATEGORY}] Set market`),
+    SET_AVAILAVLE_MARKETS: type(`[${CATEGORY}] Set available markets`)
   };
 
   export class InitAction implements Action {
@@ -47,10 +49,16 @@ export namespace Core {
     constructor(public payload: Market) {}
   }
 
+  export class SetAvailableMarketsAction implements Action {
+    type = ActionTypes.SET_AVAILAVLE_MARKETS;
+    constructor(public payload: Market[]) {}
+  }
+
   export type Actions
     = InitAction
     | InitializedAction
     | HandleErrorAction
     | ClearErrorAction
-    | SetMarketAction;
+    | SetMarketAction
+    | SetAvailableMarketsAction;
 }

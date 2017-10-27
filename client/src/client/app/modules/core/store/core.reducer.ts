@@ -27,6 +27,11 @@ export function reducer(
         market: action.payload
       });
 
+    case Core.ActionTypes.SET_AVAILAVLE_MARKETS:
+      return (<any>Object).assign({}, state, {
+        availableMarkets: action.payload
+      });
+
     default:
       return state;
   }

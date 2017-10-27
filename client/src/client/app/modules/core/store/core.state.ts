@@ -7,12 +7,14 @@ export interface CoreState {
   error: any;
   initialized: boolean;
   market: Market;
+  availableMarkets: Market[];
 }
 
 export const coreInitialState: CoreState = {
   error: undefined,
   initialized: false,
-  market: undefined
+  market: undefined,
+  availableMarkets: []
 };
 
 // selectors
