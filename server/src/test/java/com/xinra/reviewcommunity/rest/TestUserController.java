@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity;
+package com.xinra.reviewcommunity.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -30,10 +30,10 @@ public class TestUserController {
   @Test
   public void createUserTwice() throws Exception {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("username", "peter");
+    params.add("username", "foo");
     params.add("password", "secret");
+    params.add("confirmPassword", "secret");
     
-    // creating a user should work
     mvc.perform(post("/api/user").params(params).with(csrf()))
         .andExpect(status().isOk());
     
