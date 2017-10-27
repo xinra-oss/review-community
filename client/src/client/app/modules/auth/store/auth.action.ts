@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../../core/utils/index';
-import { CsrfToken, SuccessfulAuthentication } from '../../shared/models';
+import { CsrfToken, User, Permission } from '../../shared/models';
 
 export namespace Auth {
   // Category to uniquely identify the actions
@@ -10,7 +10,8 @@ export namespace Auth {
     SET_CSRF_TOKEN: string,
     SET_SESSION_ID: string,
     LOG_IN: string,
-    LOGGED_IN: string,
+    SET_AUTHENTICATED_USER: string,
+    SET_PERMISSIONS: string,
     LOG_OUT: string
     LOGGED_OUT: string
   }
@@ -19,7 +20,8 @@ export namespace Auth {
     SET_CSRF_TOKEN: type(`[${CATEGORY}] Set CSRF token`),
     SET_SESSION_ID: type(`[${CATEGORY}] Set session ID`),
     LOG_IN: type(`[${CATEGORY}] Log in`),
-    LOGGED_IN: type(`[${CATEGORY}] Logged in`),
+    SET_AUTHENTICATED_USER: type(`[${CATEGORY}] Set authenticated user`),
+    SET_PERMISSIONS: type(`[${CATEGORY}] Set permissions`),
     LOG_OUT: type(`[${CATEGORY}] Log out`),
     LOGGED_OUT: type(`[${CATEGORY}] Logged out`),
   };
@@ -42,9 +44,14 @@ export namespace Auth {
     }) {}
   }
 
-  export class LoggedInAction implements Action {
-    type = ActionTypes.LOGGED_IN;
-    constructor(public payload: SuccessfulAuthentication) {}
+  export class SetAuthenticatedUserAction implements Action {
+    type = ActionTypes.SET_AUTHENTICATED_USER;
+    constructor(public payload: User) {}
+  }
+
+  export class SetPermissionsAction implements Action {
+    type = ActionTypes.SET_PERMISSIONS;
+    constructor(public payload: Permission[]) {}
   }
 
   export class LogOutAction implements Action {
@@ -61,7 +68,8 @@ export namespace Auth {
     = SetCsrfTokenAction
     | SetSessionIdAction
     | LogInAction
-    | LoggedInAction
+    | SetAuthenticatedUserAction
+    | SetPermissionsAction
     | LogOutAction
     | LoggedOutAction;
 }

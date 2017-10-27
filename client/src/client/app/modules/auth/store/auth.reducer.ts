@@ -17,13 +17,14 @@ export function reducer(
         sessionId: action.payload
       });
 
-    case Auth.ActionTypes.LOGGED_IN:
-      const auth = <SuccessfulAuthentication>action.payload;
+    case Auth.ActionTypes.SET_AUTHENTICATED_USER:
       return (<any>Object).assign({}, state, {
-        initialized: action.payload,
-        csrfToken: auth.csrfToken,
-        authenticatedUser: auth.user,
-        permissions: auth.permissions
+        authenticatedUser: action.payload
+      });
+
+    case Auth.ActionTypes.SET_PERMISSIONS:
+      return (<any>Object).assign({}, state, {
+        permissions: action.payload
       });
 
     case Auth.ActionTypes.LOGGED_OUT:
