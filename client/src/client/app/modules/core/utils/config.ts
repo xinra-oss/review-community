@@ -1,6 +1,7 @@
 // Feel free to extend this interface
 // depending on your app specific config.
 export interface EnvConfig {
+  /** Base URL of the REST API without trailing / */
   API?: string;
   ENV?: string;
 }

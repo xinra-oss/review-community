@@ -67,7 +67,7 @@ export class ApiService {
     if (!_.includes(MARKET_AGNOSTIC_ENDPOINTS, path)) {
       path = "/" + this.market.slug + path;
     }
-    path = "http://192.168.42.68:8080/api" + path;
+    path = Config.ENVIRONMENT().API + path;
 
     const headers = new Headers();
 
