@@ -8,7 +8,6 @@ import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
-import com.xinra.reviewcommunity.dto.ProductDto;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.repo.MarketRepository;

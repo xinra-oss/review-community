@@ -1,8 +1,10 @@
 package com.xinra.reviewcommunity.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ProductDto extends SerialDto {
 
   private String name;
