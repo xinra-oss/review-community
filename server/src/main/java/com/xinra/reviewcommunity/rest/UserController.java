@@ -20,7 +20,8 @@ public class UserController extends AbstractController {
    */
   @MarketAgnostic
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void register(@Valid RegistrationDto registerDto, BindingResult result) throws BindException {
+  public void register(@Valid RegistrationDto registerDto,
+                       BindingResult result) throws BindException {
     if (result.hasErrors()) {
       throw new BindException(result);
     }

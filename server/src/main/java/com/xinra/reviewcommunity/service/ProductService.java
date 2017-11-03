@@ -96,7 +96,6 @@ public class ProductService extends AbstractService {
     List<ProductDto> list = productRepo.findProductsByCategorySerial(serial).stream()
         .map(this::toDto)
         .collect(Collectors.toList());
-
     if (list.isEmpty()) {
       throw new SerialNotFoundException(Category.class, serial);
     }
@@ -110,6 +109,8 @@ public class ProductService extends AbstractService {
     productDto.setSerial(product.getSerial());
     productDto.setName(product.getName());
     productDto.setDescription(product.getDescription());
+    productDto.setNumRatings(product.getNumRatings());
+    productDto.setAvgRating(product.getAvgRating());
 
     BrandDto brandDto = dtoFactory.createDto(BrandDto.class);
     brandDto.setName(product.getBrand().getName());

@@ -33,11 +33,11 @@ public class ReviewService extends AbstractService {
   public void createReview(@NonNull CreateReviewDto createReviewDto, int productSerial) {
 
     Product product = productRepo.findBySerial(productSerial);
-    User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
-
     if (product == null) {
       throw new SerialNotFoundException(Product.class, productSerial);
     }
+
+    User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
 
     Review review = entityFactory.createEntity(Review.class);
     review.setTitle(createReviewDto.getTitle());
@@ -45,6 +45,15 @@ public class ReviewService extends AbstractService {
     review.setText(createReviewDto.getText());
     review.setProduct(product);
     review.setUser(user);
+
+    int numRatings = product.getNumRatings();
+    double avgRatingOld = product.getAvgRating();
+
+    double avgRatingNew = (numRatings * avgRatingOld + createReviewDto.getRating())
+            / (numRatings + 1);
+
+    product.setNumRatings(numRatings + 1);
+    product.setAvgRating(avgRatingNew);
 
     int serial = serviceProvider.getService(SerialService.class).getNextSerial(Review.class);
     review.setSerial(serial);

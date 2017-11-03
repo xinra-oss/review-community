@@ -106,6 +106,9 @@ public class UserService extends AbstractService {
     user.setLevel(UserLevel.getFromRoles(user.getRoles()));
   }
 
+  /**
+   * Creates a UserDto from a User.
+   */
   public UserDto toDto(User user) {
     UserDto userDto = dtoFactory.createDto(UserDto.class);
 

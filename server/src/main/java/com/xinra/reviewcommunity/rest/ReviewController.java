@@ -23,7 +23,8 @@ public class ReviewController extends AbstractController {
    */
   @AccessRequires(Permission.CREATE_REVIEW)
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void create(@RequestBody @Valid CreateReviewDto createReviewDto, @PathVariable int serial) {
+  public void create(@RequestBody @Valid CreateReviewDto createReviewDto,
+                     @PathVariable int serial) {
     serviceProvider.getService(ReviewService.class).createReview(createReviewDto, serial);
   }
 

@@ -21,8 +21,8 @@ public class Product extends SerialEntity {
   private Brand brand;
   
   // cache
-  private double ratingAverage;
-  private int ratingAmount;
+  private double avgRating;
+  private int numRatings;
   private double score;
 
 }
