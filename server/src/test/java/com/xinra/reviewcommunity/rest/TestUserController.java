@@ -1,4 +1,4 @@
-package com.xinra.reviewcommunity;
+package com.xinra.reviewcommunity.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -15,9 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -30,14 +32,14 @@ public class TestUserController {
   @Test
   public void createUserTwice() throws Exception {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("username", "peter");
+    params.add("username", "testuser");
     params.add("password", "secret");
     
     // creating a user should work
     mvc.perform(post("/api/user").params(params).with(csrf()))
         .andExpect(status().isOk());
     
-    assertThat(userRepo.findByName("peter"))
+    assertThat(userRepo.findByName("testuser"))
         .as("create user entity")
         .isNotNull();
     
@@ -45,7 +47,6 @@ public class TestUserController {
     mvc.perform(post("/api/user").params(params).with(csrf()))
         .andExpect(status().isBadRequest());
     
-    userRepo.deleteAll();
   }
   
 }
