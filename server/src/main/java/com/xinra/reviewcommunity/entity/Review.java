@@ -12,7 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Review extends SerialEntity {
-  
+
+  private String title;
   private int rating;
   private String text;
   private @NonNull ZonedDateTime dateCreated;

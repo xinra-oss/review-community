@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.ImmutableSet;
 import com.xinra.reviewcommunity.auth.Role;
+import com.xinra.reviewcommunity.dto.UserDto;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.entity.UserLevel;
@@ -104,5 +105,13 @@ public class UserService extends AbstractService {
   private void updateLevel(User user) {
     user.setLevel(UserLevel.getFromRoles(user.getRoles()));
   }
-  
+
+  public UserDto toDto(User user) {
+    UserDto userDto = dtoFactory.createDto(UserDto.class);
+
+    userDto.setName(user.getName());
+    userDto.setLevel(user.getLevel());
+
+    return userDto;
+  }
 }
