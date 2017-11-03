@@ -4,12 +4,15 @@ import com.google.common.collect.Streams;
 import com.xinra.reviewcommunity.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.dto.ReviewDto;
 import com.xinra.reviewcommunity.dto.UserDto;
+import com.xinra.reviewcommunity.dto.VoteDto;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.Review;
 import com.xinra.reviewcommunity.entity.User;
+import com.xinra.reviewcommunity.entity.Vote;
 import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.repo.ReviewRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
+import com.xinra.reviewcommunity.repo.VoteRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
@@ -26,6 +29,7 @@ public class ReviewService extends AbstractService {
   private @Autowired ReviewRepository<Review> reviewRepo;
   private @Autowired ProductRepository<Product> productRepo;
   private @Autowired UserRepository<User> userRepo;
+  private @Autowired VoteRepository<Vote> voteRepo;
 
   /**
    * Creates a new review.
@@ -87,5 +91,34 @@ public class ReviewService extends AbstractService {
     reviewDto.setScore(review.getScore());
 
     return reviewDto;
+  }
+
+  /**
+   * Creates or uptates the upvotes for a review.
+   */
+  public void vote(VoteDto voteDto, int reviewSerial) {
+
+    User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
+    Review review = reviewRepo.findBySerial(reviewSerial);
+    Vote vote = voteRepo.findByUserIdAndReviewId(user.getPk().getId(), review.getPk().getId());
+
+    if (vote != null) {
+      vote.setUpvote(voteDto.isUpvote());
+    } else {
+      vote = entityFactory.createEntity(Vote.class);
+      vote.setUpvote(voteDto.isUpvote());
+      vote.setReview(review);
+      vote.setUser(user);
+    }
+
+    int numUpvotes = review.getNumUpvotes();
+    int numDownvotes = review.getNumDownvotes();
+    if (voteDto.isUpvote()) {
+      review.setNumUpvotes(numUpvotes + 1);
+    } else {
+      review.setNumDownvotes(numDownvotes + 1);
+    }
+
+    voteRepo.save(vote);
   }
 }

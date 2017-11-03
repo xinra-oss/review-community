@@ -4,6 +4,7 @@ import com.xinra.reviewcommunity.auth.AccessRequires;
 import com.xinra.reviewcommunity.auth.Permission;
 import com.xinra.reviewcommunity.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.dto.ReviewDto;
+import com.xinra.reviewcommunity.dto.VoteDto;
 import com.xinra.reviewcommunity.service.ReviewService;
 import java.util.List;
 import javax.validation.Valid;
@@ -35,4 +36,13 @@ public class ReviewController extends AbstractController {
   public List<ReviewDto> getAll() {
     return serviceProvider.getService(ReviewService.class).getAllReviews();
   }
+
+  /**
+   * Create or Updates an upvote for a review.
+   */
+  @RequestMapping(path = "/{serial}/vote", method = RequestMethod.POST)
+  public void vote(@RequestBody VoteDto voteDto, @PathVariable int serial) {
+    serviceProvider.getService(ReviewService.class).vote(voteDto, serial);
+  }
+
 }
