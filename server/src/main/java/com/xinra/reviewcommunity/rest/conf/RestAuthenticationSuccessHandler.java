@@ -3,7 +3,9 @@ package com.xinra.reviewcommunity.rest.conf;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
+import com.xinra.reviewcommunity.dto.SuccessfulAuthenticationDto;
 import com.xinra.reviewcommunity.dto.UserDto;
+import com.xinra.reviewcommunity.rest.FrontendUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -43,11 +45,7 @@ public class RestAuthenticationSuccessHandler
     response.setContentType("application/json");
     
     AuthenticatedUserDto user = (AuthenticatedUserDto) authentication.getPrincipal();
-    
-    // we have to create a new object so that not all properties are marshaled
-    UserDto userDto = dtoFactory.createDto(UserDto.class);
-    userDto.setLevel(user.getLevel());
-    userDto.setName(user.getName());
+    UserDto userDto = FrontendUtil.trimAuthenticatedUser(user);
     
     SuccessfulAuthenticationDto authDto = dtoFactory.createDto(SuccessfulAuthenticationDto.class);
     authDto.setUser(userDto);

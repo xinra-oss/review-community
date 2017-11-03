@@ -1,0 +1,18 @@
+ <StackLayout class="form">
+  <StackLayout class="input-field">
+    <Label [text]="'LOGIN_USERNAME' | translate" class="label"></Label>
+    <TextField #username="ngModel" [(ngModel)]="input.username" 
+        autocorrect="false"
+        autocapitalizationType="none"
+        class="input input-border"
+        required></TextField>
+    <Label [text]="'LOGIN_PASSWORD' | translate" class="label"></Label>
+    <TextField #password="ngModel" [(ngModel)]="input.password" 
+        autocorrect="false"
+        autocapitalizationType="none"
+        class="input input-border"
+        required
+        secure="true"></TextField>
+  </StackLayout>
+  <Button [text]="'LOGIN_LOG_IN' | translate" (tap)="login" class="btn btn-primary" [isEnabled]="!username.errors && !password.errors"></Button>
+</StackLayout>

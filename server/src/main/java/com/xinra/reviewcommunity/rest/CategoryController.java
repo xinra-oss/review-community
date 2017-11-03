@@ -33,7 +33,7 @@ public class CategoryController extends AbstractController {
    * GET a list of all categories.
    */
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public List<CategoryDto> get() {
+  public List<CategoryDto> getList() {
     return serviceProvider.getService(CategoryService.class).getAllCategories();
   }
 
@@ -42,7 +42,7 @@ public class CategoryController extends AbstractController {
    * GET a list of all products of a category.
    */
   @RequestMapping(path = "/{serial}", method = RequestMethod.GET)
-  public List<ProductDto> getByCategory(@PathVariable int serial) {
+  public List<ProductDto> get(@PathVariable int serial) {
     return serviceProvider.getService(ProductService.class).getProductsByCategory(serial);
   }
 }

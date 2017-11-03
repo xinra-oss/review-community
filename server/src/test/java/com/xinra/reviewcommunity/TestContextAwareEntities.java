@@ -33,6 +33,7 @@ public class TestContextAwareEntities {
     context.setMarket(marketService.getBySlug("de"));
     SampleMarketSpecificEntity entityDe = 
          entityFactory.createEntity(SampleMarketSpecificEntity.class);
+    entityDe.setSerial(1);
     assertThat(entityDe.getMarket().getSlug())
         .as("set current market automatically")
         .isEqualTo("de");

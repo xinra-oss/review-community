@@ -19,7 +19,7 @@ $ gradlew :client:generate
 
 ## Configuration
 
-TODO
+Copy the file `client/tools/env/dev.ts.template` to `client/tools/env/dev.ts` and adjust your IP address in the file. Make sure that you can access the machine running the server from your device/emulator.
 
 ## Running the client
 

@@ -1,24 +1,9 @@
 <StackLayout>
-  <StackLayout class="p-10">
-    <Label [text]="'LOVE_TECH' | translate" textWrap="true" class="love-tech"></Label>
-    <Label [text]="'SUCCESS_MSG' | translate" textWrap="true"></Label>
-    <Label [text]="'ABOUT_REWARD' | translate" textWrap="true"></Label>
-  </StackLayout>
 
-  <StackLayout class="form">
-    <StackLayout class="input-field">
-      <TextField [(ngModel)]="newName" [hint]="'INPUT_HINT' | translate" autocorrect="false" autocapitalizationType="none" class="input"></TextField>
-    </StackLayout>
-  </StackLayout>
-  <Button [text]="'ADD_BTN_TEXT' | translate" (tap)="addName()" class="btn btn-primary"></Button>
+  <TextField [hint]="'HOME_SEARCH_PRODUCT' | translate" class="input"></TextField>
+  <Button [text]="'HOME_SCAN' | translate" class="btn btn-primary" (tap)="scan()"></Button>
+  <Button [text]="'HOME_CATEGORIES' | translate" class="btn" (tap)="viewCategories()"></Button>
+  <Button [text]="'HOME_HISTORY' | translate" class="btn" (tap)="viewHistory()"></Button>
+  <Button [text]="'LOGIN_LOG_IN' | translate" class="btn" (tap)="routerext.navigate(['/login'])"></Button>
 
-  <ListView [items]="names$ | async" row="1" colSpan="2" height="250" class="list-group">
-    <ng-template let-name="item" let-odd="odd" let-even="even">
-      <StackLayout [class.odd]="odd" [class.even]="even" class="list-group-item">
-        <Label [text]="name"></Label>
-      </StackLayout>
-    </ng-template>
-  </ListView>
-
-  <Button (tap)="readAbout()" text="Read all about it" class="btn btn-outline"></Button>
 </StackLayout>

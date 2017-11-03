@@ -65,10 +65,10 @@ generateTypeScript {
   excludeClasses = [
     'com.xinra.nucleus.service.Dto',
     'com.xinra.reviewcommunity.dto.AuthenticatedUserDto',
-    'com.xinra.reviewcommunity.dto.RegisterDto'
+    'java.io.Serializable'
   ]
   //outputFileType = 'implementationFile'
-  outputFile = '../client/src/client/app/modules/shared/generated/model.d.ts'
+  outputFile = '../client/src/client/app/modules/shared/models/generated.model.d.ts'
   outputKind = 'module'
   removeTypeNameSuffix = 'Dto'
 }

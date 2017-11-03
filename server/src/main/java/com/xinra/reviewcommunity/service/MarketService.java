@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.service;
 
+import com.google.common.collect.ImmutableList;
 import com.xinra.nucleus.entity.EntityPk;
 import com.xinra.reviewcommunity.dto.MarketDto;
 import com.xinra.reviewcommunity.entity.Market;
@@ -55,6 +56,10 @@ public class MarketService extends AbstractService {
   
   Market getEntity(EntityPk pk) {
     return entityCache.get(pk);
+  }
+  
+  public ImmutableList<MarketDto> getAllMarkets() {
+    return ImmutableList.copyOf(dtoCache.values());
   }
   
 }
