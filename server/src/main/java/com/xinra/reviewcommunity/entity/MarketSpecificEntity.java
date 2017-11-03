@@ -15,7 +15,9 @@ import org.hibernate.annotations.ParamDef;
 @FilterDef(name = "market", parameters = @ParamDef(name = "marketId", type = "string"), 
     defaultCondition = "market_id = :marketId")
 @Filter(name = "market")
-public abstract class MarketSpecificEntity extends NamedEntity {
+public abstract class MarketSpecificEntity extends SerialEntity {
+
+  private String name;
 
   @ManyToOne(fetch = FetchType.LAZY)
   protected Market market;

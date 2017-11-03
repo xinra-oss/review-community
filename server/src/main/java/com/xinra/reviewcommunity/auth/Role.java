@@ -28,14 +28,16 @@ public enum Role {
   USER(
     inheritsFrom(),
     addsPermissions(
-      Permission.ADD_PRODUCT,
-      Permission.ADD_REVIEW
+      Permission.CREATE_PRODUCT,
+      Permission.CREATE_REVIEW
     )
   ),
   MODERATOR(
     inheritsFrom(USER),
     addsPermissions(
-      Permission.DELETE_PRODUCT
+      Permission.DELETE_PRODUCT,
+      Permission.CREATE_CATEGORY,
+      Permission.CREATE_BRAND
     )
   ),
   ADMIN(

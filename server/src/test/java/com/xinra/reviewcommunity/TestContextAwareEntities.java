@@ -36,11 +36,13 @@ public class TestContextAwareEntities {
     assertThat(entityDe.getMarket().getSlug())
         .as("set current market automatically")
         .isEqualTo("de");
+    entityDe.setSerial(1);
     entityDe = repo.save(entityDe);
     
     context.setMarket(marketService.getBySlug("us"));
     SampleMarketSpecificEntity entityUs = 
         entityFactory.createEntity(SampleMarketSpecificEntity.class);
+    entityUs.setSerial(2);
     entityUs = repo.save(entityUs);
     
     // querying should only return return entities of the context's market

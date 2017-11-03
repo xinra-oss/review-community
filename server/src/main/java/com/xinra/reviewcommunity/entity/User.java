@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.entity;
 
+import com.xinra.nucleus.entity.BaseEntity;
 import com.xinra.reviewcommunity.auth.Role;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -17,8 +18,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "\"User\"")
-public class User extends NamedEntity {
+public class User extends BaseEntity {
 
+  private String name;
   private String email;
   
   @Enumerated(EnumType.STRING)

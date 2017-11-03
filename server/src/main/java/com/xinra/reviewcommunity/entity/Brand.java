@@ -7,6 +7,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Brand extends NamedEntity {
+public class Brand extends MarketSpecificEntity {
 
+  private String name;
 }
