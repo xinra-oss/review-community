@@ -34,14 +34,15 @@ public class TestCategoryController {
 
     String content = "{ \"name\": \"sweets\", \"parentSerial\": 3 } ";
 
-    mvc.perform(MockMvcRequestBuilders.post("/de/api/category").contentType("application/json").content(content).with(authentication(
-            new TestingAuthenticationToken("jon", "snow", "CREATE_CATEGORY")))
-            .with(csrf()))
-            .andExpect(status().isOk());
+    mvc.perform(MockMvcRequestBuilders.post("/de/api/category").contentType("application/json")
+        .content(content)
+        .with(authentication(new TestingAuthenticationToken("jon", "snow", "CREATE_CATEGORY")))
+        .with(csrf()))
+        .andExpect(status().isOk());
 
     assertThat(categoryRepo.findBySerial(6))
-            .as("create product entity")
-            .isNotNull();
+        .as("create product entity")
+        .isNotNull();
   }
 
   @Test

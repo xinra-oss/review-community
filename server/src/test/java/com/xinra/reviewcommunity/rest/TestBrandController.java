@@ -33,14 +33,14 @@ public class TestBrandController {
 
     String content = "{ \"name\": \"Bosch\" } ";
 
-    mvc.perform(post("/de/api/brand").contentType("application/json").content(content).with(authentication(
-            new TestingAuthenticationToken("jon", "snow", "CREATE_BRAND")))
-            .with(csrf()))
-            .andExpect(status().isOk());
+    mvc.perform(post("/de/api/brand").contentType("application/json").content(content)
+        .with(authentication(new TestingAuthenticationToken("jon", "snow", "CREATE_BRAND")))
+        .with(csrf()))
+        .andExpect(status().isOk());
 
     assertThat(brandRepo.findBySerial(3))
-            .as("create product entity")
-            .isNotNull();
+        .as("create product entity")
+        .isNotNull();
   }
 
   @Test

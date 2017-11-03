@@ -33,22 +33,22 @@ public class TestProductController {
   @Test
   public void createProduct() throws Exception {
 
-    String content = "{ " +
-            "    \"name\": \"Oreo\", " +
-            "    \"description\": \"they're cookies\"," +
-            "    \"categorySerial\": 1," +
-            "    \"brandSerial\": 1" +
-            "}";
+    String content = "{ "
+        + "    \"name\": \"Oreo\", "
+        + "    \"description\": \"they're cookies\","
+        + "    \"categorySerial\": 1,"
+        + "    \"brandSerial\": 1"
+        + "}";
 
     // creating a product should work
-    mvc.perform(post("/de/api/product").contentType("application/json").content(content).with(authentication(
-            new TestingAuthenticationToken("jon", "snow", "CREATE_PRODUCT")))
-            .with(csrf()))
-            .andExpect(status().isOk());
+    mvc.perform(post("/de/api/product").contentType("application/json").content(content)
+        .with(authentication(new TestingAuthenticationToken("jon", "snow", "CREATE_PRODUCT")))
+        .with(csrf()))
+        .andExpect(status().isOk());
 
     assertThat(productRepo.findBySerial(1))
-            .as("create product entity")
-            .isNotNull();
+        .as("create product entity")
+        .isNotNull();
   }
 
   @Test
