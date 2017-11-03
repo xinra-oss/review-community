@@ -23,5 +23,6 @@ public class Product extends SerialEntity {
   // cache
   private double ratingAverage;
   private int ratingAmount;
+  private double score;
 
 }

@@ -11,14 +11,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Review extends SerialEntity {
-  
-  private int rating;
-  private String text;
+public class ReviewComment extends SerialEntity {
+
+  private @NonNull String text;
   private @NonNull ZonedDateTime dateCreated;
   
   @ManyToOne(optional = false)
-  private @NonNull Product product;
+  private @NonNull Review review;
   
   @ManyToOne(optional = false)
   private @NonNull User user;
@@ -29,10 +28,5 @@ public class Review extends SerialEntity {
       dateCreated = ZonedDateTime.now();
     }
   }
-  
-  // cache
-  private int numUpvotes;
-  private int numDownvotes;
-  private double score;
   
 }
