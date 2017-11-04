@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public abstract class BaseActivity extends AppCompatActivity
+public abstract class BaseActivity extends AbstractActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
   private FrameLayout contentFrame;
