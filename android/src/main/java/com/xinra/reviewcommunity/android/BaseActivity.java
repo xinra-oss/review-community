@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -77,8 +78,9 @@ public abstract class BaseActivity extends AppCompatActivity
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
-    if (id == R.id.nav_camera) {
-      // Handle the camera action
+    if (id == R.id.nav_login) {
+      Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+      startActivity(loginIntent);
     } else if (id == R.id.nav_gallery) {
 
     } else if (id == R.id.nav_slideshow) {
