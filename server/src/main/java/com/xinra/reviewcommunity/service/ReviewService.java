@@ -13,6 +13,8 @@ import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.repo.ReviewRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
 import com.xinra.reviewcommunity.repo.VoteRepository;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
@@ -69,10 +71,27 @@ public class ReviewService extends AbstractService {
   /**
    * Returns a list of all reviews.
    */
-  public List<ReviewDto> getAllReviews() {
-    return Streams.stream(reviewRepo.findAll())
-      .map(this::toDto)
-      .collect(Collectors.toList());
+  public List<ReviewDto> getAllReviews(String sortBy, String order) {
+    List<ReviewDto> list = Streams.stream(reviewRepo.findAll())
+            .map(this::toDto)
+            .collect(Collectors.toList());
+
+    if (sortBy.equals("date")) {
+      if (order.equals("asc")) {
+        Collections.sort(list, Comparator.comparing(ReviewDto::getCreatedAt));
+      } else {
+//      Collections.sort(list, (o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()));
+        Collections.sort(list, Comparator.comparing(ReviewDto::getCreatedAt).reversed());
+      }
+    } else if (sortBy.equals("rating")) {
+      if (order.equals("asc")) {
+        Collections.sort(list, Comparator.comparingInt(ReviewDto::getRating));
+      } else {
+//        Collections.sort(list, (o1, o2) -> o2.getRating() - o1.getRating());
+        Collections.sort(list, Comparator.comparingInt(ReviewDto::getRating).reversed());
+      }
+    }
+    return list;
   }
 
   private ReviewDto toDto(Review review) {

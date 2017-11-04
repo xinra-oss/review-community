@@ -10,6 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +34,8 @@ public class ReviewController extends AbstractController {
    * GET a list of all reviews.
    */
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public List<ReviewDto> getAll() {
-    return serviceProvider.getService(ReviewService.class).getAllReviews();
+  public List<ReviewDto> getAll(@RequestHeader String order, @RequestHeader String sortBy) {
+    return serviceProvider.getService(ReviewService.class).getAllReviews(sortBy, order);
   }
 
   /**
