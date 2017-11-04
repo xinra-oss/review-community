@@ -82,7 +82,7 @@ public class ReviewService extends AbstractService {
 
     reviewDto.setUserDto(userDto);
     reviewDto.setSerial(review.getSerial());
-    reviewDto.setDateCreated(review.getDateCreated());
+    reviewDto.setCreatedAt(review.getCreatedAt());
     reviewDto.setRating(review.getRating());
     reviewDto.setText(review.getText());
     reviewDto.setTitle(review.getTitle());

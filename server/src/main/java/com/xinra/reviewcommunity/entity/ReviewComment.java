@@ -14,7 +14,7 @@ import lombok.Setter;
 public class ReviewComment extends SerialEntity {
 
   private @NonNull String text;
-  private @NonNull ZonedDateTime dateCreated;
+  private @NonNull ZonedDateTime createdAt;
   
   @ManyToOne(optional = false)
   private @NonNull Review review;
@@ -24,8 +24,8 @@ public class ReviewComment extends SerialEntity {
   
   @PrePersist
   private void persist() {
-    if (dateCreated == null) {
-      dateCreated = ZonedDateTime.now();
+    if (createdAt == null) {
+      createdAt = ZonedDateTime.now();
     }
   }
   

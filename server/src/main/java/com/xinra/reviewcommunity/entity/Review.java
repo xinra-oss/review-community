@@ -16,7 +16,7 @@ public class Review extends SerialEntity {
   private String title;
   private int rating;
   private String text;
-  private @NonNull ZonedDateTime dateCreated;
+  private @NonNull ZonedDateTime createdAt;
   
   @ManyToOne(optional = false)
   private @NonNull Product product;
@@ -26,8 +26,8 @@ public class Review extends SerialEntity {
   
   @PrePersist
   private void persist() {
-    if (dateCreated == null) {
-      dateCreated = ZonedDateTime.now();
+    if (createdAt == null) {
+      createdAt = ZonedDateTime.now();
     }
   }
   
