@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity;
  */
 public abstract class AbstractActivity extends AppCompatActivity {
 
-//  protected final ReviewCommunityStore store;
-//
-//  public AbstractActivity() {
-//    store = ((ReviewCommunityApplication) getApplication()).getStore();
-//  }
+  protected AppState getState() {
+    return ((ReviewCommunityApplication) getApplication()).getState();
+  }
 
 }
