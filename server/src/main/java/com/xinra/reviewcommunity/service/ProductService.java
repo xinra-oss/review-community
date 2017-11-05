@@ -1,16 +1,17 @@
 package com.xinra.reviewcommunity.service;
 
-import com.xinra.reviewcommunity.dto.BrandDto;
-import com.xinra.reviewcommunity.dto.CategoryDto;
-import com.xinra.reviewcommunity.dto.CreateProductDto;
-import com.xinra.reviewcommunity.dto.ProductDto;
-import com.xinra.reviewcommunity.dto.SerialDto;
 import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.repo.BrandRepository;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
 import com.xinra.reviewcommunity.repo.ProductRepository;
+import com.xinra.reviewcommunity.shared.dto.BrandDto;
+import com.xinra.reviewcommunity.shared.dto.CategoryDto;
+import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
+import com.xinra.reviewcommunity.shared.dto.ProductDto;
+import com.xinra.reviewcommunity.shared.dto.SerialDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;

@@ -1,8 +1,7 @@
-package com.xinra.reviewcommunity.auth;
+package com.xinra.reviewcommunity.shared;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.xinra.reviewcommunity.entity.UserLevel;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

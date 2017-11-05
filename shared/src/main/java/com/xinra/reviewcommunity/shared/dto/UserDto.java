@@ -1,7 +1,8 @@
-package com.xinra.reviewcommunity.dto;
+package com.xinra.reviewcommunity.shared.dto;
 
-import com.xinra.nucleus.service.Dto;
-import com.xinra.reviewcommunity.entity.UserLevel;
+
+import com.xinra.reviewcommunity.shared.UserLevel;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -13,6 +14,7 @@ import lombok.Setter;
 public class UserDto implements Dto {
 
   private @NonNull String name;
-  private @NonNull UserLevel level;
+  private @NonNull
+  UserLevel level;
   
 }

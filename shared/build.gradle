@@ -1,8 +1,13 @@
 apply plugin: 'java-library'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok:1.16.18')
+    implementation('org.hibernate:hibernate-validator:5.3.5.Final')
+    api('com.google.guava:guava:21.0')
 }
 
 sourceCompatibility = "1.8"

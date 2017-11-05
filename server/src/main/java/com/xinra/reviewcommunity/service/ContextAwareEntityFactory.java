@@ -26,7 +26,7 @@ public class ContextAwareEntityFactory extends DefaultEntityFactory {
     
     if (entity instanceof MarketSpecificEntity) {
       ((MarketSpecificEntity) entity).setMarket(serviceProvider.getService(MarketService.class)
-          .getEntity(contextHolder.get().getMarket().get().getPk()));
+          .getEntity(contextHolder.get().getMarket().get().getSlug()));
     }
     
     return entity;

@@ -1,9 +1,10 @@
 package com.xinra.reviewcommunity.rest.conf;
 
-import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.repo.PasswordLoginRepository;
 import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

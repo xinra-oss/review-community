@@ -1,6 +1,5 @@
-package com.xinra.reviewcommunity.entity;
+package com.xinra.reviewcommunity.shared;
 
-import com.xinra.reviewcommunity.auth.Role;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NonNull;

@@ -2,12 +2,7 @@ package com.xinra.reviewcommunity;
 
 import com.xinra.nucleus.common.ContextHolder;
 import com.xinra.nucleus.entity.EntityFactory;
-import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.nucleus.service.ServiceProvider;
-import com.xinra.reviewcommunity.auth.Role;
-import com.xinra.reviewcommunity.dto.CreateBrandDto;
-import com.xinra.reviewcommunity.dto.CreateCategoryDto;
-import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.repo.MarketRepository;
@@ -17,6 +12,12 @@ import com.xinra.reviewcommunity.service.CategoryService;
 import com.xinra.reviewcommunity.service.MarketService;
 import com.xinra.reviewcommunity.service.ProductService;
 import com.xinra.reviewcommunity.service.UserService;
+import com.xinra.reviewcommunity.shared.Role;
+import com.xinra.reviewcommunity.shared.dto.CreateBrandDto;
+import com.xinra.reviewcommunity.shared.dto.CreateCategoryDto;
+import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

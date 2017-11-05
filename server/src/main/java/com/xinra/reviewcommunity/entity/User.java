@@ -1,7 +1,9 @@
 package com.xinra.reviewcommunity.entity;
 
 import com.xinra.nucleus.entity.BaseEntity;
-import com.xinra.reviewcommunity.auth.Role;
+import com.xinra.reviewcommunity.shared.Role;
+import com.xinra.reviewcommunity.shared.UserLevel;
+
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -33,6 +35,7 @@ public class User extends BaseEntity {
   // cache
   
   @Enumerated(EnumType.STRING)
-  private @NonNull UserLevel level;
+  private @NonNull
+  UserLevel level;
   
 }
