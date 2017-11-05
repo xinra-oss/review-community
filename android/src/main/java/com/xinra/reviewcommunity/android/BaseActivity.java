@@ -17,6 +17,10 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+/**
+ * Base class for "top-level" activities that have the toolbar and side drawer. Note that subclasses
+ * must disable the default action bar.
+ */
 public abstract class BaseActivity extends AbstractActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
