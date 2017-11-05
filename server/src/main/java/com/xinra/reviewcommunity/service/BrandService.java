@@ -1,10 +1,11 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.Streams;
-import com.xinra.reviewcommunity.dto.BrandDto;
-import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.repo.BrandRepository;
+import com.xinra.reviewcommunity.shared.dto.BrandDto;
+import com.xinra.reviewcommunity.shared.dto.CreateBrandDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;

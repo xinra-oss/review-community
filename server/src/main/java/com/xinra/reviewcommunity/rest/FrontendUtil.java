@@ -13,4 +13,5 @@ public class FrontendUtil {
   public static boolean isRequest() {
     return RequestContextHolder.getRequestAttributes() != null;
   }
+
 }

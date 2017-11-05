@@ -1,9 +1,10 @@
 package com.xinra.reviewcommunity.rest;
 
-import com.xinra.reviewcommunity.dto.RegisterDto;
 import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.UserService;
 import com.xinra.reviewcommunity.service.UserService.UsernameAlreadyExistsException;
+import com.xinra.reviewcommunity.shared.dto.RegisterDto;
+
 import javax.validation.Valid;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;

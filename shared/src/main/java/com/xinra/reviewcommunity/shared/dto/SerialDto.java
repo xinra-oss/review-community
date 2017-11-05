@@ -1,6 +1,5 @@
-package com.xinra.reviewcommunity.dto;
+package com.xinra.reviewcommunity.shared.dto;
 
-import com.xinra.nucleus.service.Dto;
 import lombok.Data;
 
 @Data

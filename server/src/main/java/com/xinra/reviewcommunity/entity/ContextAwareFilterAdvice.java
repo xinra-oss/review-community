@@ -1,7 +1,10 @@
 package com.xinra.reviewcommunity.entity;
 
 import com.xinra.nucleus.common.ContextHolder;
+import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
+import com.xinra.reviewcommunity.service.MarketService;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,6 +25,7 @@ public class ContextAwareFilterAdvice {
   
   private @PersistenceContext EntityManager entityManager;
   private @Autowired ContextHolder<Context> contextHolder;
+  private @Autowired ServiceProvider serviceProvider;
   
   /**
    * Enables context-specific filters for all repository methods.
@@ -47,8 +51,10 @@ public class ContextAwareFilterAdvice {
     }
       
     if (context.getMarket().isPresent()) {
-      session.enableFilter("market")
-          .setParameter("marketId", context.getMarket().get().getPk().getId());
+      String marketId = serviceProvider.getService(MarketService.class)
+          .getEntity(context.getMarket().get().getSlug())
+          .getPk().getId();
+      session.enableFilter("market").setParameter("marketId", marketId);
     } else {
       session.disableFilter("market");
     }
