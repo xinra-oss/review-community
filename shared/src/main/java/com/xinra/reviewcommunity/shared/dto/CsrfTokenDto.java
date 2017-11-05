@@ -9,8 +9,8 @@ import lombok.NonNull;
 @Data
 public class CsrfTokenDto implements Dto {
 
-  private @NonNull String headerName;
-  private @NonNull String parameterName;
-  private @NonNull String token;
+  private String headerName;
+  private String parameterName;
+  private String token;
 
 }
