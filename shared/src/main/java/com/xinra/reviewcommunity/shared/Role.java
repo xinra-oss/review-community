@@ -5,6 +5,8 @@ import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +61,10 @@ public enum Role {
    * combined into one enum set.
    */
   public static ImmutableSet<Role> getAllTransitiveRoles(@NonNull Collection<Role> roles) {
-    return roles.stream()
+    return Sets.immutableEnumSet(roles.stream()
         .map(Role::getTransitiveRoles)
         .flatMap(Set::stream)
-        .collect(Sets.toImmutableEnumSet());
+        .collect(Collectors.toSet()));
   }
   
   /**
@@ -71,10 +73,11 @@ public enum Role {
    */
   public static ImmutableSet<Permission> 
       getAllTransitivePermissions(@NonNull Collection<Role> roles) {
-    return roles.stream()
+
+    return Sets.immutableEnumSet(roles.stream()
         .map(Role::getTransitivePermissions)
         .flatMap(Set::stream)
-        .collect(Sets.toImmutableEnumSet());
+        .collect(Collectors.toSet()));
   }
   
   private final ImmutableSet<Role> parents;
