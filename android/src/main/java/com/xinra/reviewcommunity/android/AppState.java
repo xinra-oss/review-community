@@ -36,7 +36,7 @@ public class AppState {
    * Determines if the user is signed in.
    */
   public Observable<Boolean> isAuthenticated() {
-    return authenticatedUser.map(authenticatedUser -> authenticatedUser != null);
+    return authenticatedUser.map(Optional::isPresent);
   }
 
   /**
