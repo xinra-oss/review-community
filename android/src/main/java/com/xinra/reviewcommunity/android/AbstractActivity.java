@@ -66,8 +66,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
   }
 
   /**
-   * This is called once the activity has been created and the state is initialized. Usually you
-   * should NOT dispatch API calls until this is called.
+   * Called once the activity has been created and the state is initialized. Usually you should NOT
+   * dispatch API calls until this is called.
    */
   protected void onInitialized() {}
 }

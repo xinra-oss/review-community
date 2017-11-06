@@ -30,11 +30,9 @@ public class Api {
   private CompositeDisposable subscriptions;
   private AppState state;
   private MarketDto market;
-  private Context context;
 
-  public Api(AppState state, Context context) {
+  public Api(AppState state) {
     this.state = state;
-    this.context = context;
     subscriptions = new CompositeDisposable();
     subscriptions.add(state.market.subscribe(m -> market = m));
 

@@ -16,7 +16,7 @@ public class ReviewCommunityApplication extends Application {
   public void onCreate() {
     super.onCreate();
     state = new AppState();
-    api = new Api(state, getApplicationContext());
+    api = new Api(state);
   }
 
   public AppState getState() {
