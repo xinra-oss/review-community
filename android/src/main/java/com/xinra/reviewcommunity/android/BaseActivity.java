@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Optional;
+
 /**
  * Base class for "top-level" activities that have the toolbar and side drawer. Note that subclasses
  * must disable the default action bar.
@@ -26,6 +29,7 @@ public abstract class BaseActivity extends AbstractActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
   private FrameLayout contentFrame;
+  private TextView navUsername;
 
   @Override
   protected void onInitialized() {
@@ -51,7 +55,7 @@ public abstract class BaseActivity extends AbstractActivity
     MenuItem navLogin = navigationView.getMenu().findItem(R.id.nav_login);
     MenuItem navRegister = navigationView.getMenu().findItem(R.id.nav_register);
     MenuItem navLogout = navigationView.getMenu().findItem(R.id.nav_logout);
-    TextView navUsername = navigationView.getHeaderView(0).findViewById(R.id.nav_username);
+    navUsername = navigationView.getHeaderView(0).findViewById(R.id.nav_username);
 
     this.subscriptions.add(getState().authenticatedUser.subscribe(user -> {
       if (user.isPresent()) {
@@ -59,6 +63,7 @@ public abstract class BaseActivity extends AbstractActivity
         navRegister.setVisible(false);
         navLogout.setVisible(true);
         navUsername.setText(user.get().getName());
+        Snackbar.make(contentFrame, "Signed in as " + user.get().getName(), Snackbar.LENGTH_SHORT).show();
       } else {
         navLogin.setVisible(true);
         navRegister.setVisible(true);
@@ -99,6 +104,18 @@ public abstract class BaseActivity extends AbstractActivity
     return super.onOptionsItemSelected(item);
   }
 
+  private void logout() {
+    getApi().deleteSession().subscribe(() -> {
+      getState().authenticatedUser.onNext(Optional.empty());
+      getState().permissions.onNext(Collections.emptySet());
+      navUsername.setText(R.string.unauthenticated_username);
+      Snackbar.make(contentFrame, "Successfully signed out", Snackbar.LENGTH_SHORT).show();
+      // When logging out the session is destroyed. This invalidates the CSRF token and we have to
+      // get a new one manually.
+      getApi().getCsrfToken().subscribe(token -> getState().csrfToken = token, this::handleError);
+    }, this::handleError);
+  }
+
   @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
@@ -108,10 +125,10 @@ public abstract class BaseActivity extends AbstractActivity
     if (id == R.id.nav_login) {
       Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
       startActivity(loginIntent);
-    } else if (id == R.id.nav_gallery) {
+    } else if (id == R.id.nav_register) {
 
-    } else if (id == R.id.nav_slideshow) {
-
+    } else if (id == R.id.nav_logout) {
+      logout();
     } else if (id == R.id.nav_manage) {
 
     } else if (id == R.id.nav_share) {

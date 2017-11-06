@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="unauthenticated_username">[Anonymous]</string>
     <string name="sign_in">Sign in</string>
     <string name="username_or_email">Username</string>
     <string name="password">Password</string>
