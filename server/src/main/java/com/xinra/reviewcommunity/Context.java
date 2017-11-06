@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity;
 
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
 
+import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import java.util.Optional;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -15,14 +16,25 @@ import org.springframework.web.context.annotation.RequestScope;
 @RequestScope
 public class Context {
   
-  //this will be set once and read many times -> cache Optional
+  //these will be set once and read many times -> Optional is cached
+  
   private @Getter Optional<MarketDto> market = Optional.empty();
+  private @Getter Optional<AuthenticatedUserDto> authenticatedUser = Optional.empty();
   
   /**
-   * Sets the current market. May be {@code null} to indicate a market-agnostic context.
+   * Sets the current market. May be {@code null} to indicate a market-agnostic context (this is the
+   * default).
    */
   public void setMarket(MarketDto market) {
     this.market = Optional.ofNullable(market);
+  }
+  
+  /**
+   * Sets the currently authenticated user. May be {@code null} to indicate that no user is
+   * authenticated (this is the default).
+   */
+  public void setAuthenticatedUser(AuthenticatedUserDto authenticatedUser) {
+    this.authenticatedUser = Optional.ofNullable(authenticatedUser);
   }
   
 }

@@ -18,5 +18,5 @@ assemble {
 // clean.dependsOn 'npm_run_clean'
 clean.doLast {
   logger.warn("WARNING: Deleting generated sources. Running the client with npm will not work until you run the gradle task ':client:generate' again!")
-  delete 'src/client/app/modules/shared/generated'
+  delete 'src/client/app/modules/shared/models/generated.model.d.ts'
 }

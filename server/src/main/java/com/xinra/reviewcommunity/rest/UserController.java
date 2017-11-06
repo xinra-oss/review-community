@@ -4,6 +4,7 @@ import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.UserService;
 import com.xinra.reviewcommunity.service.UserService.UsernameAlreadyExistsException;
 import com.xinra.reviewcommunity.shared.dto.RegisterDto;
+import com.xinra.reviewcommunity.shared.dto.RegistrationDto;
 
 import javax.validation.Valid;
 import org.springframework.validation.BindException;
@@ -21,7 +22,8 @@ public class UserController extends AbstractController {
    */
   @MarketAgnostic
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void register(@Valid RegisterDto registerDto, BindingResult result) throws BindException {
+  public void register(@Valid RegistrationDto registerDto,
+                       BindingResult result) throws BindException {
     if (result.hasErrors()) {
       throw new BindException(result);
     }

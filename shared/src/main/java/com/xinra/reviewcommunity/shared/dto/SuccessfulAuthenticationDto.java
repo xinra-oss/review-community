@@ -3,7 +3,6 @@ package com.xinra.reviewcommunity.shared.dto;
 import com.xinra.reviewcommunity.shared.Permission;
 
 import java.util.Set;
-
 import lombok.Data;
 
 @Data

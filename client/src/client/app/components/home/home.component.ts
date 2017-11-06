@@ -5,8 +5,6 @@ import { Observable } from 'rxjs/Observable';
 
 // app
 import { RouterExtensions, Config } from '../../modules/core/index';
-import { IAppState, getNames } from '../../modules/ngrx/index';
-import { NameList } from '../../modules/sample/index';
 
 @Component({
   moduleId: module.id,
@@ -15,34 +13,29 @@ import { NameList } from '../../modules/sample/index';
   styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public names$: Observable<any>;
-  public newName: string;
 
-  constructor(private store: Store<IAppState>, public routerext: RouterExtensions) {}
+  constructor(public routerext: RouterExtensions) {}
 
   ngOnInit() {
-    this.names$ = this.store.let(getNames);
-    this.newName = '';
+    
   }
 
-  /*
-   * @param newname  any text as input.
-   * @returns return false to prevent default form submit behavior to refresh the page.
-   */
-  addName(): boolean {
-    this.store.dispatch(new NameList.AddAction(this.newName));
-    this.newName = '';
-    return false;
+  viewCategories() {
+    this.routerext.navigate(['/categories']);
   }
 
-  readAbout() {
+  viewHistory() {
     // Try this in the {N} app
     // {N} can use these animation options
-    this.routerext.navigate(['/about'], {
+    this.routerext.navigate(['/product'], {
       transition: {
-        duration: 1000,
+        duration: 400,
         name: 'slideTop',
       }
     });
+  }
+
+  scan() {
+
   }
 }

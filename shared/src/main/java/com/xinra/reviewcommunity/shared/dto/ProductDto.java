@@ -11,5 +11,7 @@ public class ProductDto extends SerialDto {
   private String description;
   private CategoryDto category;
   private BrandDto brand;
+  private int numRatings;
+  private double avgRating;
   
 }

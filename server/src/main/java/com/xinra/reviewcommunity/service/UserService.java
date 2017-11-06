@@ -7,6 +7,7 @@ import com.xinra.reviewcommunity.repo.PasswordLoginRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
 import com.xinra.reviewcommunity.shared.Role;
 import com.xinra.reviewcommunity.shared.UserLevel;
+import com.xinra.reviewcommunity.shared.dto.UserDto;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -105,5 +106,16 @@ public class UserService extends AbstractService {
   private void updateLevel(User user) {
     user.setLevel(UserLevel.getFromRoles(user.getRoles()));
   }
-  
+
+  /**
+   * Creates a UserDto from a User.
+   */
+  public UserDto toDto(User user) {
+    UserDto userDto = dtoFactory.createDto(UserDto.class);
+
+    userDto.setName(user.getName());
+    userDto.setLevel(user.getLevel());
+
+    return userDto;
+  }
 }

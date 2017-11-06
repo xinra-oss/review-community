@@ -1,6 +1,7 @@
 // Feel free to extend this interface
 // depending on your app specific config.
 export interface EnvConfig {
+  /** Base URL of the REST API without trailing / */
   API?: string;
   ENV?: string;
 }
@@ -63,11 +64,7 @@ export class Config {
   // supported languages
   public static GET_SUPPORTED_LANGUAGES() {
     return [
-      { code: 'en', title: 'English' },
-      { code: 'es', title: 'Spanish' },
-      { code: 'fr', title: 'French' },
-      { code: 'ru', title: 'Russian' },
-      { code: 'bg', title: 'Bulgarian' }
+      { code: 'en', title: 'English' }
     ];
   }
 
