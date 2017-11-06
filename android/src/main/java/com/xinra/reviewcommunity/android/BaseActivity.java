@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 /**
  * Base class for "top-level" activities that have the toolbar and side drawer. Note that subclasses
@@ -25,6 +26,11 @@ public abstract class BaseActivity extends AbstractActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
   private FrameLayout contentFrame;
+
+  @Override
+  protected void onInitialized() {
+    super.onInitialized();
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,23 @@ public abstract class BaseActivity extends AbstractActivity
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
+    MenuItem navLogin = navigationView.getMenu().findItem(R.id.nav_login);
+    MenuItem navRegister = navigationView.getMenu().findItem(R.id.nav_register);
+    MenuItem navLogout = navigationView.getMenu().findItem(R.id.nav_logout);
+    TextView navUsername = navigationView.getHeaderView(0).findViewById(R.id.nav_username);
+
+    this.subscriptions.add(getState().authenticatedUser.subscribe(user -> {
+      if (user.isPresent()) {
+        navLogin.setVisible(false);
+        navRegister.setVisible(false);
+        navLogout.setVisible(true);
+        navUsername.setText(user.get().getName());
+      } else {
+        navLogin.setVisible(true);
+        navRegister.setVisible(true);
+        navLogout.setVisible(false);
+      }
+    }));
   }
 
   @Override

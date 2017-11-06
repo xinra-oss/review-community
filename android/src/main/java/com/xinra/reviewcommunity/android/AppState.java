@@ -25,7 +25,7 @@ public class AppState {
   // For these we don't need to notify observers of updates.
   public CsrfTokenDto csrfToken;
   public String sessionCookie;
-  public final BehaviorSubject<Optional<UserDto>> authenticatedUser = BehaviorSubject.create();
+  public final BehaviorSubject<Optional<UserDto>> authenticatedUser = BehaviorSubject.createDefault(Optional.empty());
   public final BehaviorSubject<Set<Permission>> permissions = BehaviorSubject.create();
 
   public final BehaviorSubject<MarketDto> market = BehaviorSubject.create();

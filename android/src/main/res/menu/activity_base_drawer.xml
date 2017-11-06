@@ -3,11 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="@string/sign_in"/>
+            <item
+                android:id="@+id/nav_register"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Register" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Sign out" />
+        </menu>
+    </item>
+
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_login"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/sign_in" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
