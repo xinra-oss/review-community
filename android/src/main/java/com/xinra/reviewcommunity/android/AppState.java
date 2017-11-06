@@ -1,9 +1,14 @@
 package com.xinra.reviewcommunity.android;
 
-import com.google.common.collect.ImmutableSet;
 import com.xinra.reviewcommunity.shared.Permission;
+import com.xinra.reviewcommunity.shared.dto.CategoryDto;
+import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import com.xinra.reviewcommunity.shared.dto.UserDto;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
@@ -15,14 +20,17 @@ import io.reactivex.subjects.BehaviorSubject;
  */
 public class AppState {
 
-  // For these we don't need to notify observers of updates.
-  public String csrfToken;
-  public String sessionId;
+  public final BehaviorSubject<Boolean> initialized = BehaviorSubject.createDefault(false);
 
-  public final BehaviorSubject<UserDto> authenticatedUser = BehaviorSubject.create();
-  public final BehaviorSubject<ImmutableSet<Permission>> permissions = BehaviorSubject.create();
+  // For these we don't need to notify observers of updates.
+  public CsrfTokenDto csrfToken;
+  public String sessionId;
+  public final BehaviorSubject<Optional<UserDto>> authenticatedUser = BehaviorSubject.create();
+  public final BehaviorSubject<Set<Permission>> permissions = BehaviorSubject.create();
 
   public final BehaviorSubject<MarketDto> market = BehaviorSubject.create();
+  public final BehaviorSubject<List<MarketDto>> availableMarkets = BehaviorSubject.create();
+  public final BehaviorSubject<List<CategoryDto>> categoryTree = BehaviorSubject.create();
 
   /**
    * Determines if the user is signed in.

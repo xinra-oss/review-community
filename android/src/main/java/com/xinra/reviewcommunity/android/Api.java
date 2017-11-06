@@ -3,6 +3,7 @@ package com.xinra.reviewcommunity.android;
 import android.content.Context;
 
 import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
+import com.xinra.reviewcommunity.shared.dto.InitDto;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -33,19 +34,23 @@ public class Api {
     subscriptions.dispose();
   }
 
-  public Single<CsrfTokenDto> getCsrfToken(Context context) {
-    return Single.<CsrfTokenDto>create(source -> {
+  private <T> Single<T> get(String path, Class<T> responseType) {
+    return Single.<T>create(source -> {
       try {
-        final String url = "http://192.168.0.11:8080/api/csrf-token";
+        final String url = "http://192.168.0.11:8080/de/api" + path;
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        CsrfTokenDto csrfToken = restTemplate.getForObject(url, CsrfTokenDto.class);
-        source.onSuccess(csrfToken);
+        T response = restTemplate.getForObject(url, responseType);
+        source.onSuccess(response);
       } catch (Exception ex) {
         source.onError(ex);
       }
     })
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread());
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
   }
+
+  public Single<InitDto> getInitData() {
+    return get("/init", InitDto.class);
+ }
 }
