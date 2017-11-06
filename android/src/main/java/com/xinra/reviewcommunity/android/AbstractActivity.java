@@ -19,6 +19,10 @@ public abstract class AbstractActivity extends AppCompatActivity {
     return ((ReviewCommunityApplication) getApplication()).getState();
   }
 
+  protected Api getApi() {
+    return ((ReviewCommunityApplication) getApplication()).getApi();
+  }
+
   @Override
   protected void onDestroy() {
     super.onDestroy();
