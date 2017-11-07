@@ -6,6 +6,8 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+
 import java.util.Optional;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,6 +29,10 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
   protected Api getApi() {
     return ((ReviewCommunityApplication) getApplication()).getApi();
+  }
+
+  protected DtoFactory getDtoFactory() {
+    return ((ReviewCommunityApplication) getApplication()).getDtoFactory();
   }
 
   @Override

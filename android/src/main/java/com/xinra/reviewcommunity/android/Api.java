@@ -1,10 +1,9 @@
 package com.xinra.reviewcommunity.android;
 
-import android.content.Context;
-
 import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.InitDto;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
+import com.xinra.reviewcommunity.shared.dto.RegistrationDto;
 import com.xinra.reviewcommunity.shared.dto.SuccessfulAuthenticationDto;
 
 import org.springframework.http.HttpEntity;
@@ -64,9 +63,13 @@ public class Api {
     }
 
     HttpEntity<REQUEST> entity = new HttpEntity<>(requestBody, headers);
-
     ResponseEntity<RESPONSE> response = restTemplate.exchange(url, method, entity, responseType);
-    state.sessionCookie = response.getHeaders().getFirst("Set-Cookie");
+
+    String newSessionCookie = response.getHeaders().getFirst("Set-Cookie");
+    if (newSessionCookie != null) {
+      state.sessionCookie = newSessionCookie;
+    }
+
     return response.getBody();
   }
 
@@ -114,5 +117,9 @@ public class Api {
 
   public Completable deleteSession() {
     return withoutResponse("/session", HttpMethod.DELETE, null, true);
+  }
+
+  public Completable createUser(RegistrationDto registration) {
+    return withoutResponse("/user", HttpMethod.POST, registration, true);
   }
 }

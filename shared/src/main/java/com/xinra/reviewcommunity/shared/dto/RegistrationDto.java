@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Data
-public class RegistrationDto {
+public class RegistrationDto implements Dto {
 
   @NotBlank
   @Length(min = 3, max = 15)
