@@ -9,6 +9,7 @@ import com.xinra.reviewcommunity.shared.dto.RegistrationDto;
 import javax.validation.Valid;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class UserController extends AbstractController {
    */
   @MarketAgnostic
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public void register(@Valid RegistrationDto registerDto,
+  public void register(@Valid @RequestBody RegistrationDto registerDto,
                        BindingResult result) throws BindException {
     if (result.hasErrors()) {
       throw new BindException(result);
