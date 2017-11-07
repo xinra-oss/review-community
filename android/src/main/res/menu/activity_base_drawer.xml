@@ -12,7 +12,7 @@
             <item
                 android:id="@+id/nav_register"
                 android:icon="@drawable/ic_menu_camera"
-                android:title="Register" />
+                android:title="@string/sign_up" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_camera"

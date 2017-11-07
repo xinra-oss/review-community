@@ -126,7 +126,8 @@ public abstract class BaseActivity extends AbstractActivity
       Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
       startActivity(loginIntent);
     } else if (id == R.id.nav_register) {
-
+      Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+      startActivity(registerIntent);
     } else if (id == R.id.nav_logout) {
       logout();
     } else if (id == R.id.nav_manage) {
