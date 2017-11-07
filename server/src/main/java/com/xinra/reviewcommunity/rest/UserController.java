@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.xinra.reviewcommunity.Util;
 import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.UserService;
 import com.xinra.reviewcommunity.service.UserService.UsernameAlreadyExistsException;
@@ -28,7 +29,9 @@ public class UserController extends AbstractController {
     }
     try {
       serviceProvider.getService(UserService.class).createUserWithPassword(
-          registerDto.getUsername(), registerDto.getEmail(), registerDto.getPassword());
+    		  registerDto.getUsername(),
+    		  Util.normalize(registerDto.getEmail()),
+    		  registerDto.getPassword());
     } catch (UsernameAlreadyExistsException ex) {
       result.rejectValue("username", "AlreadyExists");
       throw new BindException(result);
