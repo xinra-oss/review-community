@@ -3,9 +3,11 @@ package com.xinra.reviewcommunity.rest;
 import com.xinra.reviewcommunity.auth.AccessRequires;
 import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.service.ReviewService;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
-import com.xinra.reviewcommunity.shared.dto.VoteDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
 
 import java.util.List;
 import javax.validation.Valid;
