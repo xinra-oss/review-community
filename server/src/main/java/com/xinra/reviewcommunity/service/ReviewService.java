@@ -1,13 +1,6 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.Streams;
-import com.xinra.reviewcommunity.dto.CreateReviewCommentDto;
-import com.xinra.reviewcommunity.dto.CreateReviewDto;
-import com.xinra.reviewcommunity.dto.ReviewCommentDto;
-import com.xinra.reviewcommunity.dto.ReviewDto;
-import com.xinra.reviewcommunity.dto.UserDto;
-import com.xinra.reviewcommunity.dto.ReviewVoteDto;
-import com.xinra.reviewcommunity.entity.OrderBy;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.Review;
 import com.xinra.reviewcommunity.entity.ReviewComment;
@@ -16,8 +9,18 @@ import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.repo.ReviewCommentRepository;
 import com.xinra.reviewcommunity.repo.ReviewRepository;
-import com.xinra.reviewcommunity.repo.UserRepository;
 import com.xinra.reviewcommunity.repo.ReviewVoteRepository;
+import com.xinra.reviewcommunity.repo.UserRepository;
+import com.xinra.reviewcommunity.shared.OrderBy;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewCommentDto;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
+import com.xinra.reviewcommunity.shared.dto.UserDto;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;

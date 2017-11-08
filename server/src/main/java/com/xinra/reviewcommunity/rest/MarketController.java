@@ -1,6 +1,6 @@
 package com.xinra.reviewcommunity.rest;
 
-import com.xinra.reviewcommunity.dto.MarketDto;
+import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.MarketService;
 import java.util.List;

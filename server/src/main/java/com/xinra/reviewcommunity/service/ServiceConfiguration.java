@@ -1,7 +1,8 @@
 package com.xinra.reviewcommunity.service;
 
-import com.xinra.nucleus.service.Dto;
-import com.xinra.nucleus.service.DtoFactory;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+import com.xinra.reviewcommunity.shared.dto.InstantiatingDtoFactory;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -15,15 +16,7 @@ public class ServiceConfiguration {
    */
   @Bean
   public DtoFactory dtoFactory() {
-    return new DtoFactory() {
-      @Override public <T extends Dto> T createDto(Class<T> type) {
-        try {
-          return type.newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-          throw new RuntimeException(ex);
-        }
-      }
-    };
+    return new InstantiatingDtoFactory();
   }
   
 }

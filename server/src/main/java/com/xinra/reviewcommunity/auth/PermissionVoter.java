@@ -1,5 +1,7 @@
 package com.xinra.reviewcommunity.auth;
 
+import com.xinra.reviewcommunity.shared.Permission;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

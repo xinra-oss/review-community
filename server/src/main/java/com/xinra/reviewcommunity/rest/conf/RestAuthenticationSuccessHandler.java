@@ -1,10 +1,12 @@
 package com.xinra.reviewcommunity.rest.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
-import com.xinra.reviewcommunity.dto.SuccessfulAuthenticationDto;
-import com.xinra.reviewcommunity.dto.UserDto;
+import com.xinra.reviewcommunity.rest.AuthController;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+import com.xinra.reviewcommunity.shared.dto.SuccessfulAuthenticationDto;
+import com.xinra.reviewcommunity.shared.dto.UserDto;
+
 import com.xinra.reviewcommunity.rest.FrontendUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +32,7 @@ public class RestAuthenticationSuccessHandler
     extends SavedRequestAwareAuthenticationSuccessHandler {
 
   private @Autowired DtoFactory dtoFactory;
+  private @Autowired AuthController authController;
   private final ObjectMapper mapper;
   
   @Autowired
@@ -50,7 +53,7 @@ public class RestAuthenticationSuccessHandler
     SuccessfulAuthenticationDto authDto = dtoFactory.createDto(SuccessfulAuthenticationDto.class);
     authDto.setUser(userDto);
     authDto.setPermissions(user.getPermissions());
-    authDto.setCsrfToken((CsrfToken) request.getAttribute(CsrfToken.class.getName()));
+    authDto.setCsrfToken(authController.getCsrfToken(request));
     
     log.info("User with name '{}' authenticated", user.getName());
     

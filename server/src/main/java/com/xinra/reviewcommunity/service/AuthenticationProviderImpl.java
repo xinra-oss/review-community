@@ -1,13 +1,14 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.Streams;
-import com.xinra.nucleus.service.DtoFactory;
-import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.User;
-import com.xinra.reviewcommunity.entity.UserLevel;
 import com.xinra.reviewcommunity.repo.PasswordLoginRepository;
+import com.xinra.reviewcommunity.shared.Role;
+import com.xinra.reviewcommunity.shared.UserLevel;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NonNull;

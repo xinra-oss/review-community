@@ -5,8 +5,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.xinra.reviewcommunity.SampleContentGenerator;
 import com.xinra.reviewcommunity.entity.Review;
 import com.xinra.reviewcommunity.repo.ReviewRepository;
+import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ public class TestReviewController {
 
   private @Autowired MockMvc mvc;
   private @Autowired ReviewRepository<Review> reviewRepo;
+  private @Autowired SampleContentGenerator sample;
 
   @Test
   public void createReview() throws Exception {
@@ -36,7 +40,7 @@ public class TestReviewController {
             "}";
 
     mvc.perform(post("/de/api/product/1/review").contentType("application/json").content(content)
-            .with(authentication(new TestingAuthenticationToken("jon", "snow", "CREATE_REVIEW")))
+            .with(authentication(AuthenticationProviderImpl.getAuthentication(sample.user)))
             .with(csrf()))
             .andExpect(status().isOk());
   }

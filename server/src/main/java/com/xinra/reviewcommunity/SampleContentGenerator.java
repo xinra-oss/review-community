@@ -2,16 +2,8 @@ package com.xinra.reviewcommunity;
 
 import com.xinra.nucleus.common.ContextHolder;
 import com.xinra.nucleus.entity.EntityFactory;
-import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.nucleus.service.ServiceProvider;
-import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
-import com.xinra.reviewcommunity.dto.CreateBrandDto;
-import com.xinra.reviewcommunity.dto.CreateCategoryDto;
-import com.xinra.reviewcommunity.dto.CreateProductDto;
-import com.xinra.reviewcommunity.dto.CreateReviewCommentDto;
-import com.xinra.reviewcommunity.dto.CreateReviewDto;
-import com.xinra.reviewcommunity.dto.ReviewVoteDto;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.User;
@@ -25,6 +17,15 @@ import com.xinra.reviewcommunity.service.MarketService;
 import com.xinra.reviewcommunity.service.ProductService;
 import com.xinra.reviewcommunity.service.ReviewService;
 import com.xinra.reviewcommunity.service.UserService;
+import com.xinra.reviewcommunity.shared.Role;
+import com.xinra.reviewcommunity.shared.dto.CreateBrandDto;
+import com.xinra.reviewcommunity.shared.dto.CreateCategoryDto;
+import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewCommentDto;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -257,6 +258,8 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     ReviewVoteDto reviewVoteDto5 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto5.setUpvote(false);
     reviewService.vote(reviewVoteDto5, 2);
+    
+    contextHolder.clearMock();
   }
 
   private void createReviewComments() {
@@ -281,6 +284,6 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     reviewService.createReviewComment(createReviewCommentDto3, 2);
 
 
-
+    contextHolder.clearMock();
   }
 }

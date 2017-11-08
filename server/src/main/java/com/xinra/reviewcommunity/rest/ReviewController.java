@@ -1,13 +1,12 @@
 package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.auth.AccessRequires;
-import com.xinra.reviewcommunity.auth.Permission;
-import com.xinra.reviewcommunity.dto.CreateReviewCommentDto;
-import com.xinra.reviewcommunity.dto.CreateReviewDto;
-import com.xinra.reviewcommunity.dto.ReviewCommentDto;
-import com.xinra.reviewcommunity.dto.ReviewDto;
-import com.xinra.reviewcommunity.dto.ReviewVoteDto;
+import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.service.ReviewService;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewDto;
+import com.xinra.reviewcommunity.shared.dto.VoteDto;
+
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;

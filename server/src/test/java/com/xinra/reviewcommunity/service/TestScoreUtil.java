@@ -26,12 +26,6 @@ public class TestScoreUtil {
     assertThat(ScoreUtil.fromAverageRating(4.8000001907349, 10))
             .isCloseTo(0.65545605272928, OFFSET);
   }
-
-  @Test
-  public void fromVotes() {
-    assertThat(ScoreUtil.fromVotes(0, 0))
-            .isCloseTo(0, OFFSET);
-  }
   
   @Test
   public void fromVotes() {

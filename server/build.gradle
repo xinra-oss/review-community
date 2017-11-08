@@ -34,6 +34,8 @@ configurations {
 }
 
 dependencies {
+  compile project(':shared')
+
   compile('org.springframework.boot:spring-boot-starter-aop')
   compile('org.springframework.boot:spring-boot-starter-data-jpa')
   compile('org.springframework.boot:spring-boot-starter-security')
@@ -43,6 +45,8 @@ dependencies {
   runtime('org.postgresql:postgresql')
   runtime('mysql:mysql-connector-java')
   compileOnly('org.projectlombok:lombok')
+
+  compile('com.google.guava:guava:23.3-jre')
   
   compile('com.xinra.nucleus:nucleus-common:0.1.1')
   compile('com.xinra.nucleus:nucleus-entity:0.1.0')

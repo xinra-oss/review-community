@@ -1,8 +1,9 @@
 package com.xinra.reviewcommunity.dto;
 
 import com.xinra.nucleus.entity.EntityPk;
-import com.xinra.reviewcommunity.auth.Permission;
-import com.xinra.reviewcommunity.auth.Role;
+import com.xinra.reviewcommunity.shared.Permission;
+import com.xinra.reviewcommunity.shared.Role;
+import com.xinra.reviewcommunity.shared.dto.UserDto;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NonNull;

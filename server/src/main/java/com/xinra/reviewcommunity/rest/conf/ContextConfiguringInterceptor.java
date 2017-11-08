@@ -3,8 +3,9 @@ package com.xinra.reviewcommunity.rest.conf;
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
-import com.xinra.reviewcommunity.dto.MarketDto;
 import com.xinra.reviewcommunity.service.MarketService;
+import com.xinra.reviewcommunity.shared.dto.MarketDto;
+
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

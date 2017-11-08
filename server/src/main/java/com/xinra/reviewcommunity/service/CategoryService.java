@@ -1,10 +1,11 @@
 package com.xinra.reviewcommunity.service;
 
-import com.xinra.reviewcommunity.dto.CategoryDto;
-import com.xinra.reviewcommunity.dto.CreateCategoryDto;
-import com.xinra.reviewcommunity.dto.SerialDto;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
+import com.xinra.reviewcommunity.shared.dto.CategoryDto;
+import com.xinra.reviewcommunity.shared.dto.CreateCategoryDto;
+import com.xinra.reviewcommunity.shared.dto.SerialDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;

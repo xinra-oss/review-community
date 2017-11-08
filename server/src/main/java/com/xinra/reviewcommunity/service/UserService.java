@@ -1,13 +1,14 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.ImmutableSet;
-import com.xinra.reviewcommunity.auth.Role;
-import com.xinra.reviewcommunity.dto.UserDto;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
 import com.xinra.reviewcommunity.entity.User;
-import com.xinra.reviewcommunity.entity.UserLevel;
 import com.xinra.reviewcommunity.repo.PasswordLoginRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
+import com.xinra.reviewcommunity.shared.Role;
+import com.xinra.reviewcommunity.shared.UserLevel;
+import com.xinra.reviewcommunity.shared.dto.UserDto;
+
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

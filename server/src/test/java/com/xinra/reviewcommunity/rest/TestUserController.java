@@ -31,12 +31,12 @@ public class TestUserController {
   
   @Test
   public void createUserTwice() throws Exception {
-    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("username", "testuser");
-    params.add("password", "secret");
-    params.add("confirmPassword", "secret");
+	String content = "{\"username\": \"testuser\", \"password\": \"secret\"}";
     
-    mvc.perform(post("/api/user").params(params).with(csrf()))
+    mvc.perform(post("/api/user")
+        .contentType("application/json")
+        .content(content)
+        .with(csrf()))
         .andExpect(status().isOk());
     
     assertThat(userRepo.findByName("testuser"))
@@ -44,7 +44,10 @@ public class TestUserController {
         .isNotNull();
     
     // creating a user with the same name again should fail
-    mvc.perform(post("/api/user").params(params).with(csrf()))
+    mvc.perform(post("/api/user")
+    	.contentType("application/json")
+        .content(content)
+        .with(csrf()))
         .andExpect(status().isBadRequest());
     
   }

@@ -1,9 +1,9 @@
 package com.xinra.reviewcommunity.rest;
 
 import com.xinra.nucleus.common.ApplicationContextProvider;
-import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
-import com.xinra.reviewcommunity.dto.UserDto;
+import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+import com.xinra.reviewcommunity.shared.dto.UserDto;
 import org.springframework.web.context.request.RequestContextHolder;
 
 public class FrontendUtil {
