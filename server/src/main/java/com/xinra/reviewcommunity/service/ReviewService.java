@@ -6,18 +6,18 @@ import com.xinra.reviewcommunity.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.dto.ReviewDto;
 import com.xinra.reviewcommunity.dto.UserDto;
-import com.xinra.reviewcommunity.dto.VoteDto;
+import com.xinra.reviewcommunity.dto.ReviewVoteDto;
 import com.xinra.reviewcommunity.entity.OrderBy;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.Review;
 import com.xinra.reviewcommunity.entity.ReviewComment;
+import com.xinra.reviewcommunity.entity.ReviewVote;
 import com.xinra.reviewcommunity.entity.User;
-import com.xinra.reviewcommunity.entity.Vote;
 import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.repo.ReviewCommentRepository;
 import com.xinra.reviewcommunity.repo.ReviewRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
-import com.xinra.reviewcommunity.repo.VoteRepository;
+import com.xinra.reviewcommunity.repo.ReviewVoteRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
@@ -35,7 +35,7 @@ public class ReviewService extends AbstractService {
   private @Autowired ReviewCommentRepository<ReviewComment> reviewCommentRepo;
   private @Autowired ProductRepository<Product> productRepo;
   private @Autowired UserRepository<User> userRepo;
-  private @Autowired VoteRepository<Vote> voteRepo;
+  private @Autowired ReviewVoteRepository<ReviewVote> voteRepo;
 
   /**
    * Creates a new review.
@@ -66,12 +66,12 @@ public class ReviewService extends AbstractService {
 
     int numRatings = product.getNumRatings();
     double avgRatingOld = product.getAvgRating();
-
     double avgRatingNew = (numRatings * avgRatingOld + createReviewDto.getRating())
             / (numRatings + 1);
 
     product.setNumRatings(numRatings + 1);
     product.setAvgRating(avgRatingNew);
+//    product.setScore(ScoreUtil.fromAverageRating(avgRatingNew, numRatings));
 
     int serial = serviceProvider.getService(SerialService.class).getNextSerial(Review.class);
     review.setSerial(serial);
@@ -111,28 +111,31 @@ public class ReviewService extends AbstractService {
   /**
    * Creates or uptates the upvotes for a review.
    */
-  public void vote(VoteDto voteDto, int reviewSerial) {
+  public void vote(ReviewVoteDto reviewVoteDto, int reviewSerial) {
 
     User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
     Review review = reviewRepo.findBySerial(reviewSerial);
-    Vote vote = voteRepo.findByUserIdAndReviewId(user.getPk().getId(), review.getPk().getId());
-
-    if (vote != null) {
-      vote.setUpvote(voteDto.isUpvote());
-    } else {
-      vote = entityFactory.createEntity(Vote.class);
-      vote.setUpvote(voteDto.isUpvote());
-      vote.setReview(review);
-      vote.setUser(user);
-    }
+    ReviewVote vote = voteRepo.findByUserIdAndReviewId(user.getPk().getId(), review.getPk().getId());
 
     int numUpvotes = review.getNumUpvotes();
     int numDownvotes = review.getNumDownvotes();
-    if (voteDto.isUpvote()) {
-      review.setNumUpvotes(numUpvotes + 1);
+
+    if (vote != null) {
+      //TODO upvote downvote
+      vote.setUpvote(reviewVoteDto.isUpvote());
     } else {
-      review.setNumDownvotes(numDownvotes + 1);
+      vote = entityFactory.createEntity(ReviewVote.class);
+      vote.setUpvote(reviewVoteDto.isUpvote());
+      vote.setReview(review);
+      vote.setUser(user);
+      if (reviewVoteDto.isUpvote()) {
+        review.setNumUpvotes(numUpvotes + 1);
+      } else {
+        review.setNumDownvotes(numDownvotes + 1);
+      }
     }
+
+//    review.setScore(ScoreUtil.fromVotes((double) numUpvotes, (double) numDownvotes));
 
     voteRepo.save(vote);
   }

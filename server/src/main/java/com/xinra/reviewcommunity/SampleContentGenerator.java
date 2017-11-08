@@ -11,7 +11,7 @@ import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.dto.CreateReviewCommentDto;
 import com.xinra.reviewcommunity.dto.CreateReviewDto;
-import com.xinra.reviewcommunity.dto.VoteDto;
+import com.xinra.reviewcommunity.dto.ReviewVoteDto;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.User;
@@ -236,25 +236,25 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
 
     ReviewService reviewService = serviceProvider.getService(ReviewService.class);
 
-    VoteDto voteDto1 = dtoFactory.createDto(VoteDto.class);
-    voteDto1.setUpvote(true);
-    reviewService.vote(voteDto1, 1);
+    ReviewVoteDto reviewVoteDto1 = dtoFactory.createDto(ReviewVoteDto.class);
+    reviewVoteDto1.setUpvote(true);
+    reviewService.vote(reviewVoteDto1, 1);
 
-    VoteDto voteDto2 = dtoFactory.createDto(VoteDto.class);
-    voteDto2.setUpvote(true);
-    reviewService.vote(voteDto2, 1);
+    ReviewVoteDto reviewVoteDto2 = dtoFactory.createDto(ReviewVoteDto.class);
+    reviewVoteDto2.setUpvote(true);
+    reviewService.vote(reviewVoteDto2, 1);
 
-    VoteDto voteDto3 = dtoFactory.createDto(VoteDto.class);
-    voteDto3.setUpvote(false);
-    reviewService.vote(voteDto3, 1);
+    ReviewVoteDto reviewVoteDto3 = dtoFactory.createDto(ReviewVoteDto.class);
+    reviewVoteDto3.setUpvote(false);
+    reviewService.vote(reviewVoteDto3, 1);
 
-    VoteDto voteDto4 = dtoFactory.createDto(VoteDto.class);
-    voteDto4.setUpvote(true);
-    reviewService.vote(voteDto4, 2);
+    ReviewVoteDto reviewVoteDto4 = dtoFactory.createDto(ReviewVoteDto.class);
+    reviewVoteDto4.setUpvote(true);
+    reviewService.vote(reviewVoteDto4, 2);
 
-    VoteDto voteDto5 = dtoFactory.createDto(VoteDto.class);
-    voteDto5.setUpvote(false);
-    reviewService.vote(voteDto5, 2);
+    ReviewVoteDto reviewVoteDto5 = dtoFactory.createDto(ReviewVoteDto.class);
+    reviewVoteDto5.setUpvote(false);
+    reviewService.vote(reviewVoteDto5, 2);
   }
 
   private void createReviewComments() {
