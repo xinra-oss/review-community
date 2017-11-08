@@ -7,14 +7,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.xinra.reviewcommunity.SampleContentGenerator;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.repo.ProductRepository;
+import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +30,7 @@ public class TestProductController {
 
   private @Autowired MockMvc mvc;
   private @Autowired ProductRepository<Product> productRepo;
+  private @Autowired SampleContentGenerator sample;
 
   @Test
   public void createProduct() throws Exception {
@@ -42,7 +44,7 @@ public class TestProductController {
 
     // creating a product should work
     mvc.perform(post("/de/api/product").contentType("application/json").content(content)
-        .with(authentication(new TestingAuthenticationToken("jon", "snow", "CREATE_PRODUCT")))
+        .with(authentication(AuthenticationProviderImpl.getAuthentication(sample.user)))
         .with(csrf()))
         .andExpect(status().isOk());
 
