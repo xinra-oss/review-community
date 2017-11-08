@@ -71,7 +71,7 @@ public class ReviewService extends AbstractService {
 
     product.setNumRatings(numRatings + 1);
     product.setAvgRating(avgRatingNew);
-//    product.setScore(ScoreUtil.fromAverageRating(avgRatingNew, numRatings));
+    product.setScore(ScoreUtil.fromAverageRating(avgRatingNew, numRatings));
 
     int serial = serviceProvider.getService(SerialService.class).getNextSerial(Review.class);
     review.setSerial(serial);
@@ -135,7 +135,7 @@ public class ReviewService extends AbstractService {
       }
     }
 
-//    review.setScore(ScoreUtil.fromVotes((double) numUpvotes, (double) numDownvotes));
+    review.setScore(ScoreUtil.fromVotes((double) numUpvotes, (double) numDownvotes));
 
     voteRepo.save(vote);
   }

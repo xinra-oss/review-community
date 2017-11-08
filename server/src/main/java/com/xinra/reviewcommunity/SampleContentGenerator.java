@@ -240,10 +240,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     reviewVoteDto1.setUpvote(true);
     reviewService.vote(reviewVoteDto1, 1);
 
-    ReviewVoteDto reviewVoteDto2 = dtoFactory.createDto(ReviewVoteDto.class);
-    reviewVoteDto2.setUpvote(true);
-    reviewService.vote(reviewVoteDto2, 1);
-
+    contextHolder.get().setAuthenticatedUser(user);
     ReviewVoteDto reviewVoteDto3 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto3.setUpvote(false);
     reviewService.vote(reviewVoteDto3, 1);
@@ -251,6 +248,11 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     ReviewVoteDto reviewVoteDto4 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto4.setUpvote(true);
     reviewService.vote(reviewVoteDto4, 2);
+
+    contextHolder.get().setAuthenticatedUser(moderator);
+    ReviewVoteDto reviewVoteDto2 = dtoFactory.createDto(ReviewVoteDto.class);
+    reviewVoteDto2.setUpvote(true);
+    reviewService.vote(reviewVoteDto2, 1);
 
     ReviewVoteDto reviewVoteDto5 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto5.setUpvote(false);
