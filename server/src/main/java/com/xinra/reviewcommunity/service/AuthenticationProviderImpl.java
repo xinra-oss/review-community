@@ -5,6 +5,7 @@ import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.entity.PasswordLogin;
+import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.entity.UserLevel;
 import com.xinra.reviewcommunity.repo.PasswordLoginRepository;
 import java.util.Set;
@@ -22,6 +23,43 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @RequiredArgsConstructor
 public class AuthenticationProviderImpl implements AuthenticationProvider {
+  
+  /**
+   * Converts a {@link User} entity to an {@link AuthenticatedUserDto}. Note that
+   * {@link User#getRoles()} has to be fetched already.
+   */
+  public static AuthenticatedUserDto getAuthenticatedUserDto(User user, DtoFactory dtoFactory) {
+    AuthenticatedUserDto dto = dtoFactory.createDto(AuthenticatedUserDto.class);
+    dto.setName(user.getName());
+    dto.setPk(user.getPk());
+    dto.setRoles(Role.getAllTransitiveRoles(user.getRoles()));
+    dto.setPermissions(Role.getAllTransitivePermissions(dto.getRoles()));
+    dto.setLevel(UserLevel.getFromRoles(dto.getRoles()));
+    return dto;
+  }
+  
+  /**
+   * Creates an {@link Authentication} from an {@link AuthenticatedUserDto}.
+   */
+  public static Authentication getAuthentication(AuthenticatedUserDto dto) {
+    // combine roles and permissions so that both can be used with Spring Security
+    Set<GrantedAuthority> grantedAuthorities 
+        = Streams.concat(dto.getRoles().stream(), dto.getPermissions().stream())
+          .map(Object::toString)
+          .map(SimpleGrantedAuthority::new)
+          .collect(Collectors.toSet());
+    
+    // password is not needed anymore so we omit it
+    return new UsernamePasswordAuthenticationToken(dto, null, grantedAuthorities);
+  }
+  
+  /**
+   * Creates an {@link Authentication} from a {@link User} entity. Note that {@link User#getRoles()}
+   * has to be fetched already.
+   */
+  public static Authentication getAuthentication(User user, DtoFactory dtoFactory) {
+    return getAuthentication(getAuthenticatedUserDto(user, dtoFactory));
+  }
   
   private final @NonNull DtoFactory dtoFactory;
   private final @NonNull PasswordLoginRepository<PasswordLogin> passwordLoginRepo;
@@ -42,21 +80,7 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
       throw new BadCredentialsException("Bad Credentials");
     }
     
-    AuthenticatedUserDto user = dtoFactory.createDto(AuthenticatedUserDto.class);
-    user.setName(username);
-    user.setPk(login.getUser().getPk());
-    user.setRoles(Role.getAllTransitiveRoles(login.getUser().getRoles()));
-    user.setPermissions(Role.getAllTransitivePermissions(user.getRoles()));
-    user.setLevel(UserLevel.getFromRoles(user.getRoles()));
-    
-    // combine roles and permissions so that both can be used with Spring Security
-    Set<GrantedAuthority> grantedAuthorities 
-        = Streams.concat(user.getRoles().stream(), user.getPermissions().stream())
-          .map(Object::toString)
-          .map(SimpleGrantedAuthority::new)
-          .collect(Collectors.toSet());
-    
-    return new UsernamePasswordAuthenticationToken(user, password, grantedAuthorities);
+    return getAuthentication(login.getUser(), dtoFactory);
   }
 
   @Override
