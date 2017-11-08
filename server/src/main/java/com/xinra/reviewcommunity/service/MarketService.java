@@ -42,7 +42,6 @@ public class MarketService extends AbstractService {
       entityCache.put(market.getSlug(), market);
       dtoCache.put(market.getSlug(), toDto(market));
     });
-    System.out.println();
   }
   
   private MarketDto toDto(Market market) {
@@ -56,9 +55,6 @@ public class MarketService extends AbstractService {
   }
   
   public Market getEntity(String slug) {
-	  if (dtoCache.get(slug) == null) {
-			System.out.println();
-		}
     return entityCache.get(slug); 
   }
   
