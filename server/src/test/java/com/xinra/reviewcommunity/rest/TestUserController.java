@@ -34,8 +34,8 @@ public class TestUserController {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("username", "testuser");
     params.add("password", "secret");
+    params.add("confirmPassword", "secret");
     
-    // creating a user should work
     mvc.perform(post("/api/user").params(params).with(csrf()))
         .andExpect(status().isOk());
     

@@ -7,7 +7,8 @@ repositories {
 dependencies {
     compileOnly('org.projectlombok:lombok:1.16.18')
     implementation('org.hibernate:hibernate-validator:5.3.5.Final')
-    api('com.google.guava:guava:21.0')
+    api('com.google.guava:guava:23.3-android')
+    api('com.fasterxml.jackson.core:jackson-annotations:2.8.0')
 }
 
 sourceCompatibility = "1.8"

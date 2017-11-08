@@ -5,6 +5,8 @@ import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +61,11 @@ public enum Role {
    * combined into one enum set.
    */
   public static ImmutableSet<Role> getAllTransitiveRoles(@NonNull Collection<Role> roles) {
-    return roles.stream()
-        .map(Role::getTransitiveRoles)
-        .flatMap(Set::stream)
-        .collect(Sets.toImmutableEnumSet());
+    Set<Role> transitiveRoles = new HashSet<>();
+    for (Role role: roles) {
+      transitiveRoles.addAll(role.getTransitiveRoles());
+    }
+    return Sets.immutableEnumSet(transitiveRoles);
   }
   
   /**
@@ -71,10 +74,12 @@ public enum Role {
    */
   public static ImmutableSet<Permission> 
       getAllTransitivePermissions(@NonNull Collection<Role> roles) {
-    return roles.stream()
-        .map(Role::getTransitivePermissions)
-        .flatMap(Set::stream)
-        .collect(Sets.toImmutableEnumSet());
+
+    Set<Permission> transitivePermissions = new HashSet<>();
+    for (Role role: roles) {
+      transitivePermissions.addAll(role.getTransitivePermissions());
+    }
+    return Sets.immutableEnumSet(transitivePermissions);
   }
   
   private final ImmutableSet<Role> parents;
@@ -87,11 +92,13 @@ public enum Role {
    */
   public ImmutableSet<Role> getTransitiveRoles() {
     if (transitiveRoles == null) {
-      Set<Role> roles = new HashSet<>();
-      roles.add(this);
+      Set<Role> transitiveRoles = new HashSet<>();
+      transitiveRoles.add(this);
       // it is not possible to declare circular inheritance
-      parents.forEach(p -> roles.addAll(p.getTransitiveRoles()));
-      transitiveRoles = Sets.immutableEnumSet(roles);
+      for (Role child: parents) {
+        transitiveRoles.addAll(child.getTransitiveRoles());
+      }
+      this.transitiveRoles = Sets.immutableEnumSet(transitiveRoles);
     }
     return transitiveRoles;
   }
@@ -102,10 +109,12 @@ public enum Role {
    */
   public ImmutableSet<Permission> getTransitivePermissions() {
     if (transitivePermissions == null) {
-      Set<Permission> roles = new HashSet<>();
-      roles.addAll(permissions);
-      parents.forEach(p -> roles.addAll(p.getTransitivePermissions()));
-      transitivePermissions = Sets.immutableEnumSet(roles);
+      Set<Permission> transitivePermissions = new HashSet<>();
+      transitivePermissions.addAll(permissions);
+      for (Role child: parents) {
+        transitivePermissions.addAll(child.getTransitivePermissions());
+      }
+      this.transitivePermissions = Sets.immutableEnumSet(transitivePermissions);
     }
     return transitivePermissions;
   }

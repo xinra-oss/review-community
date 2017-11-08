@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 // app
 import { Config, ILang, LogService } from '../../core/index';
-import { IAppState } from '../../ngrx/index';
+import { AppState } from '../../ngrx/index';
 import { ElectronEventService } from '../../electron/index';
 import * as multilingual from '../actions/index';
 import { MultilingualService, Languages, LanguageViewHelper } from '../services/index';
@@ -21,7 +21,7 @@ export class LangSwitcherComponent {
   public supportedLanguages: Array<ILang>;
 
   constructor(
-    private store: Store<IAppState>,
+    private store: Store<AppState>,
     private log: LogService,
     @Inject(Languages) private languages,
     @Inject(LanguageViewHelper) private viewHelper
