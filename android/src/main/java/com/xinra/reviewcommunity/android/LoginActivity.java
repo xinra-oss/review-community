@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.util.Optional;
+import com.google.common.base.Optional;
 
 public class LoginActivity extends AbstractActivity {
 

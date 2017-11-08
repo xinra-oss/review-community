@@ -7,7 +7,7 @@ import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import com.xinra.reviewcommunity.shared.dto.UserDto;
 
 import java.util.List;
-import java.util.Optional;
+import com.google.common.base.Optional;
 import java.util.Set;
 
 import io.reactivex.Observable;
@@ -25,7 +25,7 @@ public class AppState {
   // For these we don't need to notify observers of updates.
   public CsrfTokenDto csrfToken;
   public String sessionCookie;
-  public final BehaviorSubject<Optional<UserDto>> authenticatedUser = BehaviorSubject.createDefault(Optional.empty());
+  public final BehaviorSubject<Optional<UserDto>> authenticatedUser = BehaviorSubject.createDefault(Optional.absent());
   public final BehaviorSubject<Set<Permission>> permissions = BehaviorSubject.create();
 
   public final BehaviorSubject<MarketDto> market = BehaviorSubject.create();

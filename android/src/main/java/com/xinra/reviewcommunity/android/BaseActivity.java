@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.Collections;
-import java.util.Optional;
+import com.google.common.base.Optional;
 
 /**
  * Base class for "top-level" activities that have the toolbar and side drawer. Note that subclasses
@@ -106,7 +106,7 @@ public abstract class BaseActivity extends AbstractActivity
 
   private void logout() {
     getApi().deleteSession().subscribe(() -> {
-      getState().authenticatedUser.onNext(Optional.empty());
+      getState().authenticatedUser.onNext(Optional.absent());
       getState().permissions.onNext(Collections.emptySet());
       navUsername.setText(R.string.unauthenticated_username);
       Snackbar.make(contentFrame, "Successfully signed out", Snackbar.LENGTH_SHORT).show();
