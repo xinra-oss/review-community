@@ -1,6 +1,6 @@
 package com.xinra.reviewcommunity.entity;
 
-public enum SortBy {
+public enum OrderBy {
 
   RATING,
   DATE

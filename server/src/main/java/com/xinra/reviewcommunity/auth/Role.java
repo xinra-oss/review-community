@@ -29,7 +29,8 @@ public enum Role {
     inheritsFrom(),
     addsPermissions(
       Permission.CREATE_PRODUCT,
-      Permission.CREATE_REVIEW
+      Permission.CREATE_REVIEW,
+      Permission.CREATE_REVIEW_COMMENT
     )
   ),
   MODERATOR(

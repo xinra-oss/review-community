@@ -10,10 +10,11 @@ public class ReviewAlreadyExistsException extends RuntimeException {
   /**
    * Thrown if Review for a Product by a specific User already exists.
    */
-  public ReviewAlreadyExistsException(Class<? extends SerialEntity> type, int serial) {
+  public ReviewAlreadyExistsException(Class<? extends SerialEntity> type,
+                                      int serial, String userName) {
     super("The Entity with name " + type.getSimpleName()
             + " and serial " + serial
-            + " already exists.");
+            + " already exists for User " + userName);
   }
 
 }

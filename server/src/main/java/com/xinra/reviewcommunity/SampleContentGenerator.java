@@ -9,6 +9,7 @@ import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
+import com.xinra.reviewcommunity.dto.CreateReviewCommentDto;
 import com.xinra.reviewcommunity.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.dto.VoteDto;
 import com.xinra.reviewcommunity.entity.Market;
@@ -68,8 +69,9 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
         createBrands();
         createCategories();
         createProducts();
-//        createReviews();
-//        createVotes();
+        createReviews();
+        createReviewComments();
+        createVotes();
       }
       log.info("Finished generating sample data");
     }
@@ -172,8 +174,8 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createProductDto2.setCategorySerial(3);
 
     CreateProductDto createProductDto3 = dtoFactory.createDto(CreateProductDto.class);
-    createProductDto3.setName("No Man's Sky");
-    createProductDto3.setDescription("Idle Game");
+    createProductDto3.setName("PUBG");
+    createProductDto3.setDescription("Battle Royal");
     createProductDto3.setBrandSerial(2);
     createProductDto3.setCategorySerial(5);
 
@@ -201,34 +203,36 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
 
   private void createReviews() {
     contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
-//    contextHolder.get().setAuthenticatedUser(serviceProvider.getService(UserService.class)
-//            .createUserWithPassword("Eric","eric@coon.org", "coonandfriends" ));
-//
-//    AuthenticatedUserDto authenticatedUserDto = dtoFactory.createDto(AuthenticatedUserDto.class);
-//
-//
-//    contextHolder.get().setAuthenticatedUser();
-
 
     ReviewService reviewService = serviceProvider.getService(ReviewService.class);
 
+    contextHolder.get().setAuthenticatedUser(admin);
     CreateReviewDto createReviewDto1 = dtoFactory.createDto(CreateReviewDto.class);
-    createReviewDto1.setTitle("My review on PUBG");
+    createReviewDto1.setTitle("My Review on PUBG");
     createReviewDto1.setText("FPP ftw!");
-    createReviewDto1.setRating(1);
+    createReviewDto1.setRating(5);
     reviewService.createReview(createReviewDto1, 3);
 
+    contextHolder.get().setAuthenticatedUser(moderator);
     CreateReviewDto createReviewDto2 = dtoFactory.createDto(CreateReviewDto.class);
     createReviewDto2.setTitle("My Review on PUBG");
     createReviewDto2.setText("E-Sports ready");
-    createReviewDto2.setRating(2);
+    createReviewDto2.setRating(3);
     reviewService.createReview(createReviewDto2, 3);
+
+    contextHolder.get().setAuthenticatedUser(user);
+    CreateReviewDto createReviewDto3 = dtoFactory.createDto(CreateReviewDto.class);
+    createReviewDto3.setTitle("My Review on PUBG");
+    createReviewDto3.setText("Early Access");
+    createReviewDto3.setRating(4);
+    reviewService.createReview(createReviewDto3, 3);
 
     contextHolder.clearMock();
   }
 
   private void createVotes() {
     contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
+    contextHolder.get().setAuthenticatedUser(admin);
 
     ReviewService reviewService = serviceProvider.getService(ReviewService.class);
 
@@ -251,5 +255,30 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     VoteDto voteDto5 = dtoFactory.createDto(VoteDto.class);
     voteDto5.setUpvote(false);
     reviewService.vote(voteDto5, 2);
+  }
+
+  private void createReviewComments() {
+    contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
+    contextHolder.get().setAuthenticatedUser(admin);
+
+    ReviewService reviewService = serviceProvider.getService(ReviewService.class);
+
+    CreateReviewCommentDto createReviewCommentDto =
+            dtoFactory.createDto(CreateReviewCommentDto.class);
+    createReviewCommentDto.setText("Thanks for your review.");
+    reviewService.createReviewComment(createReviewCommentDto, 1);
+
+    CreateReviewCommentDto createReviewCommentDto2 =
+            dtoFactory.createDto(CreateReviewCommentDto.class);
+    createReviewCommentDto2.setText("Thanks for your review.");
+    reviewService.createReviewComment(createReviewCommentDto2, 1);
+
+    CreateReviewCommentDto createReviewCommentDto3 =
+            dtoFactory.createDto(CreateReviewCommentDto.class);
+    createReviewCommentDto3.setText("Thanks for your review.");
+    reviewService.createReviewComment(createReviewCommentDto3, 2);
+
+
+
   }
 }
