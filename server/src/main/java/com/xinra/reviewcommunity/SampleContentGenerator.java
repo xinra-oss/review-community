@@ -5,13 +5,17 @@ import com.xinra.nucleus.entity.EntityFactory;
 import com.xinra.nucleus.service.DtoFactory;
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.auth.Role;
+import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.Product;
+import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.repo.MarketRepository;
 import com.xinra.reviewcommunity.repo.ProductRepository;
+import com.xinra.reviewcommunity.repo.UserRepository;
+import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import com.xinra.reviewcommunity.service.BrandService;
 import com.xinra.reviewcommunity.service.CategoryService;
 import com.xinra.reviewcommunity.service.MarketService;
@@ -31,15 +35,27 @@ import org.springframework.stereotype.Component;
 @Profile({"test", "dev"})
 public class SampleContentGenerator implements ApplicationListener<ContextRefreshedEvent> {
   
+  private static final String USERNAME_ADMIN = "justus";
+  private static final String USERNAME_MODERATOR = "peter";
+  private static final String USERNAME_USER = "bob";
+  private static final String PASSWORD = "123";
+  
+  public AuthenticatedUserDto admin;
+  public AuthenticatedUserDto moderator;
+  public AuthenticatedUserDto user;
+  
   private @Autowired ContextHolder<Context> contextHolder;
   private @Autowired Environment environment;
   private @Autowired ServiceProvider serviceProvider;
   private @Autowired DtoFactory dtoFactory;
   private @Autowired EntityFactory entityFactory;
   private @Autowired MarketRepository<Market> marketRepo;
+  private @Autowired UserRepository<User> userRepo;
   @SuppressWarnings("unused")
   private @Autowired ProductRepository<Product> productRepo;
   private @Value("${spring.jpa.hibernate.ddl-auto:''}") String schemaExport;
+  
+  
   
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -47,10 +63,10 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
       log.info("Start generating sample data");
       createMarkets();
       if (environment.acceptsProfiles("dev", "test")) {
+        createUsers();
         createBrands();
         createCategories();
         createProducts();
-        createUsers();
       }
       log.info("Finished generating sample data");
     }
@@ -69,13 +85,24 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   
   private void createUsers() {
     UserService userService = serviceProvider.getService(UserService.class);
-    userService.createUserWithPassword("justus", null, "123");
-    userService.addRole("justus", Role.ADMIN);
-    userService.createUserWithPassword("peter", null, "123");
-    userService.addRole("peter", Role.MODERATOR);
-    userService.createUserWithPassword("bob", null, "123");
+    
+    // create admin
+    userService.createUserWithPassword(USERNAME_ADMIN, null, PASSWORD);
+    userService.addRole(USERNAME_ADMIN, Role.ADMIN);
+    admin = AuthenticationProviderImpl
+        .getAuthenticatedUserDto(userRepo.findByNameFetchRoles(USERNAME_ADMIN), dtoFactory);
+    
+    // create moderator
+    userService.createUserWithPassword(USERNAME_MODERATOR, null, PASSWORD);
+    userService.addRole(USERNAME_MODERATOR, Role.MODERATOR);
+    moderator = AuthenticationProviderImpl
+        .getAuthenticatedUserDto(userRepo.findByNameFetchRoles(USERNAME_MODERATOR), dtoFactory);
+    
+    // create normal user
+    userService.createUserWithPassword(USERNAME_USER, null, PASSWORD);
+    user = AuthenticationProviderImpl
+        .getAuthenticatedUserDto(userRepo.findByNameFetchRoles(USERNAME_USER), dtoFactory);
   }
-
 
   private void createCategories() {
     contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
