@@ -16,6 +16,8 @@ public class ReviewDto extends SerialDto {
   @JsonFormat(pattern = JsonUtil.ZONED_DATE_FORMAT)
   private ZonedDateTime createdAt;
 
+  private int productSerial;
+
   private UserDto userDto;
   private int numUpvotes;
   private int numDownvotes;

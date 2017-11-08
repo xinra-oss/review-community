@@ -7,14 +7,13 @@ import com.xinra.reviewcommunity.dto.UserDto;
 import com.xinra.reviewcommunity.dto.VoteDto;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.Review;
+import com.xinra.reviewcommunity.entity.SortBy;
 import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.entity.Vote;
 import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.repo.ReviewRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
 import com.xinra.reviewcommunity.repo.VoteRepository;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
@@ -45,6 +44,12 @@ public class ReviewService extends AbstractService {
 
     User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
 
+    Review existingReview = reviewRepo.findByUserIdAndProductId(user.getPk().getId(),
+                                                                product.getPk().getId());
+    if (existingReview != null) {
+      throw new ReviewAlreadyExistsException(Review.class, existingReview.getSerial());
+    }
+
     Review review = entityFactory.createEntity(Review.class);
     review.setTitle(createReviewDto.getTitle());
     review.setRating(createReviewDto.getRating());
@@ -71,25 +76,26 @@ public class ReviewService extends AbstractService {
   /**
    * Returns a list of all reviews.
    */
-  public List<ReviewDto> getAllReviews(String sortBy, String order) {
-    List<ReviewDto> list = Streams.stream(reviewRepo.findAll())
+  public List<ReviewDto> getAllReviews(String oderBy, int productSerial) {
+
+    Product product = productRepo.findBySerial(productSerial);
+    if (product == null) {
+      throw new SerialNotFoundException(Product.class, productSerial);
+    }
+    List<ReviewDto> list;
+
+    if (oderBy.equals(SortBy.DATE.name())) {
+      list = Streams.stream(reviewRepo.findByProductIdOrderByCreatedAtDesc(product.getPk().getId()))
+              .map(this::toDto)
+              .collect(Collectors.toList());
+    } else if (oderBy.equals(SortBy.RATING.name())) {
+      list = Streams.stream(reviewRepo.findByProductIdOrderByRatingDesc(product.getPk().getId()))
+              .map(this::toDto)
+              .collect(Collectors.toList());
+    } else {
+      list = Streams.stream(reviewRepo.findByProductId(product.getPk().getId()))
             .map(this::toDto)
             .collect(Collectors.toList());
-
-    if (sortBy.equals("date")) {
-      if (order.equals("asc")) {
-        Collections.sort(list, Comparator.comparing(ReviewDto::getCreatedAt));
-      } else {
-//      Collections.sort(list, (o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()));
-        Collections.sort(list, Comparator.comparing(ReviewDto::getCreatedAt).reversed());
-      }
-    } else if (sortBy.equals("rating")) {
-      if (order.equals("asc")) {
-        Collections.sort(list, Comparator.comparingInt(ReviewDto::getRating));
-      } else {
-//        Collections.sort(list, (o1, o2) -> o2.getRating() - o1.getRating());
-        Collections.sort(list, Comparator.comparingInt(ReviewDto::getRating).reversed());
-      }
     }
     return list;
   }

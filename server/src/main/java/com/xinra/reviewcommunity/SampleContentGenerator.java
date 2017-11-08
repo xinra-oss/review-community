@@ -8,6 +8,8 @@ import com.xinra.reviewcommunity.auth.Role;
 import com.xinra.reviewcommunity.dto.CreateBrandDto;
 import com.xinra.reviewcommunity.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.dto.CreateProductDto;
+import com.xinra.reviewcommunity.dto.CreateReviewDto;
+import com.xinra.reviewcommunity.dto.VoteDto;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.repo.MarketRepository;
@@ -16,6 +18,7 @@ import com.xinra.reviewcommunity.service.BrandService;
 import com.xinra.reviewcommunity.service.CategoryService;
 import com.xinra.reviewcommunity.service.MarketService;
 import com.xinra.reviewcommunity.service.ProductService;
+import com.xinra.reviewcommunity.service.ReviewService;
 import com.xinra.reviewcommunity.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +43,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   @SuppressWarnings("unused")
   private @Autowired ProductRepository<Product> productRepo;
   private @Value("${spring.jpa.hibernate.ddl-auto:''}") String schemaExport;
-  
+
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
     if (environment.acceptsProfiles("test") || schemaExport.startsWith("create")) {
@@ -51,6 +54,8 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
         createCategories();
         createProducts();
         createUsers();
+//        createReviews();
+//        createVotes();
       }
       log.info("Finished generating sample data");
     }
@@ -75,7 +80,6 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     userService.addRole("peter", Role.MODERATOR);
     userService.createUserWithPassword("bob", null, "123");
   }
-
 
   private void createCategories() {
     contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
@@ -142,8 +146,8 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createProductDto2.setCategorySerial(3);
 
     CreateProductDto createProductDto3 = dtoFactory.createDto(CreateProductDto.class);
-    createProductDto3.setName("Coca Cola Light");
-    createProductDto3.setDescription("Share a Coke with Olofmeister");
+    createProductDto3.setName("No Man's Sky");
+    createProductDto3.setDescription("Idle Game");
     createProductDto3.setBrandSerial(2);
     createProductDto3.setCategorySerial(5);
 
@@ -167,5 +171,59 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     productService.createProduct(createProductDto5);
 
     contextHolder.clearMock();
+  }
+
+  private void createReviews() {
+    contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
+//    contextHolder.get().setAuthenticatedUser(serviceProvider.getService(UserService.class)
+//            .createUserWithPassword("Eric","eric@coon.org", "coonandfriends" ));
+//
+//    AuthenticatedUserDto authenticatedUserDto = dtoFactory.createDto(AuthenticatedUserDto.class);
+//
+//
+//    contextHolder.get().setAuthenticatedUser();
+
+
+    ReviewService reviewService = serviceProvider.getService(ReviewService.class);
+
+    CreateReviewDto createReviewDto1 = dtoFactory.createDto(CreateReviewDto.class);
+    createReviewDto1.setTitle("My review on PUBG");
+    createReviewDto1.setText("FPP ftw!");
+    createReviewDto1.setRating(1);
+    reviewService.createReview(createReviewDto1, 3);
+
+    CreateReviewDto createReviewDto2 = dtoFactory.createDto(CreateReviewDto.class);
+    createReviewDto2.setTitle("My Review on PUBG");
+    createReviewDto2.setText("E-Sports ready");
+    createReviewDto2.setRating(2);
+    reviewService.createReview(createReviewDto2, 3);
+
+    contextHolder.clearMock();
+  }
+
+  private void createVotes() {
+    contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
+
+    ReviewService reviewService = serviceProvider.getService(ReviewService.class);
+
+    VoteDto voteDto1 = dtoFactory.createDto(VoteDto.class);
+    voteDto1.setUpvote(true);
+    reviewService.vote(voteDto1, 1);
+
+    VoteDto voteDto2 = dtoFactory.createDto(VoteDto.class);
+    voteDto2.setUpvote(true);
+    reviewService.vote(voteDto2, 1);
+
+    VoteDto voteDto3 = dtoFactory.createDto(VoteDto.class);
+    voteDto3.setUpvote(false);
+    reviewService.vote(voteDto3, 1);
+
+    VoteDto voteDto4 = dtoFactory.createDto(VoteDto.class);
+    voteDto4.setUpvote(true);
+    reviewService.vote(voteDto4, 2);
+
+    VoteDto voteDto5 = dtoFactory.createDto(VoteDto.class);
+    voteDto5.setUpvote(false);
+    reviewService.vote(voteDto5, 2);
   }
 }
