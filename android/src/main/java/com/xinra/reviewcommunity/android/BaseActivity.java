@@ -1,25 +1,28 @@
 package com.xinra.reviewcommunity.android;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.Collections;
 import com.google.common.base.Optional;
+
+import java.util.Collections;
 
 /**
  * Base class for "top-level" activities that have the toolbar and side drawer. Note that subclasses
@@ -86,6 +89,14 @@ public abstract class BaseActivity extends AbstractActivity
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.base, menu);
+
+    // Get the SearchView and set the searchable configuration
+    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+    SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+    ComponentName searchActivity = new ComponentName(getApplicationContext(), SearchActivity.class);
+    searchView.setSearchableInfo(searchManager.getSearchableInfo(searchActivity));
+    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
     return true;
   }
 
