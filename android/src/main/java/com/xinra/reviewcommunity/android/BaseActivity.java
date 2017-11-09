@@ -131,7 +131,8 @@ public abstract class BaseActivity extends AbstractActivity
     } else if (id == R.id.nav_logout) {
       logout();
     } else if (id == R.id.nav_manage) {
-
+      Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
+      startActivity(searchIntent);
     } else if (id == R.id.nav_share) {
 
     } else if (id == R.id.nav_send) {
