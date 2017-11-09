@@ -30,7 +30,8 @@ public class MarketService extends AbstractService {
   private Map<String, Market> entityCache;
   
   /**
-   * Loads market information from database into cache. 
+   * Loads market information from database into cache. Note: This can only be called in a
+   * market-agnostic context!
    */
   public void buildCache() {
     log.info("Building market cache");
