@@ -26,7 +26,6 @@ import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
 import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -34,6 +33,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -167,30 +168,35 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createProductDto1.setDescription("They're sweet.");
     createProductDto1.setBrandSerial(1);
     createProductDto1.setCategorySerial(3);
+    createProductDto1.setBarcode("dummy");
 
     CreateProductDto createProductDto2 = dtoFactory.createDto(CreateProductDto.class);
     createProductDto2.setName("Goldbären");
     createProductDto2.setDescription("They're golden.");
     createProductDto2.setBrandSerial(1);
     createProductDto2.setCategorySerial(3);
+    createProductDto2.setBarcode("temp");
 
     CreateProductDto createProductDto3 = dtoFactory.createDto(CreateProductDto.class);
     createProductDto3.setName("PUBG");
     createProductDto3.setDescription("Battle Royal");
     createProductDto3.setBrandSerial(2);
     createProductDto3.setCategorySerial(5);
+    createProductDto3.setBarcode("battleroyal");
 
     CreateProductDto createProductDto4 = dtoFactory.createDto(CreateProductDto.class);
     createProductDto4.setName("Coca Cola Zero");
     createProductDto4.setDescription("Echter Geschmack - Zero Zucker");
     createProductDto4.setBrandSerial(2);
     createProductDto4.setCategorySerial(5);
+    createProductDto4.setBarcode("qwerty");
 
     CreateProductDto createProductDto5 = dtoFactory.createDto(CreateProductDto.class);
     createProductDto5.setName("Coca Cola ");
     createProductDto5.setDescription("Timeless taste");
     createProductDto5.setBrandSerial(2);
     createProductDto5.setCategorySerial(5);
+    createProductDto5.setBarcode("checkstyle");
 
     ProductService productService = serviceProvider.getService(ProductService.class);
     productService.createProduct(createProductDto1);

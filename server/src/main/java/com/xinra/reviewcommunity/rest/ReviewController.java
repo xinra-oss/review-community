@@ -87,6 +87,7 @@ public class ReviewController extends AbstractController {
   /**
    * Create or Updates an upvote for a review.
    */
+  @AccessRequires(Permission.VOTE)
   @RequestMapping(path = "/{reviewSerial}/vote", method = RequestMethod.POST)
   public void vote(@RequestBody ReviewVoteDto reviewVoteDto,
                    @PathVariable int reviewSerial,

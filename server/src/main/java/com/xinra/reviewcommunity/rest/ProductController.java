@@ -46,4 +46,11 @@ public class ProductController extends AbstractController {
     return serviceProvider.getService(SearchService.class).searchProducts(query);
   }
 
+  /**
+   * GET a product by it's Barcode.
+   */
+  @RequestMapping(path = "", params = "barcode", method = RequestMethod.GET)
+  public ProductDto getByBarcode(@RequestParam String barcode) {
+    return serviceProvider.getService(ProductService.class).getProductByBarcode(barcode);
+  }
 }

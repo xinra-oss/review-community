@@ -3,6 +3,7 @@ package com.xinra.reviewcommunity.service;
 import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.entity.Product;
+import com.xinra.reviewcommunity.entity.SerialEntity;
 import com.xinra.reviewcommunity.repo.BrandRepository;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
 import com.xinra.reviewcommunity.repo.ProductRepository;
@@ -12,13 +13,15 @@ import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -48,6 +51,7 @@ public class ProductService extends AbstractService {
     Product product = entityFactory.createEntity(Product.class);
     product.setName(createProductDto.getName());
     product.setDescription(createProductDto.getDescription());
+    product.setBarcode(createProductDto.getBarcode());
     product.setCategory(category);
     product.setBrand(brand);
 
@@ -64,12 +68,22 @@ public class ProductService extends AbstractService {
   }
 
   /**
+   * Returns the product with the given barcode.
+   */
+  public ProductDto getProductByBarcode(String barcode) {
+    Product product = productRepo.findByBarcode(barcode);
+
+    if (product == null) {
+      throw new BarcodeNotFoundException(Product.class, barcode);
+    }
+    return toDto(product);
+  }
+
+  /**
    * Returns the product with the given Serial.
    */
   public ProductDto getProductBySerial(int serial) {
-
     Product product = productRepo.findBySerial(serial);
-
 
     if (product == null) {
       throw new SerialNotFoundException(Product.class, serial);
@@ -125,3 +139,17 @@ public class ProductService extends AbstractService {
     return productDto;
   }
 }
+
+final class BarcodeNotFoundException extends RuntimeException {
+
+
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Thrown if product cannot be found by the given barcode.
+   */
+  public BarcodeNotFoundException(Class<? extends SerialEntity> type, String barcode) {
+    super("There is no entity of type " + type.getSimpleName() + " with barcode " + barcode);
+  }
+}
+
