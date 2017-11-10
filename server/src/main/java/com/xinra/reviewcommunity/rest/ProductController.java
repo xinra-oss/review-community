@@ -41,7 +41,7 @@ public class ProductController extends AbstractController {
   /**
    * GET a list of products using full text search.
    */
-  @RequestMapping(path = "", method = RequestMethod.GET)
+  @RequestMapping(path = "", params = "q", method = RequestMethod.GET)
   public List<ProductDto> getList(@RequestParam(name = "q") String query) {
     return serviceProvider.getService(SearchService.class).searchProducts(query);
   }
