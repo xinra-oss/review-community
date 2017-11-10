@@ -30,7 +30,8 @@
         <activity
             android:name=".CategoryListActivity"
             android:label="Categories" />
-        <activity android:name=".CategoryActivity"></activity>
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".ProductActivity"></activity>
     </application>
 
 </manifest>
