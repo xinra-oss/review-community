@@ -29,7 +29,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".CategoryListActivity"
-            android:label="Categories"/>
+            android:label="Categories" />
+        <activity android:name=".CategoryActivity"></activity>
     </application>
 
 </manifest>
