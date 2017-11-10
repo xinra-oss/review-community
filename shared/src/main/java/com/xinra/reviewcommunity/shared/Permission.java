@@ -13,5 +13,7 @@ public enum Permission {
   DELETE_REVIEW_COMMENT,
   
   CREATE_BRAND,
-  CREATE_CATEGORY
+  CREATE_CATEGORY,
+
+  VOTE
 }

@@ -31,7 +31,8 @@ public enum Role {
     addsPermissions(
       Permission.CREATE_PRODUCT,
       Permission.CREATE_REVIEW,
-      Permission.CREATE_REVIEW_COMMENT
+      Permission.CREATE_REVIEW_COMMENT,
+      Permission.VOTE
     )
   ),
   MODERATOR(
