@@ -1,6 +1,5 @@
 package com.xinra.reviewcommunity.rest;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.xinra.reviewcommunity.auth.AccessRequires;
 import com.xinra.reviewcommunity.service.ReviewService;
 import com.xinra.reviewcommunity.shared.Permission;
@@ -45,14 +44,13 @@ public class ReviewController extends AbstractController {
   }
 
   /**
-   * Create or Updates an upvote for a review.
+   * Delete a Review.
    */
-  @RequestMapping(path = "/{reviewSerial}/vote", method = RequestMethod.POST)
-  public void vote(@RequestBody ReviewVoteDto reviewVoteDto,
-                   @PathVariable int reviewSerial,
-                   @PathVariable int serial ) {
-
-    serviceProvider.getService(ReviewService.class).vote(reviewVoteDto, reviewSerial, serial);
+  @AccessRequires(Permission.DELETE_REVIEW)
+  @RequestMapping(path = "/{reviewSerial}", method = RequestMethod.DELETE)
+  public void deleteReview(@PathVariable int reviewSerial, @PathVariable int serial) {
+    serviceProvider.getService(ReviewService.class)
+            .deleteReview(reviewSerial, serial);
   }
 
   /**
@@ -87,13 +85,14 @@ public class ReviewController extends AbstractController {
   }
 
   /**
-   * Delete a Review.
+   * Create or Updates an upvote for a review.
    */
-  @AccessRequires(Permission.DELETE_REVIEW)
-  @RequestMapping(path = "/{reviewSerial}", method = RequestMethod.DELETE)
-  public void deleteReview(@PathVariable int reviewSerial, @PathVariable int serial) {
-    serviceProvider.getService(ReviewService.class)
-            .deleteReview(reviewSerial, serial);
+  @RequestMapping(path = "/{reviewSerial}/vote", method = RequestMethod.POST)
+  public void vote(@RequestBody ReviewVoteDto reviewVoteDto,
+                   @PathVariable int reviewSerial,
+                   @PathVariable int serial ) {
+
+    serviceProvider.getService(ReviewService.class).vote(reviewVoteDto, reviewSerial, serial);
   }
 
 }
