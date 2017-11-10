@@ -5,7 +5,9 @@ import java.util.Set;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository<T extends Product> extends SerialEntityRepository<T> {
+public interface ProductRepository<T extends Product> extends com.xinra.nucleus.entity.AbstractEntityRepository<T> {
+
+  T findBySerial(int serial);
 
   Set<T> findProductsByBrandSerial(int serial);
 

@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.service;
 
+import com.xinra.nucleus.entity.EntityPk;
 import com.xinra.reviewcommunity.entity.ChildSerial;
 import com.xinra.reviewcommunity.entity.Serial;
 import com.xinra.reviewcommunity.entity.SerialEntity;
@@ -48,17 +49,17 @@ public class SerialService extends AbstractService {
    * Get the next child serial of an entity.
    * @param name the name of the child. Must be unique within the entity class.
    */
-  public int getNextChildSerial(String entityId, String name) {
-    ChildSerial serial = childSerialRepo.findByEntityIdAndName(entityId, name);
+  public int getNextChildSerial(EntityPk entityPk, String name) {
+    ChildSerial serial = childSerialRepo.findByEntityIdAndName(entityPk.getId(), name);
     if (serial == null) {
       serial = entityFactory.createEntity(ChildSerial.class);
       serial.setName(name);
-      serial.setEntityId(entityId);
+      serial.setEntityId(entityPk.getId());
     }
     final int nextSerial = serial.getLastSerial() + 1;
     serial.setLastSerial(nextSerial);
     childSerialRepo.save(serial);
-    log.debug("Child serial '{}' of entity with id {} incremented to {}.", name, entityId,
+    log.debug("Child serial '{}' of entity with id {} incremented to {}.", name, entityPk,
         nextSerial);
     return nextSerial;
   }

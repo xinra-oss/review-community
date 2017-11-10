@@ -30,7 +30,8 @@ public enum Role {
     inheritsFrom(),
     addsPermissions(
       Permission.CREATE_PRODUCT,
-      Permission.CREATE_REVIEW
+      Permission.CREATE_REVIEW,
+      Permission.CREATE_REVIEW_COMMENT
     )
   ),
   MODERATOR(
@@ -38,7 +39,9 @@ public enum Role {
     addsPermissions(
       Permission.DELETE_PRODUCT,
       Permission.CREATE_CATEGORY,
-      Permission.CREATE_BRAND
+      Permission.CREATE_BRAND,
+      Permission.DELETE_REVIEW,
+      Permission.DELETE_REVIEW_COMMENT
     )
   ),
   ADMIN(
