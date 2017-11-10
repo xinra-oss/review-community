@@ -7,12 +7,14 @@ import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
 
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/product")
@@ -36,4 +38,11 @@ public class ProductController extends AbstractController {
     return serviceProvider.getService(ProductService.class).getProductBySerial(serial);
   }
 
+  /**
+   * GET a product by it's Barcode.
+   */
+  @RequestMapping(path = "", method = RequestMethod.GET)
+  public ProductDto getByBarcode(@RequestParam String barcode) {
+    return serviceProvider.getService(ProductService.class).getProductByBarcode(barcode);
+  }
 }

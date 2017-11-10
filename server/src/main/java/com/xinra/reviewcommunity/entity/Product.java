@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -15,6 +16,8 @@ public class Product extends SerialEntity {
 
   private String name;
   private String description;
+
+  private String barcode;
 
   @ManyToOne(optional = false)
   private @NonNull Category category;
