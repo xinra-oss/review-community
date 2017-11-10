@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class Product extends SerialEntity {
 
+  public static final String REVIEW = "review";
+
   private String name;
   private String description;
 

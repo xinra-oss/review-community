@@ -76,7 +76,8 @@ public class ReviewService extends AbstractService {
     product.setAvgRating(avgRatingNew);
     product.setScore(ScoreUtil.fromAverageRating(avgRatingNew, numRatings));
 
-    int serial = serviceProvider.getService(SerialService.class).getNextSerial(Review.class);
+    int serial = serviceProvider.getService(SerialService.class)
+            .getNextChildSerial(product.getPk(), Product.REVIEW);
     review.setSerial(serial);
     reviewRepo.save(review);
 
@@ -110,14 +111,13 @@ public class ReviewService extends AbstractService {
     return list;
   }
 
-
   /**
    * Creates or uptates the upvotes for a review.
    */
-  public void vote(ReviewVoteDto reviewVoteDto, int reviewSerial) {
+  public void vote(ReviewVoteDto reviewVoteDto, int reviewSerial, int productSerial) {
 
     User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
-    Review review = reviewRepo.findBySerial(reviewSerial);
+    Review review = reviewRepo.findBySerialAndProductSerial(reviewSerial, productSerial);
     ReviewVote vote = voteRepo.findByUserIdAndReviewId(user.getPk().getId(), review.getPk().getId());
 
     int numUpvotes = review.getNumUpvotes();
@@ -152,10 +152,10 @@ public class ReviewService extends AbstractService {
   /**
    * Creates a new comment for a specific review.
    */
-  public void createReviewComment(CreateReviewCommentDto createReviewCommentDto, int reviewSerial) {
+  public void createReviewComment(CreateReviewCommentDto createReviewCommentDto, int reviewSerial, int productSerial) {
 
     User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
-    Review review = reviewRepo.findBySerial(reviewSerial);
+    Review review = reviewRepo.findBySerialAndProductSerial(reviewSerial, productSerial);
     ReviewComment reviewComment = entityFactory.createEntity(ReviewComment.class);
 
     reviewComment.setReview(review);
@@ -173,9 +173,10 @@ public class ReviewService extends AbstractService {
   /**
    * Returns all Comments for a specific Review.
    */
-  public List<ReviewCommentDto> getAllReviewComments(int reviewSerial) {
+  public List<ReviewCommentDto> getAllReviewComments(int reviewSerial, int productSerial) {
 
-    Review review = reviewRepo.findBySerial(reviewSerial);
+    Review review = reviewRepo.findBySerialAndProductSerial(reviewSerial, productSerial);
+
     if (review == null) {
       throw new SerialNotFoundException(Review.class, reviewSerial);
     }

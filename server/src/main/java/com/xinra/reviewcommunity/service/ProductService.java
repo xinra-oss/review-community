@@ -70,6 +70,7 @@ public class ProductService extends AbstractService {
 
     Product product = productRepo.findBySerial(serial);
 
+
     if (product == null) {
       throw new SerialNotFoundException(Product.class, serial);
     }

@@ -214,6 +214,12 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createReviewDto1.setRating(5);
     reviewService.createReview(createReviewDto1, 3);
 
+    CreateReviewDto createReviewDto4 = dtoFactory.createDto(CreateReviewDto.class);
+    createReviewDto4.setTitle("My Review on Coca Cola Zero");
+    createReviewDto4.setText("Tastes really good!");
+    createReviewDto4.setRating(5);
+    reviewService.createReview(createReviewDto4, 4);
+
     contextHolder.get().setAuthenticatedUser(moderator);
     CreateReviewDto createReviewDto2 = dtoFactory.createDto(CreateReviewDto.class);
     createReviewDto2.setTitle("My Review on PUBG");
@@ -228,6 +234,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     createReviewDto3.setRating(4);
     reviewService.createReview(createReviewDto3, 3);
 
+
     contextHolder.clearMock();
   }
 
@@ -239,25 +246,25 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
 
     ReviewVoteDto reviewVoteDto1 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto1.setUpvote(true);
-    reviewService.vote(reviewVoteDto1, 1);
+    reviewService.vote(reviewVoteDto1, 1, 3);
 
     contextHolder.get().setAuthenticatedUser(user);
     ReviewVoteDto reviewVoteDto3 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto3.setUpvote(false);
-    reviewService.vote(reviewVoteDto3, 1);
+    reviewService.vote(reviewVoteDto3, 1,3 );
 
     ReviewVoteDto reviewVoteDto4 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto4.setUpvote(true);
-    reviewService.vote(reviewVoteDto4, 2);
+    reviewService.vote(reviewVoteDto4, 2 ,3);
 
     contextHolder.get().setAuthenticatedUser(moderator);
     ReviewVoteDto reviewVoteDto2 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto2.setUpvote(true);
-    reviewService.vote(reviewVoteDto2, 1);
+    reviewService.vote(reviewVoteDto2, 1, 3);
 
     ReviewVoteDto reviewVoteDto5 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto5.setUpvote(false);
-    reviewService.vote(reviewVoteDto5, 2);
+    reviewService.vote(reviewVoteDto5, 2, 3);
     
     contextHolder.clearMock();
   }
@@ -271,18 +278,17 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     CreateReviewCommentDto createReviewCommentDto =
             dtoFactory.createDto(CreateReviewCommentDto.class);
     createReviewCommentDto.setText("Thanks for your review.");
-    reviewService.createReviewComment(createReviewCommentDto, 1);
+    reviewService.createReviewComment(createReviewCommentDto, 1, 3);
 
     CreateReviewCommentDto createReviewCommentDto2 =
             dtoFactory.createDto(CreateReviewCommentDto.class);
     createReviewCommentDto2.setText("Thanks for your review.");
-    reviewService.createReviewComment(createReviewCommentDto2, 1);
+    reviewService.createReviewComment(createReviewCommentDto2, 1, 3);
 
     CreateReviewCommentDto createReviewCommentDto3 =
             dtoFactory.createDto(CreateReviewCommentDto.class);
     createReviewCommentDto3.setText("Thanks for your review.");
-    reviewService.createReviewComment(createReviewCommentDto3, 2);
-
+    reviewService.createReviewComment(createReviewCommentDto3, 2, 3);
 
     contextHolder.clearMock();
   }
