@@ -6,4 +6,109 @@
     android:layout_height="match_parent"
     tools:context="com.xinra.reviewcommunity.android.ProductActivity">
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/topContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/productTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@id/productImage"
+                android:text="Titel" />
+
+
+            <TextView
+                android:id="@+id/productCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/productTitle"
+                android:layout_toLeftOf="@id/productImage"
+                android:text="Category" />
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                app:srcCompat="@drawable/ic_menu_gallery" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/productCategory"
+                android:layout_toLeftOf="@id/productImage"
+                android:scaleX=".8"
+                android:rating="3"
+                android:scaleY=".8"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp"
+                android:max="5"/>
+
+            <TextView
+                android:id="@+id/productDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/productImage"
+                android:layout_alignParentLeft="true"
+                android:text="Description" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/topContainer"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/reviewHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Reviews" />
+
+            <View
+                android:id="@+id/headerDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/reviewHeader"
+                android:background="@android:color/darker_gray" />
+
+            <ListView
+                android:id="@+id/reviewListView"
+                android:layout_below="@+id/headerDivider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 </android.support.constraint.ConstraintLayout>
