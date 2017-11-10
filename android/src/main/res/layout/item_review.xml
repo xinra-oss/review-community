@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/topContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/reviewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:text="Review Titel" />
+
+        <TextView
+            android:id="@+id/reviewUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/reviewTitle"
+            android:text="By + Username" />
+
+        <TextView
+            android:id="@+id/reviewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reviewTitle"
+            android:layout_toEndOf="@+id/reviewUsername"
+            android:layout_toRightOf="@+id/reviewUsername"
+            android:text=" published + reviewDate" />
+
+        <TextView
+            android:id="@+id/reviewText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/reviewUsername"
+            android:text="Review Text Text Text" />
+
+        <Button
+            android:id="@+id/addOrViewCommentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/reviewText"
+            android:text="Add/View Comment/s" />
+
+        <Button
+            android:id="@+id/upVoteReviewBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reviewText"
+            android:layout_toLeftOf="@+id/downVoteReviewBtn"
+            android:text="Down" />
+
+        <Button
+            android:id="@+id/downVoteReviewBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reviewText"
+            android:layout_toLeftOf="@+id/downVoteCount"
+            android:text="Up" />
+
+        <TextView
+            android:id="@+id/upVoteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="2dp"
+            android:layout_below="@+id/reviewText"
+            android:layout_toLeftOf="@id/upVoteReviewBtn"
+            android:text="2" />
+
+        <TextView
+            android:id="@+id/downVoteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_below="@+id/reviewText"
+            android:layout_alignParentRight="true"
+            android:text="3" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/reviewHeader"
+            android:background="@android:color/darker_gray" />
+
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
