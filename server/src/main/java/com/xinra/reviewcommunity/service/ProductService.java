@@ -123,7 +123,7 @@ public class ProductService extends AbstractService {
     CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
     categoryDto.setSerial(product.getCategory().getSerial());
 
-    productDto.setCategory(categoryDto);
+    productDto.setCategorySerial(categoryDto.getSerial());
 
     return productDto;
   }
