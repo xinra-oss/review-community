@@ -57,5 +57,10 @@ public class TestProductController {
   public void getProduct() throws Exception {
     mvc.perform(get("/de/api/product/1")).andExpect(status().isOk());
   }
+  
+  @Test
+  public void search() throws Exception {
+    mvc.perform(get("/de/api/product").param("q", "foo")).andExpect(status().isOk());
+  }
 
 }

@@ -104,7 +104,7 @@ public class ProductService extends AbstractService {
     return list;
   }
 
-  private ProductDto toDto(Product product) {
+  public ProductDto toDto(Product product) {
 
     ProductDto productDto = dtoFactory.createDto(ProductDto.class);
 
@@ -120,10 +120,7 @@ public class ProductService extends AbstractService {
 
     productDto.setBrand(brandDto);
 
-    CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
-    categoryDto.setSerial(product.getCategory().getSerial());
-
-    productDto.setCategorySerial(categoryDto.getSerial());
+    productDto.setCategorySerial(product.getCategory().getSerial());
 
     return productDto;
   }

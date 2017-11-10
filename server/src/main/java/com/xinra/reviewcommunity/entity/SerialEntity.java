@@ -4,12 +4,16 @@ import com.xinra.nucleus.entity.BaseEntity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import lombok.Getter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 
 
 @Getter
 @MappedSuperclass
 public class SerialEntity extends BaseEntity {
 
+  @Field(index = Index.NO, store = Store.YES)
   private int serial;
   
   /**

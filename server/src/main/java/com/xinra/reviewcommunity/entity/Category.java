@@ -6,12 +6,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
 
 @Entity
 @Getter
 @Setter
 public class Category extends SerialEntity {
 
+  @Field
   private String name;
 
   @ManyToOne
