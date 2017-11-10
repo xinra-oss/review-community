@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.rest;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.xinra.reviewcommunity.auth.AccessRequires;
 import com.xinra.reviewcommunity.service.ReviewService;
 import com.xinra.reviewcommunity.shared.Permission;
@@ -77,19 +78,22 @@ public class ReviewController extends AbstractController {
   /**
    * Delete a Comment.
    */
-  //TODO Permission DELETE_COMMENT
+  @AccessRequires(Permission.DELETE_REVIEW_COMMENT)
   @RequestMapping(path = "/{reviewSerial}/comment/{commentSerial}", method = RequestMethod.DELETE)
-  public void deleteComment(@PathVariable int reviewSerial, @PathVariable int commentSerial) {
-
+  public void deleteComment(@PathVariable int reviewSerial,
+                            @PathVariable int commentSerial) {
+    serviceProvider.getService(ReviewService.class)
+            .deleteReviewComment(commentSerial, reviewSerial);
   }
 
   /**
    * Delete a Review.
    */
-  //TODO Permission DELETE_REVIEW
+  @AccessRequires(Permission.DELETE_REVIEW)
   @RequestMapping(path = "/{reviewSerial}", method = RequestMethod.DELETE)
-  public void deleteReview(@PathVariable int reviewSerial) {
-
+  public void deleteReview(@PathVariable int reviewSerial, @PathVariable int serial) {
+    serviceProvider.getService(ReviewService.class)
+            .deleteReview(reviewSerial, serial);
   }
 
 }

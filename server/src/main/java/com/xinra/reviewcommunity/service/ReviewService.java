@@ -112,6 +112,14 @@ public class ReviewService extends AbstractService {
   }
 
   /**
+   * Deletes a review.
+   */
+  public void deleteReview(int reviewSerial, int productSerial) {
+    Review review = reviewRepo.findBySerialAndProductSerial(reviewSerial, productSerial);
+    reviewRepo.delete(review);
+  }
+
+  /**
    * Creates or uptates the upvotes for a review.
    */
   public void vote(ReviewVoteDto reviewVoteDto, int reviewSerial, int productSerial) {
@@ -187,6 +195,16 @@ public class ReviewService extends AbstractService {
             .collect(Collectors.toList());
 
     return list;
+  }
+
+  /**
+   * Deletes a reviewComment.
+   */
+  public void deleteReviewComment(int reviewCommentSerial, int reviewSerial) {
+    ReviewComment reviewComment = reviewCommentRepo
+            .findBySerialAndReviewSerial(reviewCommentSerial,
+                                                          reviewSerial);
+    reviewCommentRepo.delete(reviewComment);
   }
 
   private ReviewDto reviewToDto(Review review) {

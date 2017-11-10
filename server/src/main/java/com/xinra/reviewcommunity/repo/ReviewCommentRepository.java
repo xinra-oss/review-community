@@ -7,4 +7,6 @@ public interface ReviewCommentRepository<T extends ReviewComment>
         extends com.xinra.nucleus.entity.AbstractEntityRepository<T> {
 
   Set<T> findByReviewIdOrderByCreatedAtAsc(String reviewId);
+
+  T findBySerialAndReviewSerial(int serial, int reviewSerial);
 }
