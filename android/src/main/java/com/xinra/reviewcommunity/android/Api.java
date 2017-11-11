@@ -29,106 +29,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class Api {
-
-  private RestTemplate restTemplate;
-  private CompositeDisposable subscriptions;
-  private AppState state;
-  private MarketDto market;
+public class Api extends AbstractApi {
 
   public Api(AppState state) {
-    this.state = state;
-    subscriptions = new CompositeDisposable();
-    subscriptions.add(state.market.subscribe(m -> market = m));
-
-    restTemplate = new RestTemplate();
-    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-    restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+    super(state);
   }
-
-  @Override
-  protected void finalize() throws Throwable {
-    super.finalize();
-    subscriptions.dispose();
-  }
-
-  private <RESPONSE, REQUEST> RESPONSE performRequest(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
-    final String url = "http://192.168.0.11:8080"
-        + (marketAgnostic ? "" : "/de")
-        + "/api" + path;
-
-    HttpHeaders headers = new HttpHeaders();
-    if (state.csrfToken != null) {
-      headers.set(state.csrfToken.getHeaderName(), state.csrfToken.getToken());
-    }
-    if (state.sessionCookie != null) {
-      headers.set("Cookie", state.sessionCookie);
-    }
-    if (requestBody instanceof MultiValueMap) {
-      headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-    }
-
-    HttpEntity<REQUEST> entity = new HttpEntity<>(requestBody, headers);
-    ResponseEntity<RESPONSE> response = uriVariables == null
-        ? restTemplate.exchange(url, method, entity, responseType)
-        : restTemplate.exchange(url, method, entity, responseType, uriVariables);
-
-    String newSessionCookie = response.getHeaders().getFirst("Set-Cookie");
-    if (newSessionCookie != null) {
-      state.sessionCookie = newSessionCookie;
-    }
-
-    return response.getBody();
-  }
-
-  /**
-   *
-   * @param path
-   * @param method
-   * @param responseType
-   * @param requestBody may be null
-   * @param marketAgnostic
-   * @param uriVariables may be null
-   * @param <REQUEST>
-   * @param <RESPONSE>
-   * @return
-   */
-  private <REQUEST, RESPONSE> Single<RESPONSE> withResponse(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
-    return Single.<RESPONSE>create(source -> {
-      try {
-        source.onSuccess(performRequest(path, method, responseType, requestBody, marketAgnostic, uriVariables));
-      } catch (Exception ex) {
-        source.onError(ex);
-      }
-    })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-  }
-
-  /**
-   *
-   * @param path
-   * @param method
-   * @param requestBody may be null
-   * @param marketAgnostic
-   * @param uriVariables may be null
-   * @param <REQUEST>
-   * @return
-   */
-  private <REQUEST> Completable withoutResponse(String path, HttpMethod method, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
-    return Completable.create(source -> {
-      try {
-        performRequest(path, method, Void.class, requestBody, marketAgnostic, uriVariables);
-        source.onComplete();
-      } catch (Exception ex) {
-        source.onError(ex);
-      }
-    })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread());
-  }
-
-  // ### ENDPOINT METHODS ###
 
   public Single<CsrfTokenDto> getCsrfToken() {
     return withResponse("/csrf-token", HttpMethod.GET, CsrfTokenDto.class, null, true, null);
