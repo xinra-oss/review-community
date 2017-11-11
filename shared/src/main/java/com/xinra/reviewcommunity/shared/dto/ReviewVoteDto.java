@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VoteDto implements Dto {
+public class ReviewVoteDto implements Dto {
 
   private boolean upvote;
 }

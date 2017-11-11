@@ -56,7 +56,7 @@ public class MarketService extends AbstractService {
   }
   
   public Market getEntity(String slug) {
-    return entityCache.get(slug);
+    return entityCache.get(slug); 
   }
   
   public ImmutableList<MarketDto> getAllMarkets() {
