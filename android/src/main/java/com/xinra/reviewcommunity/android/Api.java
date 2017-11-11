@@ -1,8 +1,10 @@
 package com.xinra.reviewcommunity.android;
 
+import com.google.common.collect.ImmutableMap;
 import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.InitDto;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
+import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.RegistrationDto;
 import com.xinra.reviewcommunity.shared.dto.SuccessfulAuthenticationDto;
 
@@ -16,6 +18,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -46,7 +52,7 @@ public class Api {
     subscriptions.dispose();
   }
 
-  private <RESPONSE, REQUEST> RESPONSE performRequest(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic) {
+  private <RESPONSE, REQUEST> RESPONSE performRequest(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
     final String url = "http://192.168.0.11:8080"
         + (marketAgnostic ? "" : "/de")
         + "/api" + path;
@@ -63,7 +69,9 @@ public class Api {
     }
 
     HttpEntity<REQUEST> entity = new HttpEntity<>(requestBody, headers);
-    ResponseEntity<RESPONSE> response = restTemplate.exchange(url, method, entity, responseType);
+    ResponseEntity<RESPONSE> response = uriVariables == null
+        ? restTemplate.exchange(url, method, entity, responseType)
+        : restTemplate.exchange(url, method, entity, responseType, uriVariables);
 
     String newSessionCookie = response.getHeaders().getFirst("Set-Cookie");
     if (newSessionCookie != null) {
@@ -73,10 +81,22 @@ public class Api {
     return response.getBody();
   }
 
-  private <REQUEST, RESPONSE> Single<RESPONSE> withResponse(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic) {
+  /**
+   *
+   * @param path
+   * @param method
+   * @param responseType
+   * @param requestBody may be null
+   * @param marketAgnostic
+   * @param uriVariables may be null
+   * @param <REQUEST>
+   * @param <RESPONSE>
+   * @return
+   */
+  private <REQUEST, RESPONSE> Single<RESPONSE> withResponse(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
     return Single.<RESPONSE>create(source -> {
       try {
-        source.onSuccess(performRequest(path, method, responseType, requestBody, marketAgnostic));
+        source.onSuccess(performRequest(path, method, responseType, requestBody, marketAgnostic, uriVariables));
       } catch (Exception ex) {
         source.onError(ex);
       }
@@ -85,10 +105,20 @@ public class Api {
         .observeOn(AndroidSchedulers.mainThread());
   }
 
-  private <REQUEST> Completable withoutResponse(String path, HttpMethod method, REQUEST requestBody, boolean marketAgnostic) {
+  /**
+   *
+   * @param path
+   * @param method
+   * @param requestBody may be null
+   * @param marketAgnostic
+   * @param uriVariables may be null
+   * @param <REQUEST>
+   * @return
+   */
+  private <REQUEST> Completable withoutResponse(String path, HttpMethod method, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
     return Completable.create(source -> {
       try {
-        performRequest(path, method, Void.class, requestBody, marketAgnostic);
+        performRequest(path, method, Void.class, requestBody, marketAgnostic, uriVariables);
         source.onComplete();
       } catch (Exception ex) {
         source.onError(ex);
@@ -101,25 +131,30 @@ public class Api {
   // ### ENDPOINT METHODS ###
 
   public Single<CsrfTokenDto> getCsrfToken() {
-    return withResponse("/csrf-token", HttpMethod.GET, CsrfTokenDto.class, null, true);
+    return withResponse("/csrf-token", HttpMethod.GET, CsrfTokenDto.class, null, true, null);
   }
 
   public Single<InitDto> getInit() {
-    return withResponse("/init", HttpMethod.GET, InitDto.class, null, false);
+    return withResponse("/init", HttpMethod.GET, InitDto.class, null, false, null);
   }
 
   public Single<SuccessfulAuthenticationDto> getSession(String usernameOrEmail, String password) {
     MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
     parameters.add("username", usernameOrEmail);
     parameters.add("password", password);
-    return withResponse("/session", HttpMethod.POST, SuccessfulAuthenticationDto.class, parameters, true);
+    return withResponse("/session", HttpMethod.POST, SuccessfulAuthenticationDto.class, parameters, true, null);
   }
 
   public Completable deleteSession() {
-    return withoutResponse("/session", HttpMethod.DELETE, null, true);
+    return withoutResponse("/session", HttpMethod.DELETE, null, true, null);
   }
 
   public Completable createUser(RegistrationDto registration) {
-    return withoutResponse("/user", HttpMethod.POST, registration, true);
+    return withoutResponse("/user", HttpMethod.POST, registration, true, null);
+  }
+
+  public Single<List<ProductDto>> search(String query) {
+    return withResponse("/product", HttpMethod.GET, ProductDto[].class, null, false, ImmutableMap.of("q", query))
+        .map(Arrays::asList);
   }
 }

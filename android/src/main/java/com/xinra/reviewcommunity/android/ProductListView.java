@@ -5,6 +5,10 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
+import com.xinra.reviewcommunity.shared.dto.ProductDto;
+
+import java.util.List;
+
 public class ProductListView extends ConstraintLayout {
 
   public ProductListView(Context context) {
@@ -24,6 +28,10 @@ public class ProductListView extends ConstraintLayout {
 
   private void init() {
     LayoutInflater.from(getContext()).inflate(R.layout.view_product_list, this);
+  }
+
+  public void setContent(List<ProductDto> products) {
+    // TODO
   }
 
 }

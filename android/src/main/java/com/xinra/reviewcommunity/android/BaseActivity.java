@@ -90,12 +90,7 @@ public abstract class BaseActivity extends AbstractActivity
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.base, menu);
 
-    // Get the SearchView and set the searchable configuration
-    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-    SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
-    ComponentName searchActivity = new ComponentName(getApplicationContext(), SearchActivity.class);
-    searchView.setSearchableInfo(searchManager.getSearchableInfo(searchActivity));
-    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+    configureSearchView((SearchView) menu.findItem(R.id.app_bar_search).getActionView());
 
     return true;
   }
