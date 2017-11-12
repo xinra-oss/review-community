@@ -55,7 +55,7 @@ public class SearchService extends AbstractService {
     
     final FullTextQuery query = fullTextEntityManager.createFullTextQuery(luceneQuery);
     query.setProjection("name", "description", "category.serial", "brand.name", "brand.serial",
-        "avgRating", "numRatings");
+        "avgRating", "numRatings", "serial");
     
     @SuppressWarnings("unchecked")
     List<Object[]> results = query.getResultList();
@@ -73,6 +73,7 @@ public class SearchService extends AbstractService {
       product.setCategorySerial((int) result[2]);
       product.setAvgRating((double) result[5]);
       product.setNumRatings((int) result[6]);
+      product.setSerial((int) result[7]);
 
       return product;
     }).collect(Collectors.toList());
