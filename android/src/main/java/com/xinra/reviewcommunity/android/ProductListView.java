@@ -4,10 +4,14 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
@@ -15,7 +19,7 @@ import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import java.util.Collections;
 import java.util.List;
 
-public class ProductListView extends ConstraintLayout {
+public class ProductListView extends ConstraintLayout implements PopupMenu.OnMenuItemClickListener {
 
   private List<ProductDto> products;
   private Adapter adapter;
@@ -51,6 +55,11 @@ public class ProductListView extends ConstraintLayout {
     adapter.notifyDataSetChanged();
   }
 
+  @Override
+  public boolean onMenuItemClick(MenuItem menuItem) {
+    return true;
+  }
+
   private class Adapter extends BaseAdapter {
 
     @Override
@@ -74,6 +83,14 @@ public class ProductListView extends ConstraintLayout {
 
       if (view == null) {
         view = LayoutInflater.from(getContext()).inflate(R.layout.item_product, viewGroup, false);
+
+        final ImageButton menuButton = view.findViewById(R.id.productItemMenuBtn);
+        menuButton.setOnClickListener(v -> {
+          PopupMenu popupMenu = new PopupMenu(getContext(), menuButton);
+          popupMenu.getMenuInflater().inflate(R.menu.item_product_context, popupMenu.getMenu());
+          popupMenu.setOnMenuItemClickListener(ProductListView.this);
+          popupMenu.show();
+        });
 
         holder = new ViewHolder();
         holder.name = view.findViewById(R.id.productItemName);
