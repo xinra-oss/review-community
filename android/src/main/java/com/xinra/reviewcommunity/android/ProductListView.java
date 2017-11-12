@@ -4,12 +4,21 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ProductListView extends ConstraintLayout {
+
+  private List<ProductDto> products;
+  private Adapter adapter;
 
   public ProductListView(Context context) {
     super(context);
@@ -27,11 +36,63 @@ public class ProductListView extends ConstraintLayout {
   }
 
   private void init() {
+    products = Collections.emptyList();
+    adapter = new Adapter();
+
     LayoutInflater.from(getContext()).inflate(R.layout.view_product_list, this);
+    ((ListView) findViewById(R.id.productList)).setAdapter(adapter);
   }
 
+  /**
+   * Must be called from the UI thread!
+   */
   public void setContent(List<ProductDto> products) {
-    // TODO
+    this.products = products;
+    adapter.notifyDataSetChanged();
+  }
+
+  private class Adapter extends BaseAdapter {
+
+    @Override
+    public int getCount() {
+      return products.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+      return products.get(0);
+    }
+
+    @Override
+    public long getItemId(int i) {
+      return products.get(i).getSerial();
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+      ViewHolder holder;
+
+      if (view == null) {
+        view = LayoutInflater.from(getContext()).inflate(R.layout.item_product, viewGroup, false);
+
+        holder = new ViewHolder();
+        holder.name = view.findViewById(R.id.productItemName);
+
+        view.setTag(holder);
+      } else {
+        holder = (ViewHolder) view.getTag();
+      }
+
+      ProductDto product = (ProductDto) getItem(i);
+      holder.name.setText(product.getName());
+
+      return view;
+    }
+
+  }
+
+  private static class ViewHolder {
+    TextView name;
   }
 
 }
