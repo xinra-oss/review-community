@@ -1,9 +1,13 @@
 package com.xinra.reviewcommunity.android;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 
 import com.google.common.base.Optional;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
@@ -74,4 +78,14 @@ public abstract class AbstractActivity extends AppCompatActivity {
    * dispatch API calls until this is called.
    */
   protected void onInitialized() {}
+
+  /**
+   * Sets the searchable configuration on the given SearchView.
+   */
+  protected void configureSearchView(SearchView searchView) {
+    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+    ComponentName searchActivity = new ComponentName(getApplicationContext(), SearchActivity.class);
+    searchView.setSearchableInfo(searchManager.getSearchableInfo(searchActivity));
+    searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+  }
 }
