@@ -73,11 +73,11 @@ public class ReviewListAdapter extends BaseAdapter {
         Context context = viewGroup.getContext();
         ReviewDto reviewDto = (ReviewDto)getItem(i);
         holder.title.setText(reviewDto.getTitle());
-        holder.date.setText( "published" + reviewDto.getCreatedAt().toString().substring(0,9));
+        holder.date.setText( "published" + reviewDto.getCreatedAt().toString());
         holder.username.setText("By " + reviewDto.getUserDto().getName());
         holder.text.setText(reviewDto.getText());
-        holder.upVote.setText(reviewDto.getNumUpvotes());
-        holder.downVote.setText(reviewDto.getNumDownvotes());
+        holder.upVote.setText(reviewDto.getNumUpvotes() + "");
+        holder.downVote.setText(reviewDto.getNumDownvotes() + "");
 
         return view;
     }

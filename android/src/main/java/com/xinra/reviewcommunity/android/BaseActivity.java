@@ -142,7 +142,8 @@ public abstract class BaseActivity extends AbstractActivity
     } else if (id == R.id.nav_share) {
 
     } else if (id == R.id.nav_send) {
-
+      Intent productIntent = new Intent(getApplicationContext(), ProductActivity.class);
+      startActivity(productIntent);
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
