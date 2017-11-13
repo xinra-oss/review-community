@@ -14,7 +14,6 @@ import lombok.Setter;
 public class UserDto implements Dto {
 
   private @NonNull String name;
-  private @NonNull
-  UserLevel level;
+  private @NonNull UserLevel level;
   
 }
