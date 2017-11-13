@@ -8,19 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class ProductListView extends ConstraintLayout implements PopupMenu.OnMenuItemClickListener {
 
+  private Map<Integer, CategoryDto> categoryMap;
   private List<ProductDto> products;
   private Adapter adapter;
 
@@ -40,6 +44,7 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
   }
 
   private void init() {
+    categoryMap = Collections.emptyMap();
     products = Collections.emptyList();
     adapter = new Adapter();
 
@@ -52,6 +57,15 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
    */
   public void setContent(List<ProductDto> products) {
     this.products = products;
+    adapter.notifyDataSetChanged();
+  }
+
+  /**
+   * Sets a map that is used to get a category's name from its serial. Must be called from the UI
+   * thread!
+   */
+  public void setCategoryMap(Map<Integer, CategoryDto> categoryMap) {
+    this.categoryMap = categoryMap;
     adapter.notifyDataSetChanged();
   }
 
@@ -69,7 +83,7 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
 
     @Override
     public Object getItem(int i) {
-      return products.get(0);
+      return products.get(i);
     }
 
     @Override
@@ -94,6 +108,10 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
 
         holder = new ViewHolder();
         holder.name = view.findViewById(R.id.productItemName);
+        holder.brand = view.findViewById(R.id.productItemBrand);
+        holder.category = view.findViewById(R.id.productItemCategory);
+        holder.numRatings = view.findViewById(R.id.productItemNumRating);
+        holder.avgRating = view.findViewById(R.id.productItemAvgRating);
 
         view.setTag(holder);
       } else {
@@ -102,6 +120,10 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
 
       ProductDto product = (ProductDto) getItem(i);
       holder.name.setText(product.getName());
+      holder.brand.setText(product.getBrand().getName());
+      holder.category.setText(categoryMap.get(product.getCategorySerial()).getName());
+      holder.numRatings.setText("(" + product.getNumRatings() + ")");
+      holder.avgRating.setRating((float) product.getAvgRating());
 
       return view;
     }
@@ -109,7 +131,8 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
   }
 
   private static class ViewHolder {
-    TextView name;
+    TextView name, brand, category, numRatings;
+    MaterialRatingBar avgRating;
   }
 
 }

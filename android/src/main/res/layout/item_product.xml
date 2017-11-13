@@ -42,8 +42,8 @@
 
     <RelativeLayout
         android:id="@+id/productItemTaxonomies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/productItemName"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -73,10 +73,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/productItemBrandIcon"
-            android:layout_toRightOf="@+id/productItemBrandIcon"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
+            android:layout_toEndOf="@+id/productItemBrandIcon"
+            android:layout_toRightOf="@+id/productItemBrandIcon"
             android:text="Brand" />
 
         <TextView
@@ -84,11 +84,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/productItemBrandIcon"
-            android:layout_toEndOf="@+id/productItemCategoryIcon"
-            android:layout_toRightOf="@+id/productItemCategoryIcon"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
+            android:layout_toEndOf="@+id/productItemCategoryIcon"
+            android:layout_toRightOf="@+id/productItemCategoryIcon"
             android:text="Category" />
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/productItemAvgRating"
+            android:layout_width="100dp"
+            android:layout_height="19dp"
+            style="@style/Widget.MaterialRatingBar.RatingBar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/productItemCategoryIcon"
+            android:rating="3.7"
+            android:stepSize="0.01"
+            android:layout_marginBottom="4dp"
+            android:isIndicator="true" />
+
+        <TextView
+            android:id="@+id/productItemNumRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/productItemAvgRating"
+            android:layout_toEndOf="@+id/productItemAvgRating"
+            android:layout_toRightOf="@+id/productItemAvgRating"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:text="(42)" />
     </RelativeLayout>
 
 </RelativeLayout>

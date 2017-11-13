@@ -29,6 +29,8 @@ public class SearchActivity extends AbstractActivity {
     setContentView(R.layout.activity_search);
 
     resultsView = findViewById(R.id.searchResults);
+    subscriptions.add(getState().categoryMap.subscribe(resultsView::setCategoryMap));
+
     searchWidget = findViewById(R.id.searchWidget);
     configureSearchView(searchWidget);
 
