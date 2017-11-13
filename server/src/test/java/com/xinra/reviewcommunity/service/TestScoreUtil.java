@@ -13,6 +13,7 @@ public class TestScoreUtil {
   
   @Test
   public void fromRatings() {
+    assertThat(ScoreUtil.fromRatings(0, 0, 0, 0, 0)).isCloseTo(0, OFFSET);
     assertThat(ScoreUtil.fromRatings(10, 1, 2, 6, 90)).isCloseTo(0.80390178246001, OFFSET);
     assertThat(ScoreUtil.fromRatings(80, 1, 2, 6, 90)).isCloseTo(0.46188074417216, OFFSET);
     assertThat(ScoreUtil.fromRatings( 0, 1, 2, 6, 0 )).isCloseTo(0.33136280289755, OFFSET);
@@ -21,8 +22,14 @@ public class TestScoreUtil {
   
   @Test
   public void fromAverageRating() {
+    assertThat(ScoreUtil.fromVotes(0, 0)).isCloseTo(0, OFFSET);
     assertThat(ScoreUtil.fromAverageRating(4.8000001907349, 10))
-      .isCloseTo(0.65545605272928, OFFSET);
+            .isCloseTo(0.65545605272928, OFFSET);
+  }
+  
+  @Test
+  public void fromVotes() {
+    assertThat(ScoreUtil.fromVotes(0, 0)).isCloseTo(0, OFFSET);
   }
 
 

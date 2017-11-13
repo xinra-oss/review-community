@@ -9,7 +9,7 @@ public class ProductDto extends SerialDto {
 
   private String name;
   private String description;
-  private CategoryDto category;
+  private int categorySerial;
   private BrandDto brand;
   private int numRatings;
   private double avgRating;

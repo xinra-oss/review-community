@@ -6,14 +6,15 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.xinra.reviewcommunity.SampleContentGenerator;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
+import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +29,7 @@ public class TestCategoryController {
 
   private @Autowired MockMvc mvc;
   private @Autowired CategoryRepository<Category> categoryRepo;
+  private @Autowired SampleContentGenerator sample;
 
   @Test
   public void createCategory() throws Exception {
@@ -36,7 +38,7 @@ public class TestCategoryController {
 
     mvc.perform(MockMvcRequestBuilders.post("/de/api/category").contentType("application/json")
         .content(content)
-        .with(authentication(new TestingAuthenticationToken("jon", "snow", "CREATE_CATEGORY")))
+        .with(authentication(AuthenticationProviderImpl.getAuthentication(sample.moderator)))
         .with(csrf()))
         .andExpect(status().isOk());
 

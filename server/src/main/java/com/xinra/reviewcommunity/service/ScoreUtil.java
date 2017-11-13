@@ -12,6 +12,9 @@ public class ScoreUtil {
    * Calculates the score by number of up- and downvotes.
    */
   public static double fromVotes(double numUpvotes, double numDownvotes) {
+    if (numDownvotes == 0 && numDownvotes == 0) {
+      return 0;
+    }
     return (((numUpvotes + 1.9208) / (numUpvotes + numDownvotes) 
         - 1.96 * Math.sqrt(((numUpvotes * numDownvotes) / (numUpvotes + numDownvotes)) + 0.9604) 
         / (numUpvotes + numDownvotes)) / (1 + 3.8416 / (numUpvotes + numDownvotes)));

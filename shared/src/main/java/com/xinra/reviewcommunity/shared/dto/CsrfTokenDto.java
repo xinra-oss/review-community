@@ -1,7 +1,6 @@
 package com.xinra.reviewcommunity.shared.dto;
 
 import lombok.Data;
-import lombok.NonNull;
 
 /**
  * Copy of {@code org.springframework.security.web.csrf.CsrfToken} to avoid dependency.
