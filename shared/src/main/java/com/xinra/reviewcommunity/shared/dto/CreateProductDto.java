@@ -1,9 +1,10 @@
 package com.xinra.reviewcommunity.shared.dto;
 
-import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+
+import lombok.Data;
 
 @Data
 public class CreateProductDto implements Dto {
@@ -18,5 +19,7 @@ public class CreateProductDto implements Dto {
   private int categorySerial;
 
   private int brandSerial;
+
+  private String barcode;
   
 }
