@@ -6,84 +6,90 @@
     android:layout_height="match_parent"
     tools:context="com.xinra.reviewcommunity.android.AddReviewActivity">
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textReviewRating"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="16dp"
-            android:textSize="24dp"
-            android:text="Product Rating" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <me.zhanghai.android.materialratingbar.MaterialRatingBar
-            android:id="@+id/reviewRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textReviewRating"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="33dp"
-            style="@style/Widget.MaterialRatingBar.RatingBar"
-            android:stepSize="1" />
+            <TextView
+                android:id="@+id/textReviewRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="16dp"
+                android:text="Product Rating"
+                android:textSize="24dp" />
 
-        <TextView
-            android:id="@+id/textReviewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/reviewRating"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="33dp"
-            android:textSize="24dp"
-            android:text="Review Title" />
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/reviewRating"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textReviewRating"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="16dp"
+                android:stepSize="1" />
 
-        <EditText
-            android:id="@+id/reviewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textReviewTitle"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="8dp"
-            android:hint="Review Title"
-            android:singleLine="true" />
+            <TextView
+                android:id="@+id/textReviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/reviewRating"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="33dp"
+                android:text="Review Title"
+                android:textSize="24dp" />
 
-        <TextView
-            android:id="@+id/textReviewText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/reviewTitle"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="33dp"
-            android:textSize="24dp"
-            android:text="Text" />
+            <EditText
+                android:id="@+id/reviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textReviewTitle"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="8dp"
+                android:hint="Review Title"
+                android:singleLine="true" />
 
-        <EditText
-            android:id="@+id/reviewText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textReviewText"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="8dp"
-            android:hint="Text belongs here"
-            android:inputType="textMultiLine"
-            android:singleLine="true" />
+            <TextView
+                android:id="@+id/textReviewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reviewTitle"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="16dp"
+                android:text="Text"
+                android:textSize="24dp" />
 
-        <Button
-            android:id="@+id/saveBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/reviewText"
-            android:text="Save" />
+            <EditText
+                android:id="@+id/reviewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textReviewText"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="8dp"
+                android:hint="Text belongs here"
+                android:inputType="textMultiLine"
+                android:singleLine="true" />
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reviewText"
+                android:layout_centerHorizontal="true"
+                android:text="Save" />
+
+        </RelativeLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

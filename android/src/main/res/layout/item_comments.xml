@@ -43,7 +43,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/reviewText"
-            android:src="@drawable/ic_menu_item" />
+            android:src="@drawable/ic_menu_item"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/commentText"

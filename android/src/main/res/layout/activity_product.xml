@@ -113,7 +113,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="8dp"
-                android:src="@android:drawable/ic_menu_sort_by_size"/>
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                android:visibility="invisible"/>
 
             <View
                 android:id="@+id/headerDivider"
