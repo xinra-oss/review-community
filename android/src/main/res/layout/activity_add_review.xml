@@ -33,9 +33,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="33dp"
             style="@style/Widget.MaterialRatingBar.RatingBar"
-            android:rating="3.7"
-            android:stepSize="0.01" />
-
+            android:stepSize="1" />
 
         <TextView
             android:id="@+id/textReviewTitle"

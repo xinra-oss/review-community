@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.android;
 
 import com.google.common.collect.ImmutableMap;
 import com.xinra.reviewcommunity.shared.OrderBy;
+import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.InitDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
@@ -73,6 +74,10 @@ public class Api extends AbstractApi {
   public Single<List<ReviewCommentDto>> getCommentList(int productSerial, int reviewSerial) {
     return withResponse("/product/{productSerial}/review/{reviewSerial}/comment", HttpMethod.GET, ReviewCommentDto[].class, null, false, ImmutableMap.of("productSerial", productSerial, "reviewSerial", reviewSerial))
         .map(Arrays::asList);
+  }
+
+  public Completable createReview(CreateReviewDto createReviewDto, int productSerial) {
+    return withoutResponse("/product/{productSerial}/review", HttpMethod.POST, createReviewDto, false, ImmutableMap.of("productSerial", productSerial));
   }
 
 }

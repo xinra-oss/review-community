@@ -50,10 +50,16 @@ public class ProductActivity extends BaseActivity {
         Button addReview = findViewById(R.id.addReviewBtn);
         addReview.setOnClickListener(view -> {
             Intent addReviewIntent = new Intent(getApplicationContext(), AddReviewActivity.class);
-            startActivity(addReviewIntent);
+            addReviewIntent.putExtras(getIntent());
+            startActivityForResult(addReviewIntent, 1);
         });
 
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        refresh();
     }
 
     private void updateCategoryName() {
@@ -66,7 +72,10 @@ public class ProductActivity extends BaseActivity {
     @Override
     protected void onInitialized() {
         super.onInitialized();
+        refresh();
+    }
 
+    private void refresh() {
         getApi().getProductDto(productSerial).subscribe(product -> {
             TextView productTitle = findViewById(R.id.productTitle);
             TextView productDescription = findViewById(R.id.productDescription);
