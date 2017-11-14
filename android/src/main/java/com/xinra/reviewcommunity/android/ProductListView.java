@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
   private Map<Integer, CategoryDto> categoryMap;
   private List<ProductDto> products;
   private Adapter adapter;
+  private boolean displayCategory;
+  private boolean displayBrand;
 
   public ProductListView(Context context) {
     super(context);
@@ -47,9 +50,25 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
     categoryMap = Collections.emptyMap();
     products = Collections.emptyList();
     adapter = new Adapter();
+    displayBrand = true;
+    displayCategory = true;
 
     LayoutInflater.from(getContext()).inflate(R.layout.view_product_list, this);
     ((ListView) findViewById(R.id.productList)).setAdapter(adapter);
+  }
+
+  /**
+   * Doesn't update the view!
+   */
+  public void setDisplayCategory(boolean displayCategory) {
+    this.displayCategory = displayCategory;
+  }
+
+  /**
+   * Doesn't update the view!
+   */
+  public void setDisplayBrand(boolean displayBrand) {
+    this.displayBrand = displayBrand;
   }
 
   /**
@@ -109,7 +128,9 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
         holder = new ViewHolder();
         holder.name = view.findViewById(R.id.productItemName);
         holder.brand = view.findViewById(R.id.productItemBrand);
+        holder.brandIcon = view.findViewById(R.id.productItemBrandIcon);
         holder.category = view.findViewById(R.id.productItemCategory);
+        holder.categoryIcon = view.findViewById(R.id.productItemCategoryIcon);
         holder.numRatings = view.findViewById(R.id.productItemNumRating);
         holder.avgRating = view.findViewById(R.id.productItemAvgRating);
 
@@ -120,10 +141,22 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
 
       ProductDto product = (ProductDto) getItem(i);
       holder.name.setText(product.getName());
-      holder.brand.setText(product.getBrand().getName());
-      holder.category.setText(categoryMap.get(product.getCategorySerial()).getName());
       holder.numRatings.setText("(" + product.getNumRatings() + ")");
       holder.avgRating.setRating((float) product.getAvgRating());
+
+      if (displayBrand && product.getBrand() != null) {
+        holder.brand.setText(product.getBrand().getName());
+      } else {
+        holder.brand.setVisibility(View.GONE);
+        holder.brandIcon.setVisibility(View.GONE);
+      }
+
+      if (displayCategory) {
+        holder.category.setText(categoryMap.get(product.getCategorySerial()).getName());
+      } else {
+        holder.category.setVisibility(View.GONE);
+        holder.categoryIcon.setVisibility(View.GONE);
+      }
 
       return view;
     }
@@ -133,6 +166,7 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
   private static class ViewHolder {
     TextView name, brand, category, numRatings;
     MaterialRatingBar avgRating;
+    ImageView brandIcon, categoryIcon;
   }
 
 }
