@@ -21,16 +21,28 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="33dp"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="16dp"
             android:textSize="24dp"
             android:text="Product Rating" />
+
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/reviewRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textReviewRating"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="33dp"
+            style="@style/Widget.MaterialRatingBar.RatingBar"
+            android:rating="3.7"
+            android:stepSize="0.01" />
+
 
         <TextView
             android:id="@+id/textReviewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/textReviewRating"
+            android:layout_below="@id/reviewRating"
             android:layout_marginLeft="33dp"
             android:layout_marginTop="33dp"
             android:textSize="24dp"
