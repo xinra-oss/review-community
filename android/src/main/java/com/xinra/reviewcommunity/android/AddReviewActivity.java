@@ -3,7 +3,7 @@ package com.xinra.reviewcommunity.android;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class AddReviewActivity extends AppCompatActivity {
+public class AddReviewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

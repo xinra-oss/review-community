@@ -30,7 +30,7 @@ public class ProductActivity extends BaseActivity {
 
         Button addReview = findViewById(R.id.addReviewBtn);
         addReview.setOnClickListener(view -> {
-            Intent addReviewIntent = new Intent(getApplicationContext(), CategoryListActivity.class);
+            Intent addReviewIntent = new Intent(getApplicationContext(), AddReviewActivity.class);
             startActivity(addReviewIntent);
         });
 

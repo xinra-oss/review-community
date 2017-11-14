@@ -6,4 +6,74 @@
     android:layout_height="match_parent"
     tools:context="com.xinra.reviewcommunity.android.AddReviewActivity">
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textReviewRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="33dp"
+            android:textSize="24dp"
+            android:text="Product Rating" />
+
+        <TextView
+            android:id="@+id/textReviewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textReviewRating"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="33dp"
+            android:textSize="24dp"
+            android:text="Review Title" />
+
+        <EditText
+            android:id="@+id/reviewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textReviewTitle"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="8dp"
+            android:hint="Review Title"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/textReviewText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviewTitle"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="33dp"
+            android:textSize="24dp"
+            android:text="Text" />
+
+        <EditText
+            android:id="@+id/reviewText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textReviewText"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="8dp"
+            android:hint="Text belongs here"
+            android:inputType="textMultiLine"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/reviewText"
+            android:text="Save" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
