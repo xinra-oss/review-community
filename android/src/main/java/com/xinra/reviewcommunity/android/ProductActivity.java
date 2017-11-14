@@ -9,9 +9,17 @@ import android.widget.ListView;
 
 import com.xinra.reviewcommunity.shared.OrderBy;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
 
+import java.util.List;
+import io.reactivex.functions.Consumer;
+
+import io.reactivex.Single;
+
 public class ProductActivity extends BaseActivity {
+
+    private int productSerial = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +32,14 @@ public class ProductActivity extends BaseActivity {
     @Override
     protected void onInitialized() {
         super.onInitialized();
-        getApi().getReviewList(3, OrderBy.RATING).subscribe(reviews -> {
-            ListAdapter reviewAdapter = new ReviewListAdapter(this, reviews);
+        getApi().getReviewList(productSerial, OrderBy.RATING).subscribe(reviews -> {
+            ListAdapter reviewAdapter = new ReviewListAdapter(this, reviews, this::loadComments);
             ListView listView = findViewById(R.id.reviewListView);
             listView.setAdapter(reviewAdapter);
         }, this::handleError);
+    }
+
+    private void loadComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback) {
+        getApi().getCommentList(productSerial, reviewSerial).subscribe(callback, this::handleError);
     }
 }

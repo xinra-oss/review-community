@@ -6,6 +6,7 @@ import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.InitDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.RegistrationDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
 import com.xinra.reviewcommunity.shared.dto.SuccessfulAuthenticationDto;
@@ -54,8 +55,13 @@ public class Api extends AbstractApi {
         .map(Arrays::asList);
   }
 
-  public Single<List<ReviewDto>> getReviewList(int productSerial,OrderBy orderBy) {
+  public Single<List<ReviewDto>> getReviewList(int productSerial, OrderBy orderBy) {
     return withResponse("/product/{productSerial}/review?orderBy={orderBy}", HttpMethod.GET, ReviewDto[].class, null, false, ImmutableMap.of("productSerial", productSerial, "orderBy", orderBy))
+            .map(Arrays::asList);
+  }
+
+  public Single<List<ReviewCommentDto>> getCommentList(int productSerial, int reviewSerial) {
+    return withResponse("/product/{productSerial}/review/{reviewSerial}/comment", HttpMethod.GET, ReviewCommentDto[].class, null, false, ImmutableMap.of("productSerial", productSerial, "reviewSerial", reviewSerial))
             .map(Arrays::asList);
   }
 }

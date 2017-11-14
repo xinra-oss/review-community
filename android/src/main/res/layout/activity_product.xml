@@ -31,6 +31,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@id/productImage"
+                android:textSize="28dp"
                 android:text="Titel" />
 
 
@@ -41,6 +42,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/productTitle"
                 android:layout_toLeftOf="@id/productImage"
+                android:textSize="20dp"
                 android:text="Category" />
 
             <ImageView
@@ -72,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/productImage"
                 android:layout_alignParentLeft="true"
+                android:textSize="16dp"
                 android:text="Description" />
 
 
@@ -92,6 +95,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:textSize="24dp"
                 android:text="Reviews" />
 
             <View
@@ -106,6 +110,7 @@
                 android:layout_below="@+id/headerDivider"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </RelativeLayout>
 
     </RelativeLayout>

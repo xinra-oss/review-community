@@ -8,27 +8,43 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.xinra.reviewcommunity.shared.OrderBy;
+import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
 
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.function.Supplier;
+import io.reactivex.functions.BiConsumer;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Toby on 10.11.2017.
  */
 
 public class ReviewListAdapter extends BaseAdapter {
+
+    public static interface CommentSupplier {
+        void getComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback);
+    }
+
     private List<ReviewDto> reviewList;
+    private CommentSupplier commentSupplier;
     private final LayoutInflater inflater;
 
     public void setReviewList(List<ReviewDto> reviewList) {
         this.reviewList = reviewList;
     }
 
-    public ReviewListAdapter(Context context, List<ReviewDto> reviewList) {
+    public ReviewListAdapter(Context context, List<ReviewDto> reviewList, CommentSupplier commentSupplier) {
         this.reviewList = reviewList;
+        this.commentSupplier = commentSupplier;
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -70,14 +86,35 @@ public class ReviewListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
+        final View finalView = view; // for use in lambda
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
         Context context = viewGroup.getContext();
         ReviewDto reviewDto = (ReviewDto)getItem(i);
         holder.title.setText(reviewDto.getTitle());
-        holder.date.setText( "published" + reviewDto.getCreatedAt().toString());
+        holder.date.setText( " published " + dateFormat.format(reviewDto.getCreatedAt()));
         holder.username.setText("By " + reviewDto.getUserDto().getName());
         holder.text.setText(reviewDto.getText());
         holder.upVote.setText(reviewDto.getNumUpvotes() + "");
         holder.downVote.setText(reviewDto.getNumDownvotes() + "");
+        holder.addViewCommentBtn.setText("View Comments");
+
+        holder.addViewCommentBtn.setOnClickListener(v -> {
+            commentSupplier.getComments(reviewDto.getSerial(), comments -> {
+                ListAdapter commentListAdapter = new CommentListAdapter(context, comments);
+                ListView listView = finalView.findViewById(R.id.commentListView);
+
+                if(holder.addViewCommentBtn.getText() == "View Comments") {
+                    listView.setVisibility(View.VISIBLE);
+                    listView.setAdapter(commentListAdapter);
+                    holder.addViewCommentBtn.setText("Close Comments");
+                }else{
+                    listView.setVisibility(View.GONE);
+                    holder.addViewCommentBtn.setText("View Comments");
+                }
+            });
+        });
 
         return view;
     }
