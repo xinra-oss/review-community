@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xinra.reviewcommunity.android.AddReviewActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textReviewRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="16dp"
+                android:text="Product Rating"
+                android:textSize="24dp" />
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/reviewRating"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textReviewRating"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="16dp"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/textReviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/reviewRating"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="33dp"
+                android:text="Review Title"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/reviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textReviewTitle"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="8dp"
+                android:hint="Review Title"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/textReviewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reviewTitle"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="16dp"
+                android:text="Text"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/reviewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textReviewText"
+                android:layout_marginLeft="33dp"
+                android:layout_marginTop="8dp"
+                android:hint="Text belongs here"
+                android:inputType="textMultiLine"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reviewText"
+                android:layout_centerHorizontal="true"
+                android:text="Save" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

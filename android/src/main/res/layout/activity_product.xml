@@ -6,4 +6,132 @@
     android:layout_height="match_parent"
     tools:context="com.xinra.reviewcommunity.android.ProductActivity">
 
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/topContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/productTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@id/productImage"
+                android:textSize="28dp"
+                android:text="Titel" />
+
+
+            <TextView
+                android:id="@+id/productCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/productTitle"
+                android:layout_toLeftOf="@id/productImage"
+                android:textSize="20dp"
+                android:text="Category" />
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                app:srcCompat="@drawable/ic_menu_gallery" />
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/productAvgRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/productCategory"
+                android:layout_toLeftOf="@id/productImage"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:rating="3.7"
+                android:stepSize="0.01"
+                android:isIndicator="true"/>
+
+            <TextView
+                android:id="@+id/productDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/productImage"
+                android:layout_alignParentLeft="true"
+                android:textSize="16dp"
+                android:text="Description" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/topContainer"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/reviewHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Reviews"
+                android:textSize="24dp" />
+
+            <Button
+                android:id="@+id/addReviewBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@id/orderByBtn"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="4dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFFFFF"
+                android:text="ADD REVIEW"/>
+
+            <ImageButton
+                android:id="@+id/orderByBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                android:visibility="invisible"/>
+
+            <View
+                android:id="@+id/headerDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/reviewHeader"
+                android:background="@android:color/darker_gray" />
+
+            <ListView
+                android:id="@+id/reviewListView"
+                android:layout_below="@+id/headerDivider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 </android.support.constraint.ConstraintLayout>

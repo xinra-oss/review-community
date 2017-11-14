@@ -1,7 +1,7 @@
 package com.xinra.reviewcommunity.shared.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.ZonedDateTime;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +11,8 @@ public class ReviewCommentDto extends SerialDto {
 
   private String text;
 
-  @JsonFormat(pattern = JsonUtil.ZONED_DATE_FORMAT)
-  private ZonedDateTime createdAt;
+  //@JsonFormat(pattern = JsonUtil.ZONED_DATE_FORMAT)
+  private Date createdAt;
 
   private UserDto userDto;
 

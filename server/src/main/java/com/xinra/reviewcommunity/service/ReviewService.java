@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -214,7 +215,7 @@ public class ReviewService extends AbstractService {
 
     reviewDto.setUserDto(userDto);
     reviewDto.setSerial(review.getSerial());
-    reviewDto.setCreatedAt(review.getCreatedAt());
+    reviewDto.setCreatedAt(Date.from(review.getCreatedAt().toInstant()));
     reviewDto.setRating(review.getRating());
     reviewDto.setText(review.getText());
     reviewDto.setTitle(review.getTitle());
@@ -232,7 +233,7 @@ public class ReviewService extends AbstractService {
 
     reviewCommentDto.setUserDto(userDto);
     reviewCommentDto.setText(reviewComment.getText());
-    reviewCommentDto.setCreatedAt(reviewComment.getCreatedAt());
+    reviewCommentDto.setCreatedAt(Date.from(reviewComment.getCreatedAt().toInstant()));
     reviewCommentDto.setSerial(reviewComment.getSerial());
 
     return reviewCommentDto;

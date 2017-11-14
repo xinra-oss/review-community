@@ -49,6 +49,7 @@
             android:name=".CreateProductActivity"
             android:label="Create Product"
             android:theme="@style/AppTheme" />
+        <activity android:name=".AddReviewActivity"></activity>
     </application>
 
 </manifest>
