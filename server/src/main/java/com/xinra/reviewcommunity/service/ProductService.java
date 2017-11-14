@@ -109,13 +109,10 @@ public class ProductService extends AbstractService {
    * Returns a list of all products of a category.
    */
   public List<ProductDto> getProductsByCategory(int serial) {
-    List<ProductDto> list = productRepo.findProductsByCategorySerial(serial).stream()
+    // TODO check if serial is valid
+	return productRepo.findProductsByCategorySerial(serial).stream()
         .map(this::toDto)
         .collect(Collectors.toList());
-    if (list.isEmpty()) {
-      throw new SerialNotFoundException(Category.class, serial);
-    }
-    return list;
   }
 
   public ProductDto toDto(Product product) {
