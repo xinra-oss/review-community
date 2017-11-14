@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -75,8 +76,6 @@ public class ReviewListAdapter extends BaseAdapter {
             holder.username = (TextView) view.findViewById(R.id.reviewUsername);
             holder.date = (TextView) view.findViewById(R.id.reviewDate);
             holder.text = (TextView) view.findViewById(R.id.reviewText);
-            holder.upVote = (TextView) view.findViewById(R.id.upVoteCount);
-            holder.downVote = (TextView) view.findViewById(R.id.downVoteCount);
             holder.addViewCommentBtn = (Button) view.findViewById(R.id.addOrViewCommentBtn);
             holder.upBtn = (Button) view.findViewById(R.id.upVoteReviewBtn);
             holder.downBtn = (Button) view.findViewById(R.id.downVoteReviewBtn);
@@ -96,8 +95,8 @@ public class ReviewListAdapter extends BaseAdapter {
         holder.date.setText( " published " + dateFormat.format(reviewDto.getCreatedAt()));
         holder.username.setText("By " + reviewDto.getUserDto().getName());
         holder.text.setText(reviewDto.getText());
-        holder.upVote.setText(reviewDto.getNumUpvotes() + "");
-        holder.downVote.setText(reviewDto.getNumDownvotes() + "");
+        holder.upBtn.setText(reviewDto.getNumUpvotes() + "");
+        holder.downBtn.setText(reviewDto.getNumDownvotes() + "");
         holder.addViewCommentBtn.setText("View Comments");
 
         holder.addViewCommentBtn.setOnClickListener(v -> {
@@ -120,7 +119,7 @@ public class ReviewListAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        TextView title, date, text, username, upVote, downVote;
+        TextView title, date, text, username;
         Button addViewCommentBtn, upBtn, downBtn;
     }
 }

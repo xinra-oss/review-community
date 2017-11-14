@@ -73,35 +73,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/reviewText"
             android:layout_toLeftOf="@+id/downVoteReviewBtn"
-            android:text="Down" />
+            android:drawableRight="@drawable/ic_arrow_up_bold"
+            android:text="1"/>
 
         <Button
             android:id="@+id/downVoteReviewBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/reviewText"
-            android:layout_toLeftOf="@+id/downVoteCount"
-            android:text="Up" />
-
-        <TextView
-            android:id="@+id/upVoteCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="2dp"
-            android:layout_below="@+id/reviewText"
-            android:layout_toLeftOf="@id/upVoteReviewBtn"
-            android:text="2" />
-
-        <TextView
-            android:id="@+id/downVoteCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="8dp"
-            android:layout_below="@+id/reviewText"
             android:layout_alignParentRight="true"
-            android:text="3" />
+            android:layout_below="@+id/reviewText"
+            android:drawableLeft="@drawable/ic_arrow_down_bold"
+            android:text="1"/>
 
         <ListView
             android:id="@+id/commentListView"

@@ -95,8 +95,28 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:textSize="24dp"
-                android:text="Reviews" />
+                android:text="Reviews"
+                android:textSize="24dp" />
+
+            <Button
+                android:id="@+id/addReviewBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@id/orderByBtn"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="4dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFFFFF"
+                android:text="ADD REVIEW"/>
+
+            <ImageButton
+                android:id="@+id/orderByBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"/>
 
             <View
                 android:id="@+id/headerDivider"

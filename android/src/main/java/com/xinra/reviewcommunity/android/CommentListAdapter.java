@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
@@ -57,7 +58,7 @@ public class CommentListAdapter extends BaseAdapter {
             holder.commentUsername = (TextView) view.findViewById(R.id.commentUsername);
             holder.commentDate = (TextView) view.findViewById(R.id.commentDate);
             holder.commentText = (TextView) view.findViewById(R.id.commentText);
-            holder.commentInteractionBtn = (Button) view.findViewById(R.id.commentInteractionBtn);
+            holder.commentInteractionBtn = (ImageButton) view.findViewById(R.id.commentInteractionBtn);
 
             view.setTag(holder);
         } else {
@@ -77,6 +78,6 @@ public class CommentListAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         TextView commentUsername, commentDate, commentText;
-        Button commentInteractionBtn;
+        ImageButton commentInteractionBtn;
     }
 }
