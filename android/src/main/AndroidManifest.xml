@@ -45,6 +45,10 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity
+            android:name=".CreateProductActivity"
+            android:label="Create Product"
+            android:theme="@style/AppTheme" />
         <activity android:name=".AddReviewActivity"></activity>
     </application>
 

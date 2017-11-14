@@ -50,5 +50,6 @@ dependencies {
     implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
 
-    compile 'me.zhanghai.android.materialratingbar:library:1.2.0'
+    implementation 'me.zhanghai.android.materialratingbar:library:1.2.0'
+    implementation 'com.github.bmelnychuk:atv:1.2.9'
 }

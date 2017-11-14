@@ -21,6 +21,8 @@ import io.reactivex.Single;
 
 public class ProductActivity extends BaseActivity {
 
+  public static final String PRODUCT_SERIAL = "com.xinra.reviewcommunity.PRODUCT_SERIAL";
+
     private int productSerial = 3;
 
     @Override
