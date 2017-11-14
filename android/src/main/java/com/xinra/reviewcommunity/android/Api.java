@@ -50,6 +50,11 @@ public class Api extends AbstractApi {
     return withoutResponse("/user", HttpMethod.POST, registration, true, null);
   }
 
+  public Single<ProductDto> getProductDto(int productSerial) {
+    return withResponse("/product/{serial}", HttpMethod.GET, ProductDto.class, null, false, ImmutableMap.of("serial", productSerial));
+
+  }
+
   public Single<List<ProductDto>> getProductList(String query) {
     return withResponse("/product?q={query}", HttpMethod.GET, ProductDto[].class, null, false, ImmutableMap.of("query", query))
         .map(Arrays::asList);
@@ -69,4 +74,5 @@ public class Api extends AbstractApi {
     return withResponse("/product/{productSerial}/review/{reviewSerial}/comment", HttpMethod.GET, ReviewCommentDto[].class, null, false, ImmutableMap.of("productSerial", productSerial, "reviewSerial", reviewSerial))
         .map(Arrays::asList);
   }
+
 }

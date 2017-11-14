@@ -115,6 +115,18 @@ public class ReviewListAdapter extends BaseAdapter {
             });
         });
 
+        holder.upBtn.setOnClickListener(v -> {
+            holder.upBtn.setText(reviewDto.getNumUpvotes() + 1 + "");
+            holder.upBtn.setEnabled(false);
+            holder.downBtn.setEnabled(false);
+        });
+
+        holder.downBtn.setOnClickListener(v ->{
+            holder.downBtn.setText(reviewDto.getNumDownvotes() + 1 + "");
+            holder.upBtn.setEnabled(false);
+            holder.upBtn.setEnabled(false);
+        });
+
         return view;
     }
 

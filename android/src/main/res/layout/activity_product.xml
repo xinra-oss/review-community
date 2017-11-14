@@ -53,20 +53,17 @@
                 android:layout_marginRight="8dp"
                 app:srcCompat="@drawable/ic_menu_gallery" />
 
-            <RatingBar
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/productAvgRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ratingBar"
-                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/productCategory"
                 android:layout_toLeftOf="@id/productImage"
-                android:scaleX=".8"
-                android:rating="3"
-                android:scaleY=".8"
-                android:transformPivotX="0dp"
-                android:transformPivotY="0dp"
-                android:max="5"/>
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:rating="3.7"
+                android:stepSize="0.01"
+                android:isIndicator="true"/>
 
             <TextView
                 android:id="@+id/productDescription"
