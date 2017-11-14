@@ -1,12 +1,14 @@
 package com.xinra.reviewcommunity.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,7 +56,8 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
     displayCategory = true;
 
     LayoutInflater.from(getContext()).inflate(R.layout.view_product_list, this);
-    ((ListView) findViewById(R.id.productList)).setAdapter(adapter);
+    ListView listView = findViewById(R.id.productList);
+    listView.setAdapter(adapter);
   }
 
   /**
@@ -157,6 +160,12 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
         holder.category.setVisibility(View.GONE);
         holder.categoryIcon.setVisibility(View.GONE);
       }
+
+      view.setOnClickListener(v -> {
+        Intent productIntent = new Intent(getContext(), ProductActivity.class);
+        productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, product.getSerial());
+        getContext().startActivity(productIntent);
+      });
 
       return view;
     }
