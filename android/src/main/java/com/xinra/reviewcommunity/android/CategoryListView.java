@@ -49,6 +49,7 @@ public class CategoryListView extends FrameLayout {
     treeView.setUseAutoToggle(false);
     treeView.setDefaultNodeClickListener((node, value) -> {
       Intent categoryIntent = new Intent(getContext(), CategoryActivity.class);
+      categoryIntent.putExtra(CategoryActivity.CATEGORY_SERIAL, ((CategoryDto) value).getSerial());
       getContext().startActivity(categoryIntent);
     });
 
