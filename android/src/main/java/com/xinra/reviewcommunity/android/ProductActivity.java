@@ -1,9 +1,11 @@
 package com.xinra.reviewcommunity.android;
 
+import android.content.Intent;
 import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -26,6 +28,12 @@ public class ProductActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
+        Button addReview = findViewById(R.id.addReviewBtn);
+        addReview.setOnClickListener(view -> {
+            Intent addReviewIntent = new Intent(getApplicationContext(), CategoryListActivity.class);
+            startActivity(addReviewIntent);
+        });
+
 
     }
 
@@ -42,4 +50,5 @@ public class ProductActivity extends BaseActivity {
     private void loadComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback) {
         getApi().getCommentList(productSerial, reviewSerial).subscribe(callback, this::handleError);
     }
+
 }
