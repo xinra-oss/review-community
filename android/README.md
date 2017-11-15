@@ -2,7 +2,7 @@ Create file `gradle/env-debug.gradle` with the following content:
 
 ```
 android.buildTypes.debug {
-  buildConfigField 'String', 'API_URL', 'http://<server ip>:8080'
+  buildConfigField 'String', 'API_URL', '"http://<server ip>:8080"'
 }
 ```
 
