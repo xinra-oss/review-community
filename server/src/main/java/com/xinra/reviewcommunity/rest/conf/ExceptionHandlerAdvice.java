@@ -1,6 +1,6 @@
 package com.xinra.reviewcommunity.rest.conf;
 
-import com.xinra.reviewcommunity.service.ProductService;
+import com.xinra.reviewcommunity.service.BarcodeService;
 import com.xinra.reviewcommunity.service.SerialNotFoundException;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +15,7 @@ public class ExceptionHandlerAdvice {
   
   @ExceptionHandler({
       SerialNotFoundException.class,
-      ProductService.BarcodeNotFoundException.class
+      BarcodeService.BarcodeNotFoundException.class
   })
   public void handleNotFoundException(Exception ex, HttpServletResponse response)
       throws IOException {
