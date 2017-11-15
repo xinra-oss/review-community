@@ -48,7 +48,7 @@ public abstract class AbstractApi {
   }
 
   private <RESPONSE, REQUEST> RESPONSE performRequest(String path, HttpMethod method, Class<RESPONSE> responseType, REQUEST requestBody, boolean marketAgnostic, Map<String, ?> uriVariables) {
-    final String url = "http://192.168.178.47:8080"
+    final String url = BuildConfig.API_URL
         + (marketAgnostic ? "" : "/de")
         + "/api" + path;
 
