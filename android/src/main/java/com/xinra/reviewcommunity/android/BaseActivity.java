@@ -1,8 +1,10 @@
 package com.xinra.reviewcommunity.android;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,8 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.base.Optional;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.xinra.reviewcommunity.shared.ApiException;
+import com.xinra.reviewcommunity.shared.Permission;
 
 import java.util.Collections;
 
@@ -99,6 +106,84 @@ public abstract class BaseActivity extends AbstractActivity
 
     return true;
   }
+
+  /**
+   * Launch the barcode scanning activity.
+   * @param view not used. Makes this method usable as onClickListener.
+   */
+  protected void startBarcodeScan(View view) {
+    IntentIntegrator integrator = new IntentIntegrator(this);
+    integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+    if (scanResult != null) {
+      if (scanResult.getContents() != null) {
+        handleScanResult(scanResult.getContents());
+      }
+      return;
+    }
+
+    super.onActivityResult(requestCode, resultCode, data);
+  }
+
+  private void handleScanResult(String barcode) {
+    getApi().getProductSerialByBarcode(barcode).subscribe(productSerial -> {
+      Intent productIntent = new Intent(getApplicationContext(), ProductActivity.class);
+      productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
+      startActivity(productIntent);
+    }, error -> {
+        if (error instanceof ApiException && ((ApiException) error).getStatus() == 404) {
+          if (((ApiException) error).getException().equals(
+              "com.xinra.reviewcommunity.service.BarcodeService$BarcodeNotFoundException")) {
+
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this)
+                .setTitle(R.string.barcode_not_found)
+                .setNeutralButton(android.R.string.cancel, this::doNothingOnClick);
+
+            if (permissions.contains(Permission.CREATE_PRODUCT)) {
+              dialogBuilder.setMessage(R.string.barcode_not_found_message_create);
+              dialogBuilder.setPositiveButton(R.string.create, (dialog, which) -> {
+                Intent createProductIntent =
+                    new Intent(getApplicationContext(), CreateProductActivity.class);
+                createProductIntent.putExtra(CreateProductActivity.BARCODE, barcode);
+                startActivity(createProductIntent);
+              });
+              dialogBuilder.setNegativeButton(R.string.out_of_scope, (dialog, which) -> {
+                Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+              });
+            } else {
+              dialogBuilder.setMessage(R.string.barcode_not_found_message);
+              dialogBuilder.setPositiveButton(R.string.sign_in, (dialog, which) -> {
+                Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(loginIntent); // todo continue after login
+              });
+              dialogBuilder.setNegativeButton(R.string.sign_up, (dialog, which) -> {
+                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(registerIntent); // todo continue after login
+              });
+            }
+
+            dialogBuilder.show();
+            return;
+          } else {
+            new AlertDialog.Builder(this)
+                .setTitle(R.string.out_of_scope_message)
+                .setPositiveButton(android.R.string.ok, this::doNothingOnClick)
+                .show();
+          }
+        }
+        handleError(error);
+    });
+  }
+
+  /**
+   * Use this to not do anything when clicking a dialog button apart from closing the dialog.
+   * Checkstyle doesn't like empty lambdas.
+   */
+  protected void doNothingOnClick(DialogInterface dialog, int which) {}
 
   /**
    * Override to hide the search widget in the action bar.

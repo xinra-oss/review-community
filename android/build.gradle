@@ -56,4 +56,5 @@ dependencies {
 
     implementation 'me.zhanghai.android.materialratingbar:library:1.2.0'
     implementation 'com.github.bmelnychuk:atv:1.2.9'
+    implementation 'com.google.zxing:android-integration:3.3.0'
 }

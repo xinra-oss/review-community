@@ -21,7 +21,7 @@
         <menu>
             <item
                 android:id="@+id/addProduct"
-                android:title="@string/addProduct"/>
+                android:title="Add Product"/>
         </menu>
     </item>
 

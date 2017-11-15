@@ -1,6 +1,8 @@
 package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.auth.AccessRequires;
+import com.xinra.reviewcommunity.service.BarcodeService;
+import com.xinra.reviewcommunity.service.BarcodeService.BarcodeAlreadyExistsException;
 import com.xinra.reviewcommunity.service.ProductService;
 import com.xinra.reviewcommunity.service.SearchService;
 import com.xinra.reviewcommunity.shared.Permission;
@@ -9,6 +11,8 @@ import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +30,18 @@ public class ProductController extends AbstractController {
    */
   @AccessRequires(Permission.CREATE_PRODUCT)
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public SerialDto create(@RequestBody @Valid CreateProductDto createProductDto) {
-    return serviceProvider.getService(ProductService.class).createProduct(createProductDto);
+  public SerialDto create(@RequestBody @Valid CreateProductDto createProductDto,
+      BindingResult result) throws BindException {
+    
+    if (result.hasErrors()) {
+      throw new BindException(result);
+    }
+    try {
+      return serviceProvider.getService(ProductService.class).createProduct(createProductDto);
+    } catch (BarcodeAlreadyExistsException ex) {
+      result.rejectValue("barcode", "AlreadyExists");
+      throw new BindException(result);
+    }
   }
 
   /**
@@ -47,10 +61,10 @@ public class ProductController extends AbstractController {
   }
 
   /**
-   * GET a product by it's Barcode.
+   * GET a product serial by its barcode.
    */
-  @RequestMapping(path = "", params = "barcode", method = RequestMethod.GET)
-  public ProductDto getByBarcode(@RequestParam String barcode) {
-    return serviceProvider.getService(ProductService.class).getProductByBarcode(barcode);
+  @RequestMapping(path = "/serial", params = "barcode", method = RequestMethod.GET)
+  public int getByBarcode(@RequestParam String barcode) {
+    return serviceProvider.getService(BarcodeService.class).getProductSerial(barcode);
   }
 }

@@ -51,13 +51,25 @@ public class ProductService extends AbstractService {
     Product product = entityFactory.createEntity(Product.class);
     product.setName(createProductDto.getName());
     product.setDescription(createProductDto.getDescription());
-    product.setBarcode(createProductDto.getBarcode());
     product.setCategory(category);
     product.setBrand(brand);
+    
+    BarcodeService barcodeService = null;
+    if (createProductDto.getBarcode() != null) {
+      barcodeService = serviceProvider.getService(BarcodeService.class);
+      // Make sure that creating the barcode will not fail before acquiring a serial as actually
+      // creating it must be done afterwards
+      barcodeService.checkBarcodeDoesNotExist(createProductDto.getBarcode());
+    }
 
     int serial = serviceProvider.getService(SerialService.class).getNextSerial(Product.class);
     product.setSerial(serial);
-    productRepo.save(product);
+    product = productRepo.save(product);
+    
+    if (createProductDto.getBarcode() != null) {
+      // this must be called after saving the product
+      barcodeService.setBarcodeOfProduct(product, createProductDto.getBarcode());
+    }
 
     log.info("Created Product with name '{}'", createProductDto.getName());
 
@@ -65,18 +77,6 @@ public class ProductService extends AbstractService {
     serialDto.setSerial(serial);
 
     return serialDto;
-  }
-
-  /**
-   * Returns the product with the given barcode.
-   */
-  public ProductDto getProductByBarcode(String barcode) {
-    Product product = productRepo.findByBarcode(barcode);
-
-    if (product == null) {
-      throw new BarcodeNotFoundException(Product.class, barcode);
-    }
-    return toDto(product);
   }
 
   /**
@@ -93,7 +93,7 @@ public class ProductService extends AbstractService {
 
   /**
    * Returns a list of all products of a brand.
-   **/
+   */
   public List<ProductDto> getProductsByBrand(int serial) {
     List<ProductDto> list = productRepo.findProductsByBrandSerial(serial).stream()
         .map(this::toDto)
@@ -134,19 +134,6 @@ public class ProductService extends AbstractService {
     productDto.setCategorySerial(product.getCategory().getSerial());
 
     return productDto;
-  }
-}
-
-final class BarcodeNotFoundException extends RuntimeException {
-
-
-  private static final long serialVersionUID = 1L;
-
-  /**
-   * Thrown if product cannot be found by the given barcode.
-   */
-  public BarcodeNotFoundException(Class<? extends SerialEntity> type, String barcode) {
-    super("There is no entity of type " + type.getSimpleName() + " with barcode " + barcode);
   }
 }
 

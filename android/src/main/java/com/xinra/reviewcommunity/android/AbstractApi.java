@@ -1,6 +1,8 @@
 package com.xinra.reviewcommunity.android;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xinra.reviewcommunity.shared.ApiException;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
 
 import org.springframework.http.HttpEntity;
@@ -11,8 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Map;
 
 import io.reactivex.Completable;
@@ -94,7 +99,7 @@ public abstract class AbstractApi {
       try {
         source.onSuccess(performRequest(path, method, responseType, requestBody, marketAgnostic, uriVariables));
       } catch (Exception ex) {
-        source.onError(ex);
+        source.onError(extractError(ex));
       }
     }).subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread());
@@ -117,9 +122,22 @@ public abstract class AbstractApi {
         performRequest(path, method, Void.class, requestBody, marketAgnostic, uriVariables);
         source.onComplete();
       } catch (Exception ex) {
-        source.onError(ex);
+        source.onError(extractError(ex));
       }
     }).subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread());
+  }
+
+  private Throwable extractError(Throwable error) {
+    if (error instanceof HttpStatusCodeException) {
+      try {
+        return new ObjectMapper().readValue(((HttpStatusCodeException) error).getResponseBodyAsString(), ApiException.class);
+      } catch (IOException ex) {
+        ex.printStackTrace();
+        return ex;
+      }
+    }
+
+    return error;
   }
 }

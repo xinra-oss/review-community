@@ -11,8 +11,6 @@ public interface ProductRepository<T extends Product> extends com.xinra.nucleus.
 
   T findBySerial(int serial);
 
-  T findByBarcode(String barcode);
-
   Set<T> findProductsByBrandSerial(int serial);
 
   Set<T> findProductsByCategorySerial(int serial);
