@@ -80,4 +80,8 @@ public class Api extends AbstractApi {
     return withoutResponse("/product/{productSerial}/review", HttpMethod.POST, createReviewDto, false, ImmutableMap.of("productSerial", productSerial));
   }
 
+  public Single<Integer> getProductSerialByBarcode(String barcode) {
+    return withResponse("/product/serial?barcode={barcode}", HttpMethod.GET, Integer.class, null, false, ImmutableMap.of("barcode", barcode));
+  }
+
 }

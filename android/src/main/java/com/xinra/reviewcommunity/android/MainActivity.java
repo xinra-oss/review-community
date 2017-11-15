@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 public class MainActivity extends BaseActivity {
 
   @Override
@@ -18,6 +20,8 @@ public class MainActivity extends BaseActivity {
       Intent categoriesIntent = new Intent(getApplicationContext(), CategoryListActivity.class);
       startActivity(categoriesIntent);
     });
+
+    findViewById(R.id.mainScanBtn).setOnClickListener(this::startBarcodeScan);
   }
 
   @Override
