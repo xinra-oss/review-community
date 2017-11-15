@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.rest.conf;
 
+import com.xinra.reviewcommunity.service.ProductService;
 import com.xinra.reviewcommunity.service.SerialNotFoundException;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
   
-  @ExceptionHandler(SerialNotFoundException.class)
+  @ExceptionHandler({
+      SerialNotFoundException.class,
+      ProductService.BarcodeNotFoundException.class
+  })
   public void handleNotFoundException(Exception ex, HttpServletResponse response)
       throws IOException {
     response.sendError(HttpServletResponse.SC_NOT_FOUND, ex.getMessage());

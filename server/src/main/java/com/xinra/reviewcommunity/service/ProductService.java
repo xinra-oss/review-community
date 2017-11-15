@@ -27,6 +27,18 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class ProductService extends AbstractService {
+  
+  /**
+   * Thrown if product cannot be found by the given barcode.
+   */
+  public static class BarcodeNotFoundException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
+
+    public BarcodeNotFoundException(String barcode) {
+      super("There is no product with barcode " + barcode);
+    }
+  }
 
   private @Autowired ProductRepository<Product> productRepo;
   private @Autowired CategoryRepository<Category> categoryRepo;
@@ -74,7 +86,7 @@ public class ProductService extends AbstractService {
     Product product = productRepo.findByBarcode(barcode);
 
     if (product == null) {
-      throw new BarcodeNotFoundException(Product.class, barcode);
+      throw new BarcodeNotFoundException(barcode);
     }
     return toDto(product);
   }
@@ -134,19 +146,6 @@ public class ProductService extends AbstractService {
     productDto.setCategorySerial(product.getCategory().getSerial());
 
     return productDto;
-  }
-}
-
-final class BarcodeNotFoundException extends RuntimeException {
-
-
-  private static final long serialVersionUID = 1L;
-
-  /**
-   * Thrown if product cannot be found by the given barcode.
-   */
-  public BarcodeNotFoundException(Class<? extends SerialEntity> type, String barcode) {
-    super("There is no entity of type " + type.getSimpleName() + " with barcode " + barcode);
   }
 }
 
