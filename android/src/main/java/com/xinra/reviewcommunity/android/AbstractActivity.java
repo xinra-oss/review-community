@@ -10,7 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 
 import com.google.common.base.Optional;
+import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+
+import java.util.Collections;
+import java.util.Set;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -24,6 +28,12 @@ public abstract class AbstractActivity extends AppCompatActivity {
    * destroyed.
    */
   protected final CompositeDisposable subscriptions = new CompositeDisposable();
+
+  /**
+   * Current permissions of the user. Updated automatically (get notified by overriding
+   * {@link #onPermissionsUpdated()}).
+   */
+  protected Set<Permission> permissions = Collections.emptySet();
 
   protected AppState getState() {
     return ((ReviewCommunityApplication) getApplication()).getState();
@@ -40,6 +50,10 @@ public abstract class AbstractActivity extends AppCompatActivity {
   @Override
   protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
+    subscriptions.add(getState().permissions.subscribe( permissions -> {
+      this.permissions = permissions;
+      onPermissionsUpdated();
+    }));
     subscriptions.add(getState().initialized.subscribe(initialized -> {
       if (initialized) {
         onInitialized();
@@ -48,6 +62,12 @@ public abstract class AbstractActivity extends AppCompatActivity {
       }
     }));
   }
+
+  /**
+   * Called when permissions of the user are updated in {@link AppState}. New permissions are
+   * available in {@link #permissions}.
+   */
+  protected void onPermissionsUpdated() {}
 
   private void init() {
     getApi().getInit().subscribe(initDto -> {

@@ -26,8 +26,6 @@ public class Product extends SerialEntity {
   @Field(store = Store.YES)
   private String description;
 
-  private String barcode;
-
   @IndexedEmbedded
   @ManyToOne(optional = false)
   private @NonNull Category category;
