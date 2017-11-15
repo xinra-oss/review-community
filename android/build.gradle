@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+if (file('gradle/env-debug.gradle').exists()) {
+    apply from: 'gradle/env-debug.gradle'
+}
+
 repositories {
     google()
     jcenter()
