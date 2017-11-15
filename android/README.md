@@ -1,4 +1,4 @@
-Create file `gradle/env-debug.gradle` with the following content:
+Create file `android/gradle/env-debug.gradle` with the following content:
 
 ```
 android.buildTypes.debug {
