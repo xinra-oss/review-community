@@ -140,7 +140,10 @@ public abstract class BaseActivity extends AbstractActivity
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
-    if (id == R.id.nav_login) {
+    if (id == R.id.addProduct) {
+      Intent createProductIntent = new Intent(getApplicationContext(), CreateProductActivity.class);
+      startActivity(createProductIntent);
+    } else if (id == R.id.nav_login) {
       Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
       startActivity(loginIntent);
     } else if (id == R.id.nav_register) {

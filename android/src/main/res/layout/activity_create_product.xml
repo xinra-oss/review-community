@@ -6,4 +6,160 @@
     android:layout_height="match_parent"
     tools:context="com.xinra.reviewcommunity.android.CreateProductActivity">
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/textProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Name" />
+
+
+            <EditText
+                android:id="@+id/productName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textProductName"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:hint="Produkt Name"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textProductBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productName"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Brand" />
+
+            <EditText
+                android:id="@+id/productBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textProductBrand"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:hint="Produkt Name"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textProductDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productBrand"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Brand" />
+
+            <EditText
+                android:id="@id/productDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textProductDescription"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:hint="Product Description"
+                android:text=""/>
+
+            <TextView
+                android:id="@+id/textScanBarcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productDescription"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Add Barcode" />
+
+            <ImageButton
+                android:id="@+id/addBarcodeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textScanBarcode"
+                android:layout_alignLeft="@id/textScanBarcode"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_barcode_scan" />
+
+            <TextView
+                android:id="@+id/textAddPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productDescription"
+                android:layout_toRightOf="@id/textScanBarcode"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Take Picture" />
+
+            <ImageButton
+                android:id="@+id/addPictureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textAddPicture"
+                android:layout_alignLeft="@id/textAddPicture"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_camera"
+                />
+
+            <TextView
+                android:id="@+id/textLoadPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productDescription"
+                android:layout_toRightOf="@id/textAddPicture"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="Load Picture" />
+
+            <ImageButton
+                android:id="@+id/addLoadPictureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textLoadPicture"
+                android:layout_alignLeft="@id/textLoadPicture"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_camera_galerie"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addBarcodeBtn"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFFFFF"
+                android:text="Save"/>
+        </RelativeLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
