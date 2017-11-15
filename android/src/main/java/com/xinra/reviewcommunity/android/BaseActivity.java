@@ -113,7 +113,7 @@ public abstract class BaseActivity extends AbstractActivity
    */
   protected void startBarcodeScan(View view) {
     IntentIntegrator integrator = new IntentIntegrator(this);
-    integrator.initiateScan();
+    integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
   }
 
   @Override
@@ -151,7 +151,7 @@ public abstract class BaseActivity extends AbstractActivity
                 createProductIntent.putExtra(CreateProductActivity.BARCODE, barcode);
                 startActivity(createProductIntent);
               });
-              dialogBuilder.setNegativeButton("Out of Scope", (dialog, which) -> {
+              dialogBuilder.setNegativeButton(R.string.out_of_scope, (dialog, which) -> {
                 Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
               });
             } else {
