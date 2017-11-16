@@ -6,8 +6,6 @@ import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 
 public class CategoryActivity extends BaseActivity {
 
-  public static final String CATEGORY_SERIAL = "com.xinra.reviewcommunity.CATEGORY_SERIAL";
-
   private int categorySerial;
   private ProductListView productListView;
 
@@ -15,7 +13,7 @@ public class CategoryActivity extends BaseActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    categorySerial = getIntent().getIntExtra(CATEGORY_SERIAL, 0);
+    categorySerial = getIntent().getIntExtra(Extras.CATEGORY, 0);
 
     setContentView(R.layout.activity_category);
 

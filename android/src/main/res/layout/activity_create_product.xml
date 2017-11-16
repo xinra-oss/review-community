@@ -47,35 +47,37 @@
                 android:text="" />
 
             <TextView
-                android:id="@+id/textProductBrand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productName"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Brand" />
-
-            <EditText
-                android:id="@+id/productBrand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textProductBrand"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="16dp"
-                android:hint="Produkt Name"
-                android:text="" />
+              android:id="@+id/textProductBrand"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@id/productName"
+              android:layout_marginLeft="16dp"
+              android:layout_marginTop="16dp"
+              android:text="Category" />
 
             <TextView
-                android:id="@+id/textProductDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/productBrand"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:text="Brand" />
+              android:id="@+id/productBrand"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@id/textProductBrand"
+              android:layout_marginLeft="16dp"
+              android:layout_marginRight="16dp"
+              android:layout_marginTop="8dp"
+              android:text="&lt;Select Category&gt;"
+              android:textAppearance="@android:style/TextAppearance.Medium"
+              android:drawableRight="@drawable/ic_expanded_item"/>
+
+            <TextView
+              android:id="@+id/textProductDescription"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@id/productBrand"
+              android:layout_marginLeft="16dp"
+              android:layout_marginTop="16dp"
+              android:text="Description" />
 
             <EditText
                 android:id="@id/productDescription"

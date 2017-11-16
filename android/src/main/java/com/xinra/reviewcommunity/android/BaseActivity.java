@@ -148,7 +148,7 @@ public abstract class BaseActivity extends AbstractActivity
               dialogBuilder.setPositiveButton(R.string.create, (dialog, which) -> {
                 Intent createProductIntent =
                     new Intent(getApplicationContext(), CreateProductActivity.class);
-                createProductIntent.putExtra(CreateProductActivity.BARCODE, barcode);
+                createProductIntent.putExtra(Extras.BARCODE, barcode);
                 startActivity(createProductIntent);
               });
               dialogBuilder.setNegativeButton(R.string.out_of_scope, (dialog, which) -> {

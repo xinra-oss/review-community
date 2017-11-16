@@ -1,14 +1,11 @@
 package com.xinra.reviewcommunity.android;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unnamed.b.atv.model.TreeNode;
@@ -18,6 +15,14 @@ import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import java.util.List;
 
 public class CategoryListView extends FrameLayout {
+
+  public interface OnCategoryClickListener {
+    void onCategoryClick(int categorySerial);
+  }
+
+  private OnCategoryClickListener onCategoryClickListener;
+
+  private int selectedCategory;
 
   public CategoryListView(Context context) {
     super(context);
@@ -38,6 +43,18 @@ public class CategoryListView extends FrameLayout {
     LayoutInflater.from(getContext()).inflate(R.layout.view_category_list, this);
   }
 
+  public void setOnCategoryClickListener(OnCategoryClickListener onCategoryClickListener) {
+    this.onCategoryClickListener = onCategoryClickListener;
+  }
+
+  /**
+   * Doesn't update the view!
+   */
+  public void setSelectedCategory(int categorySerial) {
+    this.selectedCategory = categorySerial;
+  }
+
+
   public void setContent(List<CategoryDto> categoryTree) {
     TreeNode root = TreeNode.root();
     addNodesRecursively(root, categoryTree);
@@ -48,21 +65,38 @@ public class CategoryListView extends FrameLayout {
     treeView.setDefaultContainerStyle(R.style.TreeNodeStyle);
     treeView.setUseAutoToggle(false);
     treeView.setDefaultNodeClickListener((node, value) -> {
-      Intent categoryIntent = new Intent(getContext(), CategoryActivity.class);
-      categoryIntent.putExtra(CategoryActivity.CATEGORY_SERIAL, ((CategoryDto) value).getSerial());
-      getContext().startActivity(categoryIntent);
+      if (onCategoryClickListener != null) {
+        onCategoryClickListener.onCategoryClick(((CategoryDto) value).getSerial());
+      }
     });
 
     removeAllViews();
     addView(treeView.getView());
   }
 
-  private void addNodesRecursively(TreeNode parent, List<CategoryDto> categorySubTree) {
-    for (CategoryDto category: categorySubTree) {
-      TreeNode node = new TreeNode(category);
+  /**
+   * Creates nodes for all categories of the current subtree. Each category's children become a new
+   * subtree. If a category is selected, all of its parent nodes are expanded.
+   *
+   * @return whether the parent should be expanded
+   */
+  private boolean addNodesRecursively(TreeNode parent, List<CategoryDto> children) {
+    boolean expandParent = false;
+    for (CategoryDto child: children) {
+      TreeNode node = new TreeNode(child);
       parent.addChild(node);
-      addNodesRecursively(node, category.getChildren());
+      boolean currentIsSelected = child.getSerial() == selectedCategory;
+      if (currentIsSelected) {
+        node.setSelected(true);
+        expandParent = true;
+      }
+      boolean expandCurrent = addNodesRecursively(node, child.getChildren());
+      if (expandCurrent) {
+        node.setExpanded(true);
+        expandParent = true;
+      }
     }
+    return expandParent;
   }
 
   private static class ItemHolder extends TreeNode.BaseNodeViewHolder<CategoryDto> {
@@ -78,7 +112,11 @@ public class CategoryListView extends FrameLayout {
       final LayoutInflater inflater = LayoutInflater.from(context);
       final View view = inflater.inflate(R.layout.item_category, null, false);
 
-      ((TextView) view.findViewById(R.id.categoryItemName)).setText(value.getName());
+      TextView name = view.findViewById(R.id.categoryItemName);
+      name.setText(value.getName());
+      if (node.isSelected()) {
+        name.setBackgroundColor(0xFF7a9cff);
+      }
 
       expandBtn = view.findViewById(R.id.categoryItemExpandBtn);
       if (node.isLeaf()) {
