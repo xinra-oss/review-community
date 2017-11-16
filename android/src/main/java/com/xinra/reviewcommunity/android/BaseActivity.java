@@ -107,29 +107,8 @@ public abstract class BaseActivity extends AbstractActivity
     return true;
   }
 
-  /**
-   * Launch the barcode scanning activity.
-   * @param view not used. Makes this method usable as onClickListener.
-   */
-  protected void startBarcodeScan(View view) {
-    IntentIntegrator integrator = new IntentIntegrator(this);
-    integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
-  }
-
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-    if (scanResult != null) {
-      if (scanResult.getContents() != null) {
-        handleScanResult(scanResult.getContents());
-      }
-      return;
-    }
-
-    super.onActivityResult(requestCode, resultCode, data);
-  }
-
-  private void handleScanResult(String barcode) {
+  protected void handleScanResult(String barcode) {
     getApi().getProductSerialByBarcode(barcode).subscribe(productSerial -> {
       Intent productIntent = new Intent(getApplicationContext(), ProductActivity.class);
       productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
