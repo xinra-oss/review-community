@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.auth.AccessRequires;
 import com.xinra.reviewcommunity.service.ReviewService;
+import com.xinra.reviewcommunity.shared.OrderBy;
 import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
@@ -39,8 +40,9 @@ public class ReviewController extends AbstractController {
    * GET a list of all reviews for a specific product.
    */
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public List<ReviewDto> getAllReviews(@PathVariable int serial, @RequestParam String orderBy) {
-    return serviceProvider.getService(ReviewService.class).getAllReviews(orderBy, serial);
+  public List<ReviewDto> getAllReviews(@PathVariable int serial, 
+      @RequestParam(defaultValue = "DATE") OrderBy orderBy) {
+    return serviceProvider.getService(ReviewService.class).getReviewsForProduct(serial, orderBy);
   }
 
   /**

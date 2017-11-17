@@ -2,7 +2,6 @@ package com.xinra.reviewcommunity.entity;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

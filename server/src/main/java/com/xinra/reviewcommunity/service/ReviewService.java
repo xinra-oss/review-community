@@ -1,6 +1,8 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.Streams;
+import com.xinra.nucleus.common.ContextHolder;
+import com.xinra.reviewcommunity.Context;
 import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.Review;
 import com.xinra.reviewcommunity.entity.ReviewComment;
@@ -18,17 +20,14 @@ import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
 import com.xinra.reviewcommunity.shared.dto.UserDto;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -40,6 +39,7 @@ public class ReviewService extends AbstractService {
   private @Autowired ProductRepository<Product> productRepo;
   private @Autowired UserRepository<User> userRepo;
   private @Autowired ReviewVoteRepository<ReviewVote> voteRepo;
+  private @Autowired ContextHolder<Context> contextHolder;
 
   /**
    * Creates a new review.
@@ -88,28 +88,25 @@ public class ReviewService extends AbstractService {
   /**
    * Returns a list of all reviews.
    */
-  public List<ReviewDto> getAllReviews(String oderBy, int productSerial) {
+  @SuppressWarnings("unchecked")
+  public List<ReviewDto> getReviewsForProduct(int productSerial, @NonNull OrderBy orderBy) {
 
     Product product = productRepo.findBySerial(productSerial);
     if (product == null) {
       throw new SerialNotFoundException(Product.class, productSerial);
     }
-    List<ReviewDto> list;
-
-    if (oderBy.equals(OrderBy.DATE.name())) {
-      list = Streams.stream(reviewRepo.findByProductIdOrderByCreatedAtDesc(product.getPk().getId()))
-              .map(this::reviewToDto)
-              .collect(Collectors.toList());
-    } else if (oderBy.equals(OrderBy.RATING.name())) {
-      list = Streams.stream(reviewRepo.findByProductIdOrderByRatingDesc(product.getPk().getId()))
-              .map(this::reviewToDto)
-              .collect(Collectors.toList());
+    
+    List<?> results = reviewRepo.findByProduct(product, orderBy);
+    
+    if (contextHolder.get().getAuthenticatedUser().isPresent()) {
+      return ((List<Object[]>) results).stream()
+          .map(r -> reviewToDto((Review) r[0], (ReviewVote) r[1]))
+          .collect(Collectors.toList());
     } else {
-      list = Streams.stream(reviewRepo.findByProductId(product.getPk().getId()))
-            .map(this::reviewToDto)
-            .collect(Collectors.toList());
+      return results.stream()
+          .map(r -> reviewToDto((Review) r))
+          .collect(Collectors.toList());
     }
-    return list;
   }
 
   /**
@@ -206,6 +203,20 @@ public class ReviewService extends AbstractService {
             .findBySerialAndReviewSerial(reviewCommentSerial,
                                                           reviewSerial);
     reviewCommentRepo.delete(reviewComment);
+  }
+  
+  private ReviewDto reviewToDto(Review review, ReviewVote vote) {
+    ReviewDto reviewDto = reviewToDto(review);
+    if (vote != null) {
+      reviewDto.setAuthenticatedUserVote(reviewVoteToDto(vote));
+    }
+    return reviewDto;
+  }
+  
+  private ReviewVoteDto reviewVoteToDto(ReviewVote vote) {
+    ReviewVoteDto voteDto = dtoFactory.createDto(ReviewVoteDto.class);
+    voteDto.setUpvote(vote.isUpvote());
+    return voteDto;
   }
 
   private ReviewDto reviewToDto(Review review) {

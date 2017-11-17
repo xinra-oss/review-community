@@ -22,5 +22,7 @@ public class ReviewDto extends SerialDto {
   private int numUpvotes;
   private int numDownvotes;
   private double score;
+  
+  private ReviewVoteDto authenticatedUserVote;
 
 }
