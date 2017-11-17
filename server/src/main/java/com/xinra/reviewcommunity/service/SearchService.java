@@ -36,6 +36,9 @@ public class SearchService extends AbstractService {
     log.info("Finished building Lucene index");
   }
   
+  /**
+   * Searches for products in the Lucene index.
+   */
   public List<ProductDto> searchProducts(String queryString) {
     
     final FullTextEntityManager fullTextEntityManager 

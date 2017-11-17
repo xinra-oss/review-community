@@ -9,4 +9,5 @@ public interface ReviewCommentRepository<T extends ReviewComment>
   Set<T> findByReviewIdOrderByCreatedAtAsc(String reviewId);
 
   T findBySerialAndReviewSerial(int serial, int reviewSerial);
+  
 }

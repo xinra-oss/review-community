@@ -3,25 +3,20 @@ package com.xinra.reviewcommunity.service;
 import com.xinra.reviewcommunity.entity.Brand;
 import com.xinra.reviewcommunity.entity.Category;
 import com.xinra.reviewcommunity.entity.Product;
-import com.xinra.reviewcommunity.entity.SerialEntity;
 import com.xinra.reviewcommunity.repo.BrandRepository;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
 import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.shared.dto.BrandDto;
-import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
-
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -97,7 +92,7 @@ public class ProductService extends AbstractService {
    * Returns a list of all products of a brand.
    */
   public List<ProductDto> getProductsByBrand(int serial) {
-    List<ProductDto> list = productRepo.findProductsByBrandSerial(serial).stream()
+    List<ProductDto> list = productRepo.findByBrandSerial(serial).stream()
         .map(this::toDto)
         .collect(Collectors.toList());
 
@@ -112,11 +107,14 @@ public class ProductService extends AbstractService {
    */
   public List<ProductDto> getProductsByCategory(int serial) {
     // TODO check if serial is valid
-	return productRepo.findProductsByCategorySerial(serial).stream()
-        .map(this::toDto)
-        .collect(Collectors.toList());
+    return productRepo.findByCategorySerial(serial).stream()
+      .map(this::toDto)
+      .collect(Collectors.toList());
   }
 
+  /**
+   * Converts a product entity to a DTO.
+   */
   public ProductDto toDto(Product product) {
 
     ProductDto productDto = dtoFactory.createDto(ProductDto.class);
@@ -133,7 +131,6 @@ public class ProductService extends AbstractService {
       brandDto.setSerial(product.getBrand().getSerial());
       productDto.setBrand(brandDto);
     }
-    
 
     productDto.setCategorySerial(product.getCategory().getSerial());
 

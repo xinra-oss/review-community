@@ -16,8 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 @Transactional
 @SpringBootTest
@@ -31,7 +29,7 @@ public class TestUserController {
   
   @Test
   public void createUserTwice() throws Exception {
-	String content = "{\"username\": \"testuser\", \"password\": \"secret\"}";
+    String content = "{\"username\": \"testuser\", \"password\": \"secret\"}";
     
     mvc.perform(post("/api/user")
         .contentType("application/json")
@@ -45,11 +43,10 @@ public class TestUserController {
     
     // creating a user with the same name again should fail
     mvc.perform(post("/api/user")
-    	.contentType("application/json")
+        .contentType("application/json")
         .content(content)
         .with(csrf()))
         .andExpect(status().isBadRequest());
     
   }
-  
 }

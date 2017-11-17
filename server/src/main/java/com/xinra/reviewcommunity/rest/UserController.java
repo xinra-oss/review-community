@@ -24,15 +24,16 @@ public class UserController extends AbstractController {
   @MarketAgnostic
   @RequestMapping(path = "", method = RequestMethod.POST)
   public void register(@Valid @RequestBody RegistrationDto registerDto,
-                       BindingResult result) throws BindException {
+      BindingResult result) throws BindException {
+    
     if (result.hasErrors()) {
       throw new BindException(result);
     }
     try {
       serviceProvider.getService(UserService.class).createUserWithPassword(
-    		  registerDto.getUsername(),
-    		  Util.normalize(registerDto.getEmail()),
-    		  registerDto.getPassword());
+          registerDto.getUsername(),
+          Util.normalize(registerDto.getEmail()),
+          registerDto.getPassword());
     } catch (UsernameAlreadyExistsException ex) {
       result.rejectValue("username", "AlreadyExists");
       throw new BindException(result);

@@ -5,13 +5,12 @@ import com.xinra.reviewcommunity.Context;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.shared.dto.InitDto;
 import com.xinra.reviewcommunity.shared.dto.UserDto;
+import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collections;
 
 @RestController
 public class InitController extends AbstractController {

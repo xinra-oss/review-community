@@ -1,11 +1,9 @@
 package com.xinra.reviewcommunity.service;
 
 import com.google.common.collect.ImmutableList;
-import com.xinra.nucleus.entity.EntityPk;
 import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.repo.MarketRepository;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
-
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;

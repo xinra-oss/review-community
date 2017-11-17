@@ -3,11 +3,10 @@ package com.xinra.reviewcommunity.rest.conf;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.rest.AuthController;
+import com.xinra.reviewcommunity.rest.FrontendUtil;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
 import com.xinra.reviewcommunity.shared.dto.SuccessfulAuthenticationDto;
 import com.xinra.reviewcommunity.shared.dto.UserDto;
-
-import com.xinra.reviewcommunity.rest.FrontendUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Component;
 
 /**

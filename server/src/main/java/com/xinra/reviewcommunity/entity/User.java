@@ -35,7 +35,6 @@ public class User extends BaseEntity {
   // cache
   
   @Enumerated(EnumType.STRING)
-  private @NonNull
-  UserLevel level;
+  private @NonNull UserLevel level;
   
 }

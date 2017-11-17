@@ -1,8 +1,8 @@
 package com.xinra.reviewcommunity.rest;
 
-import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import com.xinra.reviewcommunity.rest.conf.MarketAgnostic;
 import com.xinra.reviewcommunity.service.MarketService;
+import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

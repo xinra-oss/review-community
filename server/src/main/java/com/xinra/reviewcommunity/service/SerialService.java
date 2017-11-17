@@ -41,7 +41,7 @@ public class SerialService extends AbstractService {
     final int nextSerial = serial.getLastSerial() + 1;
     serial.setLastSerial(nextSerial);
     serialRepo.save(serial);
-    log.debug("Top-level serial of {} incemented to {}.", entityType.getName(), nextSerial);
+    log.debug("Top-level serial of {} incremented to {}.", entityType.getName(), nextSerial);
     return nextSerial;
   }
   

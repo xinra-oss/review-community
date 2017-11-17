@@ -1,6 +1,5 @@
 package com.xinra.reviewcommunity.service;
 
-import com.google.common.collect.Streams;
 import com.xinra.nucleus.common.ContextHolder;
 import com.xinra.reviewcommunity.Context;
 import com.xinra.reviewcommunity.entity.Product;
@@ -124,16 +123,17 @@ public class ReviewService extends AbstractService {
 
     User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
     Review review = reviewRepo.findBySerialAndProductSerial(reviewSerial, productSerial);
-    ReviewVote vote = voteRepo.findByUserIdAndReviewId(user.getPk().getId(), review.getPk().getId());
+    ReviewVote vote 
+        = voteRepo.findByUserIdAndReviewId(user.getPk().getId(), review.getPk().getId());
 
     int numUpvotes = review.getNumUpvotes();
     int numDownvotes = review.getNumDownvotes();
 
     if (vote != null) {
-      if (vote.isUpvote() && !reviewVoteDto.isUpvote()){
+      if (vote.isUpvote() && !reviewVoteDto.isUpvote()) {
         review.setNumUpvotes(numUpvotes - 1);
         review.setNumDownvotes(numDownvotes + 1);
-      } else if (!vote.isUpvote() && reviewVoteDto.isUpvote()){
+      } else if (!vote.isUpvote() && reviewVoteDto.isUpvote()) {
         review.setNumUpvotes(numUpvotes + 1);
         review.setNumDownvotes(numDownvotes - 1);
       }
@@ -158,7 +158,8 @@ public class ReviewService extends AbstractService {
   /**
    * Creates a new comment for a specific review.
    */
-  public void createReviewComment(CreateReviewCommentDto createReviewCommentDto, int reviewSerial, int productSerial) {
+  public void createReviewComment(CreateReviewCommentDto createReviewCommentDto, int reviewSerial,
+      int productSerial) {
 
     User user = userRepo.findOne(contextHolder.get().getAuthenticatedUser().get().getPk());
     Review review = reviewRepo.findBySerialAndProductSerial(reviewSerial, productSerial);
@@ -186,13 +187,11 @@ public class ReviewService extends AbstractService {
     if (review == null) {
       throw new SerialNotFoundException(Review.class, reviewSerial);
     }
-    List<ReviewCommentDto> list = Streams.stream(reviewCommentRepo
-            .findByReviewIdOrderByCreatedAtAsc(review.getPk()
-            .getId()))
-            .map(this::reviewCommentToDto)
-            .collect(Collectors.toList());
-
-    return list;
+    
+    return reviewCommentRepo.findByReviewIdOrderByCreatedAtAsc(review.getPk().getId())
+      .stream()
+      .map(this::reviewCommentToDto)
+      .collect(Collectors.toList());
   }
 
   /**
@@ -200,25 +199,14 @@ public class ReviewService extends AbstractService {
    */
   public void deleteReviewComment(int reviewCommentSerial, int reviewSerial) {
     ReviewComment reviewComment = reviewCommentRepo
-            .findBySerialAndReviewSerial(reviewCommentSerial,
-                                                          reviewSerial);
+            .findBySerialAndReviewSerial(reviewCommentSerial, reviewSerial);
+    // todo error handling
     reviewCommentRepo.delete(reviewComment);
   }
   
-  private ReviewDto reviewToDto(Review review, ReviewVote vote) {
-    ReviewDto reviewDto = reviewToDto(review);
-    if (vote != null) {
-      reviewDto.setAuthenticatedUserVote(reviewVoteToDto(vote));
-    }
-    return reviewDto;
-  }
-  
-  private ReviewVoteDto reviewVoteToDto(ReviewVote vote) {
-    ReviewVoteDto voteDto = dtoFactory.createDto(ReviewVoteDto.class);
-    voteDto.setUpvote(vote.isUpvote());
-    return voteDto;
-  }
-
+  /**
+   * Converts a review entity to a DTO.
+   */
   private ReviewDto reviewToDto(Review review) {
     ReviewDto reviewDto = dtoFactory.createDto(ReviewDto.class);
 
@@ -235,6 +223,20 @@ public class ReviewService extends AbstractService {
     reviewDto.setScore(review.getScore());
 
     return reviewDto;
+  }
+  
+  private ReviewDto reviewToDto(Review review, ReviewVote vote) {
+    ReviewDto reviewDto = reviewToDto(review);
+    if (vote != null) {
+      reviewDto.setAuthenticatedUserVote(reviewVoteToDto(vote));
+    }
+    return reviewDto;
+  }
+  
+  private ReviewVoteDto reviewVoteToDto(ReviewVote vote) {
+    ReviewVoteDto voteDto = dtoFactory.createDto(ReviewVoteDto.class);
+    voteDto.setUpvote(vote.isUpvote());
+    return voteDto;
   }
 
   private ReviewCommentDto reviewCommentToDto(ReviewComment reviewComment) {

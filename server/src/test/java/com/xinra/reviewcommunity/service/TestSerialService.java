@@ -2,7 +2,6 @@ package com.xinra.reviewcommunity.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.xinra.nucleus.entity.EntityFactory;
 import com.xinra.nucleus.entity.EntityPk;
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.SampleMarketSpecificEntity;
@@ -21,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.swing.text.html.parser.Entity;
-
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
@@ -31,7 +28,6 @@ public class TestSerialService {
   
   private @Autowired ServiceProvider serviceProvider;
   private @Autowired PlatformTransactionManager transactionManager;
-  private @Autowired EntityFactory entityFactory;
   
   @Test
   public void topLevelSerial() {

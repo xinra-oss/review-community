@@ -1,10 +1,14 @@
 package com.xinra.reviewcommunity.rest;
 
-import com.xinra.reviewcommunity.SampleContentGenerator;
-import com.xinra.reviewcommunity.entity.Review;
-import com.xinra.reviewcommunity.repo.ReviewRepository;
-import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.xinra.reviewcommunity.SampleContentGenerator;
+import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,22 +27,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TestReviewController {
 
   private @Autowired MockMvc mvc;
-  private @Autowired ReviewRepository<Review> reviewRepo;
   private @Autowired SampleContentGenerator sample;
+  
+  // TODO confirm actions at database level!
 
   @Test
   public void createReview() throws Exception {
 
-    String content = "{" +
-            "\"title\": \"My review.\"," +
-            "\"rating\": 4," +
-            "\"text\": \"I like this product sooo much, bla bla bla...\"" +
-            "}";
+    String content = "{"
+        + "\"title\": \"My review.\","
+        + "\"rating\": 4,"
+        + "\"text\": \"I like this product sooo much, bla bla bla...\""
+        + "}";
 
     mvc.perform(post("/de/api/product/1/review").contentType("application/json").content(content)
-            .with(authentication(AuthenticationProviderImpl.getAuthentication(sample.user)))
-            .with(csrf()))
-            .andExpect(status().isOk());
+      .with(authentication(AuthenticationProviderImpl.getAuthentication(sample.user)))
+      .with(csrf()))
+      .andExpect(status().isOk());
   }
 
   @Test
@@ -93,7 +91,8 @@ public class TestReviewController {
   public void vote() throws Exception {
     String content = "{ \"upvote\": true }";
 
-    mvc.perform(post("/de/api/product/3/review/1/vote").contentType("application/json").content(content)
+    mvc.perform(post("/de/api/product/3/review/1/vote").contentType("application/json")
+            .content(content)
             .with(authentication(AuthenticationProviderImpl.getAuthentication(sample.user)))
             .with(csrf()))
             .andExpect(status().isOk());

@@ -5,10 +5,8 @@ import com.xinra.nucleus.entity.EntityFactory;
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
 import com.xinra.reviewcommunity.entity.Market;
-import com.xinra.reviewcommunity.entity.Product;
 import com.xinra.reviewcommunity.entity.User;
 import com.xinra.reviewcommunity.repo.MarketRepository;
-import com.xinra.reviewcommunity.repo.ProductRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
 import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import com.xinra.reviewcommunity.service.BrandService;
@@ -25,7 +23,7 @@ import com.xinra.reviewcommunity.shared.dto.CreateReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
 import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -33,8 +31,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -57,8 +53,6 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   private @Autowired EntityFactory entityFactory;
   private @Autowired MarketRepository<Market> marketRepo;
   private @Autowired UserRepository<User> userRepo;
-  @SuppressWarnings("unused")
-  private @Autowired ProductRepository<Product> productRepo;
   private @Value("${spring.jpa.hibernate.ddl-auto:''}") String schemaExport;
 
   @Override
@@ -66,6 +60,9 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     if (environment.acceptsProfiles("test") || schemaExport.startsWith("create")) {
       log.info("Start generating sample data");
       createMarkets();
+      
+      // TODO don't load all the sample data into test env.
+      // atm tests rely on this data, that has to be fixed first
       if (environment.acceptsProfiles("dev", "test")) {
         createUsers();
         createBrands();
@@ -80,6 +77,10 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   }
   
   private void createMarkets() {
+    // TODO when there is a default market in all environments this can be removed. 
+    // tests that rely on multiple markets should create their own anyways.
+    // see https://github.com/xinra-it/review-community/issues/27
+    
     Market m1 = entityFactory.createEntity(Market.class);
     m1.setSlug("de");
     marketRepo.save(m1);
@@ -127,7 +128,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     categoryService.createCategory(createCategoryDto2);
 
     CreateCategoryDto createCategoryDto3 = dtoFactory.createDto(CreateCategoryDto.class);
-    createCategoryDto3.setName("Fruchgummi");
+    createCategoryDto3.setName("Fruchtgummi");
     createCategoryDto3.setParentSerial(2);
     categoryService.createCategory(createCategoryDto3);
 
@@ -211,13 +212,13 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   private void createReviews() {
     contextHolder.mock().setMarket(serviceProvider.getService(MarketService.class).getBySlug("de"));
 
-    ReviewService reviewService = serviceProvider.getService(ReviewService.class);
-
     contextHolder.get().setAuthenticatedUser(admin);
     CreateReviewDto createReviewDto1 = dtoFactory.createDto(CreateReviewDto.class);
     createReviewDto1.setTitle("My Review on PUBG");
     createReviewDto1.setText("FPP ftw!");
     createReviewDto1.setRating(5);
+    
+    ReviewService reviewService = serviceProvider.getService(ReviewService.class);
     reviewService.createReview(createReviewDto1, 3);
 
     CreateReviewDto createReviewDto4 = dtoFactory.createDto(CreateReviewDto.class);
@@ -257,7 +258,7 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     contextHolder.get().setAuthenticatedUser(user);
     ReviewVoteDto reviewVoteDto3 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto3.setUpvote(false);
-    reviewService.vote(reviewVoteDto3, 1,3 );
+    reviewService.vote(reviewVoteDto3, 1, 3);
 
     ReviewVoteDto reviewVoteDto4 = dtoFactory.createDto(ReviewVoteDto.class);
     reviewVoteDto4.setUpvote(true);

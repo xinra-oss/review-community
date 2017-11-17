@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ReviewVoteRepository<T extends ReviewVote> extends AbstractEntityRepository<T> {
 
   T findByUserIdAndReviewId(String userId, String reviewId);
+  
 }
