@@ -96,8 +96,6 @@ public class ReviewListAdapter extends BaseAdapter implements PopupMenu.OnMenuIt
                             reportingIntent.putExtra(Extras.PRODUCT, productSerial);
                             reportingIntent.putExtra("ReviewSerial", reviewList.get(i).getSerial());
                             context.startActivity(reportingIntent);
-                            Toast.makeText(context,
-                                    menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 });

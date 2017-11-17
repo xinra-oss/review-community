@@ -1,12 +1,9 @@
 package com.xinra.reviewcommunity.android;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,13 +24,18 @@ public class ReportActivity extends AbstractActivity implements AdapterView.OnIt
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(this);
+
+
+        findViewById(R.id.reportSendBtn).setOnClickListener(view -> {
+            Toast.makeText(this, "Report submitted", Toast.LENGTH_SHORT).show();
+            finish();
+        });
     }
 
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
         String sSelected = adapterView.getItemAtPosition(position).toString();
-        Toast.makeText(this,sSelected, Toast.LENGTH_SHORT).show();
     }
 
     @Override

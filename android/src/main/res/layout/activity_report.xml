@@ -58,6 +58,7 @@
                 android:hint="Your extra information"/>
 
             <Button
+              android:id="@+id/reportSendBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reportingDetail"
