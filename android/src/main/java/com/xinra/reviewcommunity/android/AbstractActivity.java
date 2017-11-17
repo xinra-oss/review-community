@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.common.base.Optional;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -140,5 +141,17 @@ public abstract class AbstractActivity extends AppCompatActivity {
    */
   protected void onScanResult(String barcode) {
     throw new RuntimeException("If you call startBarcodeScan() you must override onScanResult()");
+  }
+
+  /**
+   * Returns the text of a {@link TextView} as a String or {@code null} if the text is {@code null}
+   * or empty.
+   */
+  protected String getText(TextView textView) {
+    CharSequence text = textView.getText();
+    if (text == null) {
+      return null;
+    }
+    return text.length() == 0 ? null : text.toString();
   }
 }

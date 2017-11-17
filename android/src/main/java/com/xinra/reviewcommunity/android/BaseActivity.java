@@ -73,7 +73,6 @@ public abstract class BaseActivity extends AbstractActivity
         navRegister.setVisible(false);
         navLogout.setVisible(true);
         navUsername.setText(user.get().getName());
-        Snackbar.make(contentFrame, "Signed in as " + user.get().getName(), Snackbar.LENGTH_SHORT).show();
       } else {
         navLogin.setVisible(true);
         navRegister.setVisible(true);
@@ -111,7 +110,7 @@ public abstract class BaseActivity extends AbstractActivity
   protected void onScanResult(String barcode) {
     getApi().getProductSerialByBarcode(barcode).subscribe(productSerial -> {
       Intent productIntent = new Intent(getApplicationContext(), ProductActivity.class);
-      productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
+      productIntent.putExtra(Extras.PRODUCT, productSerial);
       startActivity(productIntent);
     }, error -> {
         if (error instanceof ApiException && ((ApiException) error).getStatus() == 404) {
@@ -202,7 +201,7 @@ public abstract class BaseActivity extends AbstractActivity
       getState().authenticatedUser.onNext(Optional.absent());
       getState().permissions.onNext(Collections.emptySet());
       navUsername.setText(R.string.unauthenticated_username);
-      Snackbar.make(contentFrame, "Successfully signed out", Snackbar.LENGTH_SHORT).show();
+      Toast.makeText(this, "Successfully signed out", Toast.LENGTH_SHORT).show();
       // When logging out the session is destroyed. This invalidates the CSRF token and we have to
       // get a new one manually.
       getApi().getCsrfToken().subscribe(token -> getState().csrfToken = token, this::handleError);

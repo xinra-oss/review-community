@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.android;
 
 import com.google.common.collect.ImmutableMap;
 import com.xinra.reviewcommunity.shared.OrderBy;
+import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.InitDto;
@@ -82,6 +83,10 @@ public class Api extends AbstractApi {
 
   public Single<Integer> getProductSerialByBarcode(String barcode) {
     return withResponse("/product/serial?barcode={barcode}", HttpMethod.GET, Integer.class, null, false, ImmutableMap.of("barcode", barcode));
+  }
+
+  public Single<SerialDto> createProduct(CreateProductDto createProductDto) {
+    return withResponse("/product", HttpMethod.POST, SerialDto.class, createProductDto, false, null);
   }
 
 }

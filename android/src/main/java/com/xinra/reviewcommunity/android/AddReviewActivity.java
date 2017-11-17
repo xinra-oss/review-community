@@ -14,7 +14,7 @@ public class AddReviewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        productSerial = getIntent().getIntExtra(ProductActivity.PRODUCT_SERIAL, 0);
+        productSerial = getIntent().getIntExtra(Extras.PRODUCT, 0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_review);
