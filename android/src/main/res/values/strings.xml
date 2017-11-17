@@ -5,6 +5,7 @@
   <string name="name">Name</string>
   <string name="category">Category</string>
   <string name="save">Save</string>
+  <string name="authentication_required">Login required</string>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -41,4 +42,5 @@
   <string name="edit_product_barcode">Barcode (optional)</string>
   <string name="scan_barcode">Scan Barcode</string>
   <string name="clear_barcode">Clear Barcode</string>
+  <string name="create_product_auth">You need to sign in to add a new product.</string>
 </resources>

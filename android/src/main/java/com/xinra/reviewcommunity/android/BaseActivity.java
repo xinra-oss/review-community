@@ -118,41 +118,32 @@ public abstract class BaseActivity extends AbstractActivity
           if (((ApiException) error).getException().equals(
               "com.xinra.reviewcommunity.service.BarcodeService$BarcodeNotFoundException")) {
 
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this)
-                .setTitle(R.string.barcode_not_found)
-                .setNeutralButton(android.R.string.cancel, this::doNothingOnClick);
-
             if (permissions.contains(Permission.CREATE_PRODUCT)) {
-              dialogBuilder.setMessage(R.string.barcode_not_found_message_create);
-              dialogBuilder.setPositiveButton(R.string.create, (dialog, which) -> {
-                Intent createProductIntent =
-                    new Intent(getApplicationContext(), CreateProductActivity.class);
-                createProductIntent.putExtra(Extras.BARCODE, barcode);
-                startActivity(createProductIntent);
-              });
-              dialogBuilder.setNegativeButton(R.string.out_of_scope, (dialog, which) -> {
-                Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
-              });
+              new AlertDialog.Builder(this)
+                  .setTitle(R.string.barcode_not_found)
+                  .setNeutralButton(android.R.string.cancel, this::doNothingOnClick)
+                  .setMessage(R.string.barcode_not_found_message_create)
+                  .setPositiveButton(R.string.create, (dialog, which) -> {
+                    Intent createProductIntent =
+                        new Intent(getApplicationContext(), CreateProductActivity.class);
+                    createProductIntent.putExtra(Extras.BARCODE, barcode);
+                    startActivity(createProductIntent);
+                  })
+                  .setNegativeButton(R.string.out_of_scope, (dialog, which) -> {
+                    Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+                  })
+                  .show();
             } else {
-              dialogBuilder.setMessage(R.string.barcode_not_found_message);
-              dialogBuilder.setPositiveButton(R.string.sign_in, (dialog, which) -> {
-                Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(loginIntent); // todo continue after login
-              });
-              dialogBuilder.setNegativeButton(R.string.sign_up, (dialog, which) -> {
-                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(registerIntent); // todo continue after login
-              });
+              showLoginRequiredPopup(R.string.barcode_not_found_message,
+                  R.string.barcode_not_found);
             }
-
-            dialogBuilder.show();
-            return;
           } else {
             new AlertDialog.Builder(this)
                 .setTitle(R.string.out_of_scope_message)
                 .setPositiveButton(android.R.string.ok, this::doNothingOnClick)
                 .show();
           }
+          return;
         }
         handleError(error);
     });
@@ -169,6 +160,26 @@ public abstract class BaseActivity extends AbstractActivity
    */
   protected boolean isSearchInActionBarEnabled() {
     return true;
+  }
+
+  protected void showLoginRequiredPopup(int messageResource) {
+    showLoginRequiredPopup(messageResource, R.string.authentication_required);
+  }
+
+  protected void showLoginRequiredPopup(int messageResource, int titleResource) {
+    new AlertDialog.Builder(this)
+        .setTitle(titleResource)
+        .setNeutralButton(android.R.string.cancel, this::doNothingOnClick)
+        .setMessage(messageResource)
+        .setPositiveButton(R.string.sign_in, (dialog, which) -> {
+          Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+          startActivity(loginIntent); // todo continue after login
+        })
+        .setNegativeButton(R.string.sign_up, (dialog, which) -> {
+          Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+          startActivity(registerIntent); // todo continue after login
+        })
+        .show();
   }
 
   @Override
@@ -205,8 +216,12 @@ public abstract class BaseActivity extends AbstractActivity
     int id = item.getItemId();
 
     if (id == R.id.addProduct) {
-      Intent createProductIntent = new Intent(getApplicationContext(), CreateProductActivity.class);
-      startActivity(createProductIntent);
+      if (permissions.contains(Permission.CREATE_PRODUCT)) {
+        Intent createProductIntent = new Intent(getApplicationContext(), CreateProductActivity.class);
+        startActivity(createProductIntent);
+      } else {
+        showLoginRequiredPopup(R.string.create_product_auth);
+      }
     } else if (id == R.id.nav_login) {
       Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
       startActivity(loginIntent);

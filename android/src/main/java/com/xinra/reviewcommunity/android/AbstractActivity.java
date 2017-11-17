@@ -54,7 +54,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
   @Override
   protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    subscriptions.add(getState().permissions.subscribe( permissions -> {
+    subscriptions.add(getState().permissions.subscribe(permissions -> {
       this.permissions = permissions;
       onPermissionsUpdated();
     }));
