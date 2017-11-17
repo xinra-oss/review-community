@@ -127,7 +127,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
     if (scanResult != null) {
       if (scanResult.getContents() != null) {
-        handleScanResult(scanResult.getContents());
+        onScanResult(scanResult.getContents());
       }
       return;
     }
@@ -138,8 +138,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
   /**
    * Called when {@link #startBarcodeScan(View)} finished with a valid barcode result.
    */
-  protected void handleScanResult(String barcode) {
-    throw new RuntimeException("If you call startBarcodeScan() "
-        + "you must override handleScanResult()");
+  protected void onScanResult(String barcode) {
+    throw new RuntimeException("If you call startBarcodeScan() you must override onScanResult()");
   }
 }

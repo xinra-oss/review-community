@@ -2,6 +2,9 @@
   <string name="app_name">Review Community</string>
 
   <string name="create">Create</string>
+  <string name="name">Name</string>
+  <string name="category">Category</string>
+  <string name="save">Save</string>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -30,4 +33,12 @@
   </string>
   <string name="out_of_scope">Out of Scope</string>
   <string name="out_of_scope_message">This product is not in the scope of this community</string>
+
+  <string name="select_category_placeholder">&lt;Select Category&gt;</string>
+  <string name="select_brand_placeholder">&lt;Select Brand&gt;</string>
+  <string name="edit_product_brand">Brand (optional)</string>
+  <string name="edit_product_description">Description (optional)</string>
+  <string name="edit_product_barcode">Barcode (optional)</string>
+  <string name="scan_barcode">Scan Barcode</string>
+  <string name="clear_barcode">Clear Barcode</string>
 </resources>

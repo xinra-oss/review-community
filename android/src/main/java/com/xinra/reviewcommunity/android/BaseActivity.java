@@ -108,7 +108,7 @@ public abstract class BaseActivity extends AbstractActivity
   }
 
   @Override
-  protected void handleScanResult(String barcode) {
+  protected void onScanResult(String barcode) {
     getApi().getProductSerialByBarcode(barcode).subscribe(productSerial -> {
       Intent productIntent = new Intent(getApplicationContext(), ProductActivity.class);
       productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
