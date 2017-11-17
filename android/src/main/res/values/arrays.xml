@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="report_array">
+        <item>Uncivil, unneighborly or offensive</item>
+        <item>Not relevant or annoying</item>
+        <item>Safety issue or illegal</item>
+        <item>Commercial or spam</item>
+    </string-array>
+</resources>

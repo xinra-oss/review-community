@@ -37,14 +37,14 @@
             android:text="on Date"/>
 
         <ImageButton
-            android:id="@+id/commentInteractionBtn"
+            android:id="@+id/commentMenuBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/reviewText"
             android:src="@drawable/ic_menu_item"
-            android:visibility="invisible"/>
+            />
 
         <TextView
             android:id="@+id/commentText"

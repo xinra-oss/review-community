@@ -8,7 +8,7 @@ import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
 
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-public class AddReviewActivity extends BaseActivity {
+public class AddReviewActivity extends AbstractActivity {
 
     private int productSerial;
 
