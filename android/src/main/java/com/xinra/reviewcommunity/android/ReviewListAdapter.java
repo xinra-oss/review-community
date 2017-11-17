@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.xinra.reviewcommunity.shared.OrderBy;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -37,26 +39,28 @@ public class ReviewListAdapter extends BaseAdapter implements PopupMenu.OnMenuIt
         return true;
     }
 
-    public static interface CommentSupplier {
+    public interface CommentSupplier {
         void getComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback);
+    }
+
+    public interface  OnVoteListener {
+      void onVote(ReviewDto reviewDto, boolean isUpvote);
     }
 
     private List<ReviewDto> reviewList;
     private CommentSupplier commentSupplier;
-    private final LayoutInflater inflater;
+    private LayoutInflater inflater;
     private Context context;
     private int productSerial;
+    private OnVoteListener onVoteListener;
 
-    public void setReviewList(List<ReviewDto> reviewList) {
-        this.reviewList = reviewList;
-    }
-
-    public ReviewListAdapter(Context context, List<ReviewDto> reviewList, int productSerial, CommentSupplier commentSupplier) {
-        this.context = context;
-        this.reviewList = reviewList;
-        this.productSerial = productSerial;
-        this.commentSupplier = commentSupplier;
-        this.inflater = LayoutInflater.from(context);
+    public ReviewListAdapter(Context context, List<ReviewDto> reviewList, int productSerial, CommentSupplier commentSupplier, OnVoteListener onVoteListener) {
+      this.context = context;
+      this.reviewList = reviewList;
+      this.productSerial = productSerial;
+      this.commentSupplier = commentSupplier;
+      this.inflater = LayoutInflater.from(context);
+      this.onVoteListener = onVoteListener;
     }
 
     @Override
@@ -89,7 +93,7 @@ public class ReviewListAdapter extends BaseAdapter implements PopupMenu.OnMenuIt
                     switch(menuItem.getItemId()) {
                         case R.id.report:
                             Intent reportingIntent = new Intent(context, ReportActivity.class);
-                            reportingIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
+                            reportingIntent.putExtra(Extras.PRODUCT, productSerial);
                             reportingIntent.putExtra("ReviewSerial", reviewList.get(i).getSerial());
                             context.startActivity(reportingIntent);
                             Toast.makeText(context,
@@ -128,6 +132,16 @@ public class ReviewListAdapter extends BaseAdapter implements PopupMenu.OnMenuIt
         holder.downBtn.setText(reviewDto.getNumDownvotes() + "");
         holder.addViewCommentBtn.setText("View Comments");
 
+        if (reviewDto.getAuthenticatedUserVote() != null) {
+          if (reviewDto.getAuthenticatedUserVote().isUpvote()) {
+            holder.upBtn.setEnabled(false);
+            holder.upBtn.setTextColor(Color.BLUE);
+          } else {
+            holder.downBtn.setEnabled(false);
+            holder.downBtn.setTextColor(Color.BLUE);
+          }
+        }
+
         holder.addViewCommentBtn.setOnClickListener(v -> {
             commentSupplier.getComments(reviewDto.getSerial(), comments -> {
                 ListAdapter commentListAdapter = new CommentListAdapter(context, comments, productSerial, reviewList.get(i).getSerial());
@@ -144,17 +158,8 @@ public class ReviewListAdapter extends BaseAdapter implements PopupMenu.OnMenuIt
             });
         });
 
-        holder.upBtn.setOnClickListener(v -> {
-            holder.upBtn.setText(reviewDto.getNumUpvotes() + 1 + "");
-            holder.upBtn.setEnabled(false);
-            holder.downBtn.setEnabled(false);
-        });
-
-        holder.downBtn.setOnClickListener(v ->{
-            holder.downBtn.setText(reviewDto.getNumDownvotes() + 1 + "");
-            holder.upBtn.setEnabled(false);
-            holder.upBtn.setEnabled(false);
-        });
+        holder.upBtn.setOnClickListener(v -> onVoteListener.onVote(reviewDto, true));
+        holder.downBtn.setOnClickListener(v -> onVoteListener.onVote(reviewDto, false));
 
         return view;
     }

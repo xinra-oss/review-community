@@ -10,6 +10,7 @@ import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.RegistrationDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
 import com.xinra.reviewcommunity.shared.dto.SuccessfulAuthenticationDto;
 
@@ -87,6 +88,10 @@ public class Api extends AbstractApi {
 
   public Single<SerialDto> createProduct(CreateProductDto createProductDto) {
     return withResponse("/product", HttpMethod.POST, SerialDto.class, createProductDto, false, null);
+  }
+
+  public Completable createOrUpdateReviewVote(int productSerial, int reviewSerial, ReviewVoteDto voteDto) {
+    return withoutResponse("/product/{productSerial}/review/{reviewSerial}/vote", HttpMethod.POST, voteDto, false, ImmutableMap.of("productSerial", productSerial, "reviewSerial", reviewSerial));
   }
 
 }

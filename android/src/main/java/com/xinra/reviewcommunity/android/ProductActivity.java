@@ -12,10 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xinra.reviewcommunity.shared.OrderBy;
+import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
+import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +29,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.Single;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-public class ProductActivity extends BaseActivity {
+public class ProductActivity extends BaseActivity implements ReviewListAdapter.OnVoteListener, ReviewListAdapter.CommentSupplier {
 
     private int productSerial;
     private int categorySerial;
@@ -89,15 +91,33 @@ public class ProductActivity extends BaseActivity {
         }, this::handleError);
 
         getApi().getReviewList(productSerial, OrderBy.RATING).subscribe(reviews -> {
-            ListAdapter reviewAdapter = new ReviewListAdapter(this, reviews, productSerial, this::loadComments);
+            ListAdapter reviewAdapter = new ReviewListAdapter(this, reviews, productSerial, this, this);
             ListView listView = findViewById(R.id.reviewListView);
             listView.setAdapter(reviewAdapter);
         }, this::handleError);
     }
 
-    private void loadComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback) {
+    @Override
+    public void getComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback) {
         getApi().getCommentList(productSerial, reviewSerial).subscribe(callback, this::handleError);
     }
 
+    @Override
+    public void onVote(ReviewDto reviewDto, boolean isUpvote) {
+      if (permissions.contains(Permission.VOTE)) {
+        ReviewVoteDto voteDto = getDtoFactory().createDto(ReviewVoteDto.class);
+        voteDto.setUpvote(isUpvote);
+        getApi().createOrUpdateReviewVote(productSerial, reviewDto.getSerial(), voteDto).subscribe(this::refresh, this::handleError);
+        // todo update without re-fetch
+      } else {
+        showLoginRequiredPopup(R.string.review_vote_auth);
+      }
 
+    }
+
+  @Override
+  protected void onPermissionsUpdated() {
+    super.onPermissionsUpdated();
+    refresh();
+  }
 }

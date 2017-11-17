@@ -25,12 +25,9 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     String queryString = "SELECT r";
     
     if (user.isPresent()) {
-      queryString += ", (SELECT v FROM ReviewVote v WHERE v.review.id = r.id AND v.user.id = :userId)";
+      queryString +=
+          ", (SELECT v FROM ReviewVote v WHERE v.review.id = r.id AND v.user.id = :userId)";
     }
-    
-//    String queryString = user.isPresent()
-//        ? "SELECT r, v FROM Review r, ReviewVote v LEFT JOIN ReviewVote WHERE v.user.id = :userId "
-//        : "SELECT r FROM Review r WHERE 1=1 ";
     
     queryString += " FROM Review r WHERE r.product = :product ORDER BY ";
     queryString += orderBy == OrderBy.DATE ? "r.createdAt " : "r.score ";

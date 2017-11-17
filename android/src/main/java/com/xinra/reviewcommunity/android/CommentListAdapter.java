@@ -68,7 +68,7 @@ public class CommentListAdapter extends BaseAdapter implements PopupMenu.OnMenuI
                     switch(menuItem.getItemId()) {
                         case R.id.report:
                             Intent reportingIntent = new Intent(context, ReportActivity.class);
-                            reportingIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
+                            reportingIntent.putExtra(Extras.PRODUCT, productSerial);
                             reportingIntent.putExtra("ReviewSerial", reviewSerial);
                             reportingIntent.putExtra("CommentSerial", commentList.get(i).getSerial());
                             context.startActivity(reportingIntent);

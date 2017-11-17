@@ -44,4 +44,6 @@
   <string name="clear_barcode">Clear Barcode</string>
   <string name="create_product_auth">You need to sign in to add a new product.</string>
   <string name="create_product_success">Product has been added</string>
+
+  <string name="review_vote_auth">You need to sign in to vote on reviews.</string>
 </resources>
