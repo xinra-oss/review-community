@@ -73,7 +73,6 @@ public abstract class BaseActivity extends AbstractActivity
         navRegister.setVisible(false);
         navLogout.setVisible(true);
         navUsername.setText(user.get().getName());
-        Snackbar.make(contentFrame, "Signed in as " + user.get().getName(), Snackbar.LENGTH_SHORT).show();
       } else {
         navLogin.setVisible(true);
         navRegister.setVisible(true);
@@ -107,73 +106,43 @@ public abstract class BaseActivity extends AbstractActivity
     return true;
   }
 
-  /**
-   * Launch the barcode scanning activity.
-   * @param view not used. Makes this method usable as onClickListener.
-   */
-  protected void startBarcodeScan(View view) {
-    IntentIntegrator integrator = new IntentIntegrator(this);
-    integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
-  }
-
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-    if (scanResult != null) {
-      if (scanResult.getContents() != null) {
-        handleScanResult(scanResult.getContents());
-      }
-      return;
-    }
-
-    super.onActivityResult(requestCode, resultCode, data);
-  }
-
-  private void handleScanResult(String barcode) {
+  protected void onScanResult(String barcode) {
     getApi().getProductSerialByBarcode(barcode).subscribe(productSerial -> {
       Intent productIntent = new Intent(getApplicationContext(), ProductActivity.class);
-      productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
+      productIntent.putExtra(Extras.PRODUCT, productSerial);
       startActivity(productIntent);
     }, error -> {
         if (error instanceof ApiException && ((ApiException) error).getStatus() == 404) {
           if (((ApiException) error).getException().equals(
               "com.xinra.reviewcommunity.service.BarcodeService$BarcodeNotFoundException")) {
 
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this)
-                .setTitle(R.string.barcode_not_found)
-                .setNeutralButton(android.R.string.cancel, this::doNothingOnClick);
-
             if (permissions.contains(Permission.CREATE_PRODUCT)) {
-              dialogBuilder.setMessage(R.string.barcode_not_found_message_create);
-              dialogBuilder.setPositiveButton(R.string.create, (dialog, which) -> {
-                Intent createProductIntent =
-                    new Intent(getApplicationContext(), CreateProductActivity.class);
-                createProductIntent.putExtra(CreateProductActivity.BARCODE, barcode);
-                startActivity(createProductIntent);
-              });
-              dialogBuilder.setNegativeButton(R.string.out_of_scope, (dialog, which) -> {
-                Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
-              });
+              new AlertDialog.Builder(this)
+                  .setTitle(R.string.barcode_not_found)
+                  .setNeutralButton(android.R.string.cancel, this::doNothingOnClick)
+                  .setMessage(R.string.barcode_not_found_message_create)
+                  .setPositiveButton(R.string.create, (dialog, which) -> {
+                    Intent createProductIntent =
+                        new Intent(getApplicationContext(), CreateProductActivity.class);
+                    createProductIntent.putExtra(Extras.BARCODE, barcode);
+                    startActivity(createProductIntent);
+                  })
+                  .setNegativeButton(R.string.out_of_scope, (dialog, which) -> {
+                    Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+                  })
+                  .show();
             } else {
-              dialogBuilder.setMessage(R.string.barcode_not_found_message);
-              dialogBuilder.setPositiveButton(R.string.sign_in, (dialog, which) -> {
-                Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(loginIntent); // todo continue after login
-              });
-              dialogBuilder.setNegativeButton(R.string.sign_up, (dialog, which) -> {
-                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(registerIntent); // todo continue after login
-              });
+              showLoginRequiredPopup(R.string.barcode_not_found_message,
+                  R.string.barcode_not_found);
             }
-
-            dialogBuilder.show();
-            return;
           } else {
             new AlertDialog.Builder(this)
                 .setTitle(R.string.out_of_scope_message)
                 .setPositiveButton(android.R.string.ok, this::doNothingOnClick)
                 .show();
           }
+          return;
         }
         handleError(error);
     });
@@ -190,6 +159,26 @@ public abstract class BaseActivity extends AbstractActivity
    */
   protected boolean isSearchInActionBarEnabled() {
     return true;
+  }
+
+  protected void showLoginRequiredPopup(int messageResource) {
+    showLoginRequiredPopup(messageResource, R.string.authentication_required);
+  }
+
+  protected void showLoginRequiredPopup(int messageResource, int titleResource) {
+    new AlertDialog.Builder(this)
+        .setTitle(titleResource)
+        .setNeutralButton(android.R.string.cancel, this::doNothingOnClick)
+        .setMessage(messageResource)
+        .setPositiveButton(R.string.sign_in, (dialog, which) -> {
+          Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+          startActivity(loginIntent); // todo continue after login
+        })
+        .setNegativeButton(R.string.sign_up, (dialog, which) -> {
+          Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+          startActivity(registerIntent); // todo continue after login
+        })
+        .show();
   }
 
   @Override
@@ -212,7 +201,7 @@ public abstract class BaseActivity extends AbstractActivity
       getState().authenticatedUser.onNext(Optional.absent());
       getState().permissions.onNext(Collections.emptySet());
       navUsername.setText(R.string.unauthenticated_username);
-      Snackbar.make(contentFrame, "Successfully signed out", Snackbar.LENGTH_SHORT).show();
+      Toast.makeText(this, "Successfully signed out", Toast.LENGTH_SHORT).show();
       // When logging out the session is destroyed. This invalidates the CSRF token and we have to
       // get a new one manually.
       getApi().getCsrfToken().subscribe(token -> getState().csrfToken = token, this::handleError);
@@ -225,7 +214,14 @@ public abstract class BaseActivity extends AbstractActivity
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
-    if (id == R.id.nav_login) {
+    if (id == R.id.addProduct) {
+      if (permissions.contains(Permission.CREATE_PRODUCT)) {
+        Intent createProductIntent = new Intent(getApplicationContext(), CreateProductActivity.class);
+        startActivity(createProductIntent);
+      } else {
+        showLoginRequiredPopup(R.string.create_product_auth);
+      }
+    } else if (id == R.id.nav_login) {
       Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
       startActivity(loginIntent);
     } else if (id == R.id.nav_register) {

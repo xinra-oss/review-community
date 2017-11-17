@@ -43,16 +43,18 @@ public class ProductService extends AbstractService {
       throw new SerialNotFoundException(Category.class, createProductDto.getCategorySerial());
     }
 
-    Brand brand = brandRepo.findBySerial(createProductDto.getBrandSerial());
-    if (brand == null) {
-      throw new SerialNotFoundException(Brand.class, createProductDto.getBrandSerial());
-    }
-
     Product product = entityFactory.createEntity(Product.class);
     product.setName(createProductDto.getName());
     product.setDescription(createProductDto.getDescription());
     product.setCategory(category);
-    product.setBrand(brand);
+    
+    if (createProductDto.getBrandSerial() != 0) {
+      Brand brand = brandRepo.findBySerial(createProductDto.getBrandSerial());
+      if (brand == null) {
+        throw new SerialNotFoundException(Brand.class, createProductDto.getBrandSerial());
+      }
+      product.setBrand(brand);
+    }
     
     BarcodeService barcodeService = null;
     if (createProductDto.getBarcode() != null) {
@@ -125,11 +127,13 @@ public class ProductService extends AbstractService {
     productDto.setNumRatings(product.getNumRatings());
     productDto.setAvgRating(product.getAvgRating());
 
-    BrandDto brandDto = dtoFactory.createDto(BrandDto.class);
-    brandDto.setName(product.getBrand().getName());
-    brandDto.setSerial(product.getBrand().getSerial());
-
-    productDto.setBrand(brandDto);
+    if (product.getBrand() != null) {
+      BrandDto brandDto = dtoFactory.createDto(BrandDto.class);
+      brandDto.setName(product.getBrand().getName());
+      brandDto.setSerial(product.getBrand().getSerial());
+      productDto.setBrand(brandDto);
+    }
+    
 
     productDto.setCategorySerial(product.getCategory().getSerial());
 

@@ -29,15 +29,13 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class ProductActivity extends BaseActivity {
 
-  public static final String PRODUCT_SERIAL = "com.xinra.reviewcommunity.PRODUCT_SERIAL";
-
     private int productSerial;
     private int categorySerial;
     private Map<Integer, CategoryDto> categoryMap = Collections.emptyMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        productSerial = getIntent().getIntExtra(PRODUCT_SERIAL, 0);
+        productSerial = getIntent().getIntExtra(Extras.PRODUCT, 0);
 
         subscriptions.add(getState().categoryMap.subscribe(categoryMap -> {
             this.categoryMap = categoryMap;

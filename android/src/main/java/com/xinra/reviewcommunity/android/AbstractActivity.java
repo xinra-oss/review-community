@@ -4,12 +4,17 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.common.base.Optional;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
 
@@ -50,7 +55,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
   @Override
   protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    subscriptions.add(getState().permissions.subscribe( permissions -> {
+    subscriptions.add(getState().permissions.subscribe(permissions -> {
       this.permissions = permissions;
       onPermissionsUpdated();
     }));
@@ -94,8 +99,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
   }
 
   /**
-   * Called once the activity has been created and the state is initialized. Usually you should NOT
-   * dispatch API calls until this is called.
+   * Called once the activity has been created and the state is initialized. You must NOT dispatch
+   * API calls until this is called!
    */
   protected void onInitialized() {}
 
@@ -107,5 +112,46 @@ public abstract class AbstractActivity extends AppCompatActivity {
     ComponentName searchActivity = new ComponentName(getApplicationContext(), SearchActivity.class);
     searchView.setSearchableInfo(searchManager.getSearchableInfo(searchActivity));
     searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+  }
+
+  /**
+   * Launch the barcode scanning activity.
+   * @param view not used. Makes this method usable as onClickListener.
+   */
+  protected void startBarcodeScan(View view) {
+    IntentIntegrator integrator = new IntentIntegrator(this);
+    integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+    if (scanResult != null) {
+      if (scanResult.getContents() != null) {
+        onScanResult(scanResult.getContents());
+      }
+      return;
+    }
+
+    super.onActivityResult(requestCode, resultCode, data);
+  }
+
+  /**
+   * Called when {@link #startBarcodeScan(View)} finished with a valid barcode result.
+   */
+  protected void onScanResult(String barcode) {
+    throw new RuntimeException("If you call startBarcodeScan() you must override onScanResult()");
+  }
+
+  /**
+   * Returns the text of a {@link TextView} as a String or {@code null} if the text is {@code null}
+   * or empty.
+   */
+  protected String getText(TextView textView) {
+    CharSequence text = textView.getText();
+    if (text == null) {
+      return null;
+    }
+    return text.length() == 0 ? null : text.toString();
   }
 }

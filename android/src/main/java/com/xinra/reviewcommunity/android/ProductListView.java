@@ -163,7 +163,7 @@ public class ProductListView extends ConstraintLayout implements PopupMenu.OnMen
 
       view.setOnClickListener(v -> {
         Intent productIntent = new Intent(getContext(), ProductActivity.class);
-        productIntent.putExtra(ProductActivity.PRODUCT_SERIAL, product.getSerial());
+        productIntent.putExtra(Extras.PRODUCT, product.getSerial());
         getContext().startActivity(productIntent);
       });
 

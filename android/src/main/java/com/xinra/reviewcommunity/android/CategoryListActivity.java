@@ -1,5 +1,6 @@
 package com.xinra.reviewcommunity.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 public class CategoryListActivity extends BaseActivity {
@@ -12,6 +13,11 @@ public class CategoryListActivity extends BaseActivity {
     setContentView(R.layout.activity_category_list);
 
     categoryTree = findViewById(R.id.categoryListTree);
-    getState().categoryTree.subscribe(categoryTree::setContent);
+    categoryTree.setOnCategoryClickListener(categorySerial -> {
+      Intent categoryIntent = new Intent(this, CategoryActivity.class);
+      categoryIntent.putExtra(Extras.CATEGORY, categorySerial);
+      startActivity(categoryIntent);
+    });
+    subscriptions.add(getState().categoryTree.subscribe(categoryTree::setContent));
   }
 }

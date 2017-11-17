@@ -6,4 +6,123 @@
     android:layout_height="match_parent"
     tools:context="com.xinra.reviewcommunity.android.CreateProductActivity">
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/name" />
+
+        <EditText
+          android:id="@+id/createProductName"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="text" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/category"
+          android:layout_marginTop="8dp"/>
+
+        <TextView
+          android:id="@+id/createProductCategory"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/select_category_placeholder"
+          android:textAppearance="@android:style/TextAppearance.Medium"
+          android:drawableRight="@drawable/ic_expanded_item"
+          android:drawableEnd="@drawable/ic_expanded_item" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/edit_product_brand"
+          android:layout_marginTop="8dp"/>
+
+        <TextView
+          android:id="@+id/createProductBrand"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/select_brand_placeholder"
+          android:textAppearance="@android:style/TextAppearance.Medium"
+          android:drawableRight="@drawable/ic_expanded_item"
+          android:drawableEnd="@drawable/ic_expanded_item" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/edit_product_description"
+          android:layout_marginTop="8dp"/>
+
+        <EditText
+          android:id="@+id/createProductDescription"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textMultiLine" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/edit_product_barcode"
+          android:layout_marginTop="8dp"/>
+
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <TextView
+            android:id="@+id/createProductBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@android:color/black"
+            android:layout_centerVertical="true" />
+
+          <ImageButton
+            android:id="@+id/createProductScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_barcode_scan"
+            android:contentDescription="@string/scan_barcode"
+            android:layout_toLeftOf="@+id/createProductRemoveBarcode"
+            android:layout_toStartOf="@+id/createProductRemoveBarcode"/>
+
+          <ImageButton
+            android:id="@+id/createProductRemoveBarcode"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/clear_barcode"
+            app:srcCompat="@drawable/ic_x" />
+
+        </RelativeLayout>
+
+        <Button
+          android:id="@+id/createProductSaveBtn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/save" />
+
+      </LinearLayout>
+
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
