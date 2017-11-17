@@ -1,8 +1,10 @@
 package com.xinra.reviewcommunity.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,9 +13,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xinra.reviewcommunity.shared.OrderBy;
+import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewDto;
 
@@ -25,11 +30,12 @@ import io.reactivex.functions.BiConsumer;
 
 import io.reactivex.functions.Consumer;
 
-/**
- * Created by Toby on 10.11.2017.
- */
+public class ReviewListAdapter extends BaseAdapter implements PopupMenu.OnMenuItemClickListener {
 
-public class ReviewListAdapter extends BaseAdapter {
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        return true;
+    }
 
     public static interface CommentSupplier {
         void getComments(int reviewSerial, Consumer<List<ReviewCommentDto>> callback);
@@ -38,13 +44,17 @@ public class ReviewListAdapter extends BaseAdapter {
     private List<ReviewDto> reviewList;
     private CommentSupplier commentSupplier;
     private final LayoutInflater inflater;
+    private Context context;
+    private int productSerial;
 
     public void setReviewList(List<ReviewDto> reviewList) {
         this.reviewList = reviewList;
     }
 
-    public ReviewListAdapter(Context context, List<ReviewDto> reviewList, CommentSupplier commentSupplier) {
+    public ReviewListAdapter(Context context, List<ReviewDto> reviewList, int productSerial, CommentSupplier commentSupplier) {
+        this.context = context;
         this.reviewList = reviewList;
+        this.productSerial = productSerial;
         this.commentSupplier = commentSupplier;
         this.inflater = LayoutInflater.from(context);
     }
@@ -70,6 +80,25 @@ public class ReviewListAdapter extends BaseAdapter {
         ViewHolder holder;
         if(view == null) {
             view = inflater.inflate(R.layout.item_review, viewGroup, false);
+
+            final ImageButton menuButton = view.findViewById(R.id.reviewMenuBtn);
+            menuButton.setOnClickListener(v -> {
+                PopupMenu popupMenu = new PopupMenu(context, menuButton);
+                popupMenu.getMenuInflater().inflate(R.menu.item_interaction_context, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(menuItem -> {
+                    switch(menuItem.getItemId()) {
+                        case R.id.report:
+                            Intent reportingIntent = new Intent(context, ReportActivity.class);
+                            reportingIntent.putExtra(ProductActivity.PRODUCT_SERIAL, productSerial);
+                            reportingIntent.putExtra("ReviewSerial", reviewList.get(i).getSerial());
+                            context.startActivity(reportingIntent);
+                            Toast.makeText(context,
+                                    menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                });
+                popupMenu.show();
+            });
 
             holder = new ViewHolder();
             holder.title = (TextView) view.findViewById(R.id.reviewTitle);
@@ -101,7 +130,7 @@ public class ReviewListAdapter extends BaseAdapter {
 
         holder.addViewCommentBtn.setOnClickListener(v -> {
             commentSupplier.getComments(reviewDto.getSerial(), comments -> {
-                ListAdapter commentListAdapter = new CommentListAdapter(context, comments);
+                ListAdapter commentListAdapter = new CommentListAdapter(context, comments, productSerial, reviewList.get(i).getSerial());
                 ListView listView = finalView.findViewById(R.id.commentListView);
 
                 if(holder.addViewCommentBtn.getText() == "View Comments") {

@@ -89,7 +89,7 @@ public class ProductActivity extends BaseActivity {
         }, this::handleError);
 
         getApi().getReviewList(productSerial, OrderBy.RATING).subscribe(reviews -> {
-            ListAdapter reviewAdapter = new ReviewListAdapter(this, reviews, this::loadComments);
+            ListAdapter reviewAdapter = new ReviewListAdapter(this, reviews, productSerial, this::loadComments);
             ListView listView = findViewById(R.id.reviewListView);
             listView.setAdapter(reviewAdapter);
         }, this::handleError);
