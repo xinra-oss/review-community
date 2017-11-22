@@ -6,5 +6,6 @@ import lombok.Data;
 public class MarketDto implements Dto {
 
   private String slug;
+  private String name;
   
 }

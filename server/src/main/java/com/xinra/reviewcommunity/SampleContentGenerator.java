@@ -1,12 +1,9 @@
 package com.xinra.reviewcommunity;
 
 import com.xinra.nucleus.common.ContextHolder;
-import com.xinra.nucleus.entity.EntityFactory;
 import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.dto.AuthenticatedUserDto;
-import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.User;
-import com.xinra.reviewcommunity.repo.MarketRepository;
 import com.xinra.reviewcommunity.repo.UserRepository;
 import com.xinra.reviewcommunity.service.AuthenticationProviderImpl;
 import com.xinra.reviewcommunity.service.BrandService;
@@ -22,20 +19,24 @@ import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewCommentDto;
 import com.xinra.reviewcommunity.shared.dto.CreateReviewDto;
 import com.xinra.reviewcommunity.shared.dto.DtoFactory;
+import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import com.xinra.reviewcommunity.shared.dto.ReviewVoteDto;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 @Profile({"test", "dev"})
-public class SampleContentGenerator implements ApplicationListener<ContextRefreshedEvent> {
+public class SampleContentGenerator implements ApplicationListener<ContextRefreshedEvent>, Ordered {
   
   private static final String USERNAME_ADMIN = "justus";
   private static final String USERNAME_MODERATOR = "peter";
@@ -50,10 +51,9 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
   private @Autowired Environment environment;
   private @Autowired ServiceProvider serviceProvider;
   private @Autowired DtoFactory dtoFactory;
-  private @Autowired EntityFactory entityFactory;
-  private @Autowired MarketRepository<Market> marketRepo;
   private @Autowired UserRepository<User> userRepo;
   private @Value("${spring.jpa.hibernate.ddl-auto:''}") String schemaExport;
+  private @PersistenceContext EntityManager entityManager;
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -81,14 +81,15 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     // tests that rely on multiple markets should create their own anyways.
     // see https://github.com/xinra-it/review-community/issues/27
     
-    Market m1 = entityFactory.createEntity(Market.class);
-    m1.setSlug("de");
-    marketRepo.save(m1);
-    Market m2 = entityFactory.createEntity(Market.class);
-    m2.setSlug("us");
-    marketRepo.save(m2);
+    MarketDto market = dtoFactory.createDto(MarketDto.class);
+    market.setName("Deutschland");
+    market.setSlug("de");
+    serviceProvider.getService(MarketService.class).createMarket(market);
     
-    serviceProvider.getService(MarketService.class).buildCache();
+    market = dtoFactory.createDto(MarketDto.class);
+    market.setName("United States");
+    market.setSlug("us");
+    serviceProvider.getService(MarketService.class).createMarket(market);
   }
   
   private void createUsers() {
@@ -298,5 +299,10 @@ public class SampleContentGenerator implements ApplicationListener<ContextRefres
     reviewService.createReviewComment(createReviewCommentDto3, 2, 3);
 
     contextHolder.clearMock();
+  }
+
+  @Override
+  public int getOrder() {
+    return LOWEST_PRECEDENCE;
   }
 }

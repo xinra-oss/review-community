@@ -52,7 +52,7 @@ public class ContextAwareFilterAdvice {
       
     if (context.getMarket().isPresent()) {
       String marketId = serviceProvider.getService(MarketService.class)
-          .getEntity(context.getMarket().get().getSlug())
+          .getEntityBySlug(context.getMarket().get().getSlug())
           .getPk().getId();
       session.enableFilter("market").setParameter("marketId", marketId);
     } else {
