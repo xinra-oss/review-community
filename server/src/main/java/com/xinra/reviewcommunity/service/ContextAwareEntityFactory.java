@@ -3,9 +3,10 @@ package com.xinra.reviewcommunity.service;
 import com.xinra.nucleus.common.ContextHolder;
 import com.xinra.nucleus.entity.BaseEntity;
 import com.xinra.nucleus.entity.DefaultEntityFactory;
-import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
+import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.entity.MarketSpecificEntity;
+import com.xinra.reviewcommunity.repo.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContextAwareEntityFactory extends DefaultEntityFactory {
   
-  private @Autowired ServiceProvider serviceProvider;
+  private @Autowired MarketRepository<Market> marketRepo;
   private @Autowired ContextHolder<Context> contextHolder;
 
   @Override
@@ -25,8 +26,8 @@ public class ContextAwareEntityFactory extends DefaultEntityFactory {
     T entity = super.createEntity(type);
     
     if (entity instanceof MarketSpecificEntity) {
-      ((MarketSpecificEntity) entity).setMarket(serviceProvider.getService(MarketService.class)
-          .getEntityBySlug(contextHolder.get().getMarket().get().getSlug()));
+      ((MarketSpecificEntity) entity).setMarket(
+          marketRepo.findBySlug((contextHolder.get().getMarket().get().getSlug())));
     }
     
     return entity;

@@ -1,12 +1,11 @@
 package com.xinra.reviewcommunity.entity;
 
 import com.xinra.nucleus.common.ContextHolder;
-import com.xinra.nucleus.service.ServiceProvider;
 import com.xinra.reviewcommunity.Context;
-import com.xinra.reviewcommunity.service.MarketService;
-
+import com.xinra.reviewcommunity.repo.MarketRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.hibernate.Session;
@@ -25,16 +24,20 @@ public class ContextAwareFilterAdvice {
   
   private @PersistenceContext EntityManager entityManager;
   private @Autowired ContextHolder<Context> contextHolder;
-  private @Autowired ServiceProvider serviceProvider;
+  private @Autowired MarketRepository<Market> marketRepo;
   
   /**
    * Enables context-specific filters for all repository methods.
    */
   @Before("this(org.springframework.data.repository.Repository)")
-  public void enableFilters() {
+  public void enableFilters(JoinPoint joinPoint) {
     
     if (!entityManager.isJoinedToTransaction()) {
       return; // this is not an actual query
+    }
+    
+    if (joinPoint.getTarget() instanceof MarketRepository) {
+      return; // would cause endless recursion
     }
     
     final Session session = entityManager.unwrap(Session.class);
@@ -51,8 +54,7 @@ public class ContextAwareFilterAdvice {
     }
       
     if (context.getMarket().isPresent()) {
-      String marketId = serviceProvider.getService(MarketService.class)
-          .getEntityBySlug(context.getMarket().get().getSlug())
+      String marketId = marketRepo.findBySlug(context.getMarket().get().getSlug())
           .getPk().getId();
       session.enableFilter("market").setParameter("marketId", marketId);
     } else {

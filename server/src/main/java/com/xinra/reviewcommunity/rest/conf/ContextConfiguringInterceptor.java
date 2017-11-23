@@ -22,15 +22,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @Component
 public class ContextConfiguringInterceptor extends HandlerInterceptorAdapter {
   
-  @SuppressWarnings("unused")
-  private static class MarketNotFoundException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
-    
-    public MarketNotFoundException(String slug) {
-      super("Market with slug '" + slug + "' does not exist");
-    }
-  }
-  
   @Autowired
   private Context context;
   
@@ -44,11 +35,6 @@ public class ContextConfiguringInterceptor extends HandlerInterceptorAdapter {
     String slug = getPathParameters(request).get("market");
     if (slug != null) {
       MarketDto market = serviceProvider.getService(MarketService.class).getBySlug(slug);
-      if (market == null) {
-        response.sendError(404);
-        return false;
-        // TODO throw new MarketNotFoundException(slug);
-      }
       context.setMarket(market);
     } // else handler is @MarketAgnostic
     
