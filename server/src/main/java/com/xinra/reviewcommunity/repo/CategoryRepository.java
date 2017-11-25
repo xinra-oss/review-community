@@ -18,4 +18,8 @@ public interface CategoryRepository<T extends Category> extends AbstractEntityRe
   @Query("SELECT c, (SELECT COUNT(p) FROM c.products p WHERE p.market = :market) FROM Category c")
   Collection<Object[]> findAllWithNumProducts(@Param("market") Market market);
   
+  @CacheQuery
+  @Query("SELECT c.id FROM Category c WHERE c.parent.id = :parentId")
+  Collection<String> getIdsByParentId(@Param("parentId") String parentId);
+  
 }

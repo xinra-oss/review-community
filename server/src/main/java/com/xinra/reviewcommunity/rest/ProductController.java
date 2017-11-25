@@ -61,7 +61,7 @@ public class ProductController extends AbstractController {
   }
   
   /**
-   * GET a list of products using full text search.
+   * GET a list of products in the given category.
    */
   @RequestMapping(path = "", params = "category", method = RequestMethod.GET)
   public List<ProductDto> getByCategory(@RequestParam(name = "category") int categorySerial) {

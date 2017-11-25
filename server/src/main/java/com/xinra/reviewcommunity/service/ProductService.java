@@ -10,7 +10,9 @@ import com.xinra.reviewcommunity.shared.dto.BrandDto;
 import com.xinra.reviewcommunity.shared.dto.CreateProductDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -105,11 +107,30 @@ public class ProductService extends AbstractService {
   /**
    * Returns a list of all products of a category.
    */
-  public List<ProductDto> getProductsByCategory(int serial) {
-    // TODO check if serial is valid
-    return productRepo.findByCategorySerial(serial).stream()
+  public List<ProductDto> getProductsByCategory(int categorySerial) {
+    Category category = categoryRepo.findBySerial(categorySerial);
+    
+    if (category == null) {
+      throw new SerialNotFoundException(Category.class, categorySerial);
+    }
+    
+    Set<String> categoryIds = getTransitiveCategoryIds(category.getPk().getId());
+    
+    return productRepo.findByCategoryIds(categoryIds).stream()
       .map(this::toDto)
       .collect(Collectors.toList());
+  }
+  
+  /**
+   * Returns the IDs of all categories that are included by the given one (itself and all transitive
+   * children).
+   */
+  private Set<String> getTransitiveCategoryIds(String categoryId) {
+    Set<String> transitiveCategoryIds = new HashSet<>();
+    transitiveCategoryIds.add(categoryId);
+    categoryRepo.getIdsByParentId(categoryId).forEach(childId ->
+        transitiveCategoryIds.addAll(getTransitiveCategoryIds(childId)));
+    return transitiveCategoryIds;
   }
 
   /**
