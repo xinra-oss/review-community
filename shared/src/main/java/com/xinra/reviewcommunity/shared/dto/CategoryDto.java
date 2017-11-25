@@ -1,6 +1,6 @@
 package com.xinra.reviewcommunity.shared.dto;
 
-import java.util.List;
+import java.util.Collection;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +8,9 @@ import lombok.Setter;
 @Setter
 public class CategoryDto extends SerialDto {
 
+  private int parentSerial;
   private String name;
-  private List<CategoryDto> children;
+  private int numProducts;
+  private Collection<CategoryDto> children;
   
 }

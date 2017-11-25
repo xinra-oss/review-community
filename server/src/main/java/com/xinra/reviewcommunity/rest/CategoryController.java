@@ -8,7 +8,7 @@ import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import com.xinra.reviewcommunity.shared.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
-
+import java.util.Collection;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +34,8 @@ public class CategoryController extends AbstractController {
    * GET a list of all categories.
    */
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public List<CategoryDto> getList() {
-    return serviceProvider.getService(CategoryService.class).getAllCategories();
+  public Collection<CategoryDto> getList() {
+    return serviceProvider.getService(CategoryService.class).getCategoryTree();
   }
 
 
