@@ -12,6 +12,7 @@ import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 
+import java.util.Collection;
 import java.util.List;
 
 public class CategoryListView extends FrameLayout {
@@ -55,7 +56,7 @@ public class CategoryListView extends FrameLayout {
   }
 
 
-  public void setContent(List<CategoryDto> categoryTree) {
+  public void setContent(Collection<CategoryDto> categoryTree) {
     TreeNode root = TreeNode.root();
     addNodesRecursively(root, categoryTree);
 
@@ -80,7 +81,7 @@ public class CategoryListView extends FrameLayout {
    *
    * @return whether the parent should be expanded
    */
-  private boolean addNodesRecursively(TreeNode parent, List<CategoryDto> children) {
+  private boolean addNodesRecursively(TreeNode parent, Collection<CategoryDto> children) {
     boolean expandParent = false;
     for (CategoryDto child: children) {
       TreeNode node = new TreeNode(child);

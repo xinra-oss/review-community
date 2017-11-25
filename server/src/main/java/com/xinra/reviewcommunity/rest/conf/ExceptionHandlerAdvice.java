@@ -2,6 +2,7 @@ package com.xinra.reviewcommunity.rest.conf;
 
 import com.xinra.reviewcommunity.service.BarcodeService.BarcodeNotFoundException;
 import com.xinra.reviewcommunity.service.BarcodeService.ProductOutOfScopeException;
+import com.xinra.reviewcommunity.service.MarketService.MarketNotFoundException;
 import com.xinra.reviewcommunity.service.SerialNotFoundException;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,8 @@ public class ExceptionHandlerAdvice {
   @ExceptionHandler({
       SerialNotFoundException.class,
       BarcodeNotFoundException.class,
-      ProductOutOfScopeException.class
+      ProductOutOfScopeException.class,
+      MarketNotFoundException.class
   })
   public void handleNotFoundException(Exception ex, HttpServletResponse response)
       throws IOException {

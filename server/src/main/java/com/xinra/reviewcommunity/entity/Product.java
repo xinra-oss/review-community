@@ -16,7 +16,7 @@ import org.hibernate.search.annotations.Store;
 @Getter
 @Setter
 @Indexed
-public class Product extends SerialEntity {
+public class Product extends MarketSpecificEntity {
 
   public static final String REVIEW = "review";
 

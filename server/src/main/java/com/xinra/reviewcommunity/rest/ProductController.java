@@ -59,6 +59,14 @@ public class ProductController extends AbstractController {
   public List<ProductDto> getList(@RequestParam(name = "q") String query) {
     return serviceProvider.getService(SearchService.class).searchProducts(query);
   }
+  
+  /**
+   * GET a list of products in the given category.
+   */
+  @RequestMapping(path = "", params = "category", method = RequestMethod.GET)
+  public List<ProductDto> getByCategory(@RequestParam(name = "category") int categorySerial) {
+    return serviceProvider.getService(ProductService.class).getProductsByCategory(categorySerial);
+  }
 
   /**
    * GET a product serial by its barcode.

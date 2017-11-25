@@ -1,13 +1,17 @@
 package com.xinra.reviewcommunity.service;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
+import com.xinra.nucleus.common.ContextHolder;
+import com.xinra.reviewcommunity.Context;
 import com.xinra.reviewcommunity.entity.Category;
+import com.xinra.reviewcommunity.entity.Market;
 import com.xinra.reviewcommunity.repo.CategoryRepository;
+import com.xinra.reviewcommunity.repo.MarketRepository;
 import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import com.xinra.reviewcommunity.shared.dto.CreateCategoryDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collection;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CategoryService extends AbstractService {
 
+  private @Autowired ContextHolder<Context> contextHolder;
   private @Autowired CategoryRepository<Category> categoryRepo;
+  private @Autowired MarketRepository<Market> marketRepo;
 
   /**
    * Creates a new Category.
@@ -50,34 +56,57 @@ public class CategoryService extends AbstractService {
   }
 
   /**
-   * Returns a list of all categories.
-   *
+   * Returns all categories in a tree structure.
    */
-  public List<CategoryDto> getAllCategories() {
-    return categoryRepo.findByParentIsNull().stream()
-      .map(this::toDto)
-      .collect(Collectors.toList());
-
-//    List<CategoryDto> list = new ArrayList<>();
-//
-//    for(Category cat : categoryRepo.findByParentIsNull()) {
-//      list.add(toDto(cat));
-//    }
-//
-//    return list;
+  public Collection<CategoryDto> getCategoryTree() {
+    
+    Multimap<Integer, CategoryDto> children = MultimapBuilder.treeKeys().arrayListValues().build();
+    
+    Market market = marketRepo.findBySlug(contextHolder.get().getMarket().get().getSlug());
+    
+    for (Object[] result : categoryRepo.findAllWithNumProducts(market)) {
+      CategoryDto category = toDtoIgnoringChildrenAndNumProducts((Category) result[0]);
+      category.setNumProducts((int) (long) result[1]);
+      children.put(category.getParentSerial(), category);
+    }
+    
+    Collection<CategoryDto> rootCategories = children.get(0);
+    rootCategories.forEach(rootCategory -> addChildrenRecursively(rootCategory, children));
+    cumulateNumProductsRecursively(rootCategories);
+        
+    return rootCategories;
+  }
+  
+  /**
+   * A product that is placed in a category is also included in all parents of this category.
+   * This function cumulates the number of products of a category accordingly.
+   */
+  private int cumulateNumProductsRecursively(Collection<CategoryDto> children) {
+    int cumulatedNumProducts = 0;
+    for (CategoryDto child : children) {
+      int cumulatedNumProductsOfChild = child.getNumProducts();
+      cumulatedNumProductsOfChild += cumulateNumProductsRecursively(child.getChildren());
+      child.setNumProducts(cumulatedNumProductsOfChild);
+      cumulatedNumProducts += cumulatedNumProductsOfChild;
+    }
+    return cumulatedNumProducts;
+  }
+  
+  private void addChildrenRecursively(CategoryDto parent, Multimap<Integer, CategoryDto> children) {
+    parent.setChildren(children.get(parent.getSerial()));
+    parent.getChildren().forEach(child -> addChildrenRecursively(child, children));
   }
 
-  private CategoryDto toDto(Category category) {
+  private CategoryDto toDtoIgnoringChildrenAndNumProducts(Category category) {
 
     CategoryDto categoryDto = dtoFactory.createDto(CategoryDto.class);
 
     categoryDto.setName(category.getName());
     categoryDto.setSerial(category.getSerial());
-
-    categoryDto.setChildren(category.getChildren().stream()
-            .map(this::toDto)
-            .collect(Collectors.toList()));
-
+    if (category.getParent() != null) {
+      categoryDto.setParentSerial(category.getParent().getSerial());
+    }
+    
     return categoryDto;
   }
 

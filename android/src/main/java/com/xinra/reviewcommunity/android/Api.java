@@ -63,8 +63,8 @@ public class Api extends AbstractApi {
         .map(Arrays::asList);
   }
 
-  public Single<List<ProductDto>> getCategory(int categorySerial) {
-    return withResponse("/category/{serial}", HttpMethod.GET, ProductDto[].class, null, false, ImmutableMap.of("serial", categorySerial))
+  public Single<List<ProductDto>> getProductsByCategory(int categorySerial) {
+    return withResponse("/product?category={categorySerial}", HttpMethod.GET, ProductDto[].class, null, false, ImmutableMap.of("categorySerial", categorySerial))
         .map(Arrays::asList);
   }
 

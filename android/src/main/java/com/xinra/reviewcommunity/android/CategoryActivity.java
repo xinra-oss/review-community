@@ -18,7 +18,6 @@ public class CategoryActivity extends BaseActivity {
     setContentView(R.layout.activity_category);
 
     productListView = findViewById(R.id.categoryProducts);
-    productListView.setDisplayCategory(false);
   }
 
   @Override
@@ -27,13 +26,15 @@ public class CategoryActivity extends BaseActivity {
     subscriptions.add(getState().categoryMap.subscribe(categoryMap -> {
       CategoryDto category = categoryMap.get(categorySerial);
       if (category == null) {
-        // todo
+        // TODO what happens if the category is removed while we are on this activity or come back to it?
+        return;
       }
 
       setTitle(category.getName());
+      productListView.setDisplayCategory(!category.getChildren().isEmpty());
       productListView.setCategoryMap(categoryMap);
 
-      getApi().getCategory(categorySerial).subscribe(productListView::setContent, this::handleError);
+      getApi().getProductsByCategory(categorySerial).subscribe(productListView::setContent, this::handleError);
     }));
   }
 }

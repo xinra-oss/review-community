@@ -6,6 +6,7 @@ import com.xinra.reviewcommunity.shared.dto.CsrfTokenDto;
 import com.xinra.reviewcommunity.shared.dto.MarketDto;
 import com.xinra.reviewcommunity.shared.dto.UserDto;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import com.google.common.base.Optional;
@@ -32,8 +33,8 @@ public class AppState {
   public final BehaviorSubject<Set<Permission>> permissions = BehaviorSubject.create();
 
   public final BehaviorSubject<MarketDto> market = BehaviorSubject.create();
-  public final BehaviorSubject<List<MarketDto>> availableMarkets = BehaviorSubject.create();
-  public final BehaviorSubject<List<CategoryDto>> categoryTree = BehaviorSubject.create();
+  public final BehaviorSubject<Collection<MarketDto>> availableMarkets = BehaviorSubject.create();
+  public final BehaviorSubject<Collection<CategoryDto>> categoryTree = BehaviorSubject.create();
   /** Maps category serial to DTO. */
   public final Observable<Map<Integer, CategoryDto>> categoryMap = categoryTree.map(this::buildCategoryMap);
 
@@ -51,13 +52,13 @@ public class AppState {
     return permissions.map(permissions -> permissions.contains(permission));
   }
 
-  private Map<Integer, CategoryDto> buildCategoryMap(List<CategoryDto> categoryTree) {
+  private Map<Integer, CategoryDto> buildCategoryMap(Collection<CategoryDto> categoryTree) {
     Map<Integer, CategoryDto> categoryMap = new HashMap<>();
     addToCategoryMapRecursively(categoryTree, categoryMap);
     return  categoryMap;
   }
 
-  private void addToCategoryMapRecursively(List<CategoryDto> categorySubTree, Map<Integer, CategoryDto> categoryMap) {
+  private void addToCategoryMapRecursively(Collection<CategoryDto> categorySubTree, Map<Integer, CategoryDto> categoryMap) {
     for (CategoryDto category: categorySubTree) {
       categoryMap.put(category.getSerial(), category);
       addToCategoryMapRecursively(category.getChildren(), categoryMap);

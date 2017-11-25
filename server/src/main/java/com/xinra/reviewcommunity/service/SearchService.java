@@ -13,13 +13,17 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @Transactional
-public class SearchService extends AbstractService {
+public class SearchService extends AbstractService
+    implements ApplicationListener<ContextRefreshedEvent>, Ordered {
   
   private @PersistenceContext EntityManager entityManager;
   
@@ -80,6 +84,16 @@ public class SearchService extends AbstractService {
 
       return product;
     }).collect(Collectors.toList());
+  }
+
+  @Override
+  public void onApplicationEvent(ContextRefreshedEvent event) {
+    rebuildIndex();
+  }
+
+  @Override
+  public int getOrder() {
+    return 30;
   }
 
 }

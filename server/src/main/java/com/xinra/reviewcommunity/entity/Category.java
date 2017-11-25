@@ -6,11 +6,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.search.annotations.Field;
 
 @Entity
 @Getter
 @Setter
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category extends SerialEntity {
 
   @Field
@@ -21,5 +24,8 @@ public class Category extends SerialEntity {
 
   @OneToMany(mappedBy = "parent")
   private Set<Category> children;
+  
+  @OneToMany(mappedBy = "category")
+  private Set<Product> products;
 
 }
