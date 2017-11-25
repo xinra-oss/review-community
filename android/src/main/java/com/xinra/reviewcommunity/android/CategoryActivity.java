@@ -33,7 +33,7 @@ public class CategoryActivity extends BaseActivity {
       setTitle(category.getName());
       productListView.setCategoryMap(categoryMap);
 
-      getApi().getCategory(categorySerial).subscribe(productListView::setContent, this::handleError);
+      getApi().getProductsByCategory(categorySerial).subscribe(productListView::setContent, this::handleError);
     }));
   }
 }

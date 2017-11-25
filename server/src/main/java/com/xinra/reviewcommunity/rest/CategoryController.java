@@ -2,16 +2,12 @@ package com.xinra.reviewcommunity.rest;
 
 import com.xinra.reviewcommunity.auth.AccessRequires;
 import com.xinra.reviewcommunity.service.CategoryService;
-import com.xinra.reviewcommunity.service.ProductService;
 import com.xinra.reviewcommunity.shared.Permission;
 import com.xinra.reviewcommunity.shared.dto.CategoryDto;
 import com.xinra.reviewcommunity.shared.dto.CreateCategoryDto;
-import com.xinra.reviewcommunity.shared.dto.ProductDto;
 import com.xinra.reviewcommunity.shared.dto.SerialDto;
 import java.util.Collection;
-import java.util.List;
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,14 +32,5 @@ public class CategoryController extends AbstractController {
   @RequestMapping(path = "", method = RequestMethod.GET)
   public Collection<CategoryDto> getList() {
     return serviceProvider.getService(CategoryService.class).getCategoryTree();
-  }
-
-
-  /**
-   * GET a list of all products of a category.
-   */
-  @RequestMapping(path = "/{serial}", method = RequestMethod.GET)
-  public List<ProductDto> get(@PathVariable int serial) {
-    return serviceProvider.getService(ProductService.class).getProductsByCategory(serial);
   }
 }
